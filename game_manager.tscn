@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://c7hmkt1anrwoa"]
 
+[ext_resource type="PackedScene" uid="uid://cgbgsgl4srwo4" path="res://world/world.tscn" id="1_70yv6"]
+
 [node name="GameManager" type="MarginContainer" unique_id=262446007]
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,10 +16,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="World" type="MarginContainer" parent="EffectsManager" unique_id=405063825]
+[node name="World" parent="EffectsManager" unique_id=982076166 instance=ExtResource("1_70yv6")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 
 [node name="RightInfo" type="VBoxContainer" parent="EffectsManager" unique_id=1780832780]
 layout_mode = 2

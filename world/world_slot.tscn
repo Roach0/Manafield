@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c24ku0r18sfo4"]
+
+[ext_resource type="Script" uid="uid://dpncstvsv70dt" path="res://world/world_slot.gd" id="1_m8job"]
+
+[node name="WorldSlot" type="MarginContainer" unique_id=1348747963]
+anchors_preset = -1
+anchor_right = 0.055555556
+anchor_bottom = 0.09876543
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m8job")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="." unique_id=813968399]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
