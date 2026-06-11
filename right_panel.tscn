@@ -2,12 +2,38 @@
 
 [ext_resource type="Script" uid="uid://c0lt2qdaajnnx" path="res://right_panel.gd" id="1_07peb"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07peb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_07peb"]
+color = Color(0.8, 0.8, 0.8, 1)
+grow_begin = -1.0
+grow_end = -1.0
+thickness = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nr2se"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
 [node name="RightPanel" type="Panel" unique_id=903372235]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_07peb")
 script = ExtResource("1_07peb")
 
-[node name="RightInfo" type="VBoxContainer" parent="." unique_id=503189534]
+[node name="Layout" type="VBoxContainer" parent="." unique_id=503189534]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,8 +42,76 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="RichTextLabel" parent="RightInfo" unique_id=1469394625]
+[node name="Info" type="MarginContainer" parent="Layout" unique_id=2035901824]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
 
-[node name="Hp" type="RichTextLabel" parent="RightInfo" unique_id=1794382111]
+[node name="InfoLayout" type="VBoxContainer" parent="Layout/Info" unique_id=1451789655]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Name" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1469394625]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Piece Name:"
+
+[node name="Hp" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1794382111]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Piece HP:"
+
+[node name="Description" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1604803740]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Description:"
+
+[node name="Sep" type="HSeparator" parent="Layout" unique_id=514728999]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+theme_override_styles/separator = SubResource("StyleBoxLine_07peb")
+
+[node name="Upgrades" type="MarginContainer" parent="Layout" unique_id=1923645387]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 7
+
+[node name="UpgradesLayout" type="VBoxContainer" parent="Layout/Upgrades" unique_id=1038315842]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Margin1" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=523292765]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
+
+[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin1" unique_id=742918448]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")
+
+[node name="Margin2" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=969870773]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
+
+[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin2" unique_id=1253571078]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")
+
+[node name="Margin3" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=1004330229]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
+
+[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin3" unique_id=468521519]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")

@@ -1,32 +1,110 @@
 [gd_scene format=3 uid="uid://26i6hohxno2e"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j440y"]
+bg_color = Color(0.14406255, 0.14406255, 0.14406255, 1)
+
 [node name="LeftPanel" type="Panel" unique_id=1825938487]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vtft1")
 
-[node name="LeftInfo" type="VBoxContainer" parent="." unique_id=746198552]
-layout_mode = 0
-offset_left = 4.0
-offset_right = 289.0
-offset_bottom = 648.0
+[node name="Margin" type="MarginContainer" parent="." unique_id=106773676]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="LeftInfo" type="VBoxContainer" parent="Margin" unique_id=746198552]
+layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Health" type="RichTextLabel" parent="LeftInfo" unique_id=1370197568]
+[node name="Player" type="Panel" parent="Margin/LeftInfo" unique_id=1792008006]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Hp"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j440y")
 
-[node name="Sanity" type="RichTextLabel" parent="LeftInfo" unique_id=1248300212]
+[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Player" unique_id=1635173076]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Player/MarginContainer" unique_id=508057646]
+layout_mode = 2
+
+[node name="Health" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=1370197568]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Sanity"
+text = "Health"
 
-[node name="Nerve" type="RichTextLabel" parent="LeftInfo" unique_id=876359879]
+[node name="Hunger" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=1248300212]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Hunger"
+
+[node name="Nerve" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=876359879]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Nerve"
 
-[node name="Wood" type="RichTextLabel" parent="LeftInfo" unique_id=1070482995]
+[node name="Resources" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Wood"
+
+[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Resources" unique_id=1592771526]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="GridContainer" parent="Margin/LeftInfo/Resources/MarginContainer" unique_id=57238652]
+layout_mode = 2
+
+[node name="Inventory" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Inventory" unique_id=1005372988]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Inventory/MarginContainer" unique_id=1700622129]
+layout_mode = 2
