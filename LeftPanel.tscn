@@ -8,7 +8,21 @@ border_width_right = 3
 border_width_bottom = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j440y"]
-bg_color = Color(0.14406255, 0.14406255, 0.14406255, 1)
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhfb7"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f86fl"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 
 [node name="LeftPanel" type="Panel" unique_id=1825938487]
 anchors_preset = 15
@@ -74,6 +88,7 @@ text = "Nerve"
 [node name="Resources" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_lhfb7")
 
 [node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Resources" unique_id=1592771526]
 layout_mode = 1
@@ -93,6 +108,7 @@ layout_mode = 2
 [node name="Inventory" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_f86fl")
 
 [node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Inventory" unique_id=1005372988]
 layout_mode = 1
@@ -106,5 +122,5 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Inventory/MarginContainer" unique_id=1700622129]
+[node name="VBoxContainer" type="GridContainer" parent="Margin/LeftInfo/Inventory/MarginContainer" unique_id=1716563160]
 layout_mode = 2
