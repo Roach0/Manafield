@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://cwirhrnv8yf3p"]
 
+[ext_resource type="Script" uid="uid://c0lt2qdaajnnx" path="res://right_panel.gd" id="1_07peb"]
+
 [node name="RightPanel" type="Panel" unique_id=903372235]
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_07peb")
 
 [node name="RightInfo" type="VBoxContainer" parent="." unique_id=503189534]
 layout_mode = 1
@@ -12,3 +15,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+
+[node name="Name" type="RichTextLabel" parent="RightInfo" unique_id=1469394625]
+layout_mode = 2
+
+[node name="Hp" type="RichTextLabel" parent="RightInfo" unique_id=1794382111]
+layout_mode = 2
