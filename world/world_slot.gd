@@ -3,6 +3,7 @@ class_name WorldSlot
 
 var piece: PieceData
 var tween: Tween
+var health: int
 
 func set_piece(data: PieceData) -> void:
 	piece = data
@@ -19,14 +20,14 @@ func _on_button_mouse_entered() -> void:
 func _on_button_pressed() -> void:
 	_kill_tween()
 	tween = create_tween()
-	tween.tween_property($TextureRect, "position:y", 6.0, 0.08)\
+	tween.tween_property($TextureRect, "position:y", -8.0, 0.03)\
 		.set_ease(Tween.EASE_OUT)
-	tween.tween_property($TextureRect, "position:y", 0.0, 0.20)\
+	tween.tween_property($TextureRect, "position:y", 0.0, 0.31)\
 		.set_ease(Tween.EASE_OUT)\
 		.set_trans(Tween.TRANS_ELASTIC)
 
 func _remove() -> void:
-	piece = null
+	piece = null # make a default spawn bank later
 	$TextureRect.texture = null
 	_kill_tween()
 	tween = create_tween()

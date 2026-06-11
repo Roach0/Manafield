@@ -4,12 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://26i6hohxno2e" path="res://LeftPanel.tscn" id="1_smx3j"]
 [ext_resource type="PackedScene" uid="uid://cwirhrnv8yf3p" path="res://right_panel.tscn" id="3_o2178"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2178"]
+bg_color = Color(0, 0, 0, 1)
+
 [node name="GameManager" type="MarginContainer" unique_id=262446007]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=952238281]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o2178")
 
 [node name="EffectsManager" type="HBoxContainer" parent="." unique_id=292837239]
 layout_mode = 2

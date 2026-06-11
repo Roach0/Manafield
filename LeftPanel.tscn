@@ -11,10 +11,22 @@ offset_right = 289.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
 
-[node name="Health" type="ProgressBar" parent="LeftInfo" unique_id=975123645]
+[node name="Health" type="RichTextLabel" parent="LeftInfo" unique_id=1370197568]
 layout_mode = 2
-show_percentage = false
+size_flags_vertical = 3
+text = "Hp"
 
-[node name="Energy" type="ProgressBar" parent="LeftInfo" unique_id=1018340218]
+[node name="Sanity" type="RichTextLabel" parent="LeftInfo" unique_id=1248300212]
 layout_mode = 2
-show_percentage = false
+size_flags_vertical = 3
+text = "Sanity"
+
+[node name="Nerve" type="RichTextLabel" parent="LeftInfo" unique_id=876359879]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Nerve"
+
+[node name="Wood" type="RichTextLabel" parent="LeftInfo" unique_id=1070482995]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Wood"

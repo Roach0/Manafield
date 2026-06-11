@@ -2,7 +2,6 @@ extends PieceData
 class_name Forest
 
 
-
 func _ready() -> void:
 	pass
 
