@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://26i6hohxno2e"]
 
+[ext_resource type="PackedScene" uid="uid://t7xbn7j3bcpb" path="res://left_panel/perk_slot.tscn" id="1_f6xjk"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 3
@@ -55,7 +57,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_j440y")
 
-[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Player" unique_id=1635173076]
+[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Player" unique_id=1635173076]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,30 +69,35 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Player/MarginContainer" unique_id=508057646]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Player/Margin" unique_id=508057646]
 layout_mode = 2
 
-[node name="Health" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=1370197568]
+[node name="Health" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1370197568]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Health"
 
-[node name="Hunger" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=1248300212]
+[node name="Hunger" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1248300212]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Hunger"
 
-[node name="Nerve" type="RichTextLabel" parent="Margin/LeftInfo/Player/MarginContainer/VBoxContainer" unique_id=876359879]
+[node name="Energy" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1713771385]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Energy"
+
+[node name="Nerve" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=876359879]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Nerve"
 
-[node name="Resources" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
+[node name="Loot" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_lhfb7")
 
-[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Resources" unique_id=1592771526]
+[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Loot" unique_id=1592771526]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,19 +105,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 3
+theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 3
+theme_override_constants/margin_bottom = 7
 
-[node name="VBoxContainer" type="GridContainer" parent="Margin/LeftInfo/Resources/MarginContainer" unique_id=57238652]
+[node name="LootContainer" type="GridContainer" parent="Margin/LeftInfo/Loot/Margin" unique_id=57238652]
 layout_mode = 2
 
-[node name="Inventory" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
+[node name="Panel" parent="Margin/LeftInfo/Loot/Margin/LootContainer" unique_id=1198460113 instance=ExtResource("1_f6xjk")]
+layout_mode = 2
+
+[node name="Perks" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_f86fl")
 
-[node name="MarginContainer" type="MarginContainer" parent="Margin/LeftInfo/Inventory" unique_id=1005372988]
+[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Perks" unique_id=1005372988]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,9 +128,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 3
+theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 3
+theme_override_constants/margin_bottom = 7
 
-[node name="VBoxContainer" type="GridContainer" parent="Margin/LeftInfo/Inventory/MarginContainer" unique_id=1716563160]
+[node name="PerkContainer" type="GridContainer" parent="Margin/LeftInfo/Perks/Margin" unique_id=1716563160]
+layout_mode = 2
+columns = 8
+
+[node name="Panel" parent="Margin/LeftInfo/Perks/Margin/PerkContainer" unique_id=250509048 instance=ExtResource("1_f6xjk")]
 layout_mode = 2

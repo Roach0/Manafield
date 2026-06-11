@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://t7xbn7j3bcpb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x86a1"]
+
+[node name="Panel" type="Panel" unique_id=1198460113]
+custom_minimum_size = Vector2(20, 20)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x86a1")
