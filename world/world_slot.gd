@@ -1,11 +1,42 @@
 extends MarginContainer
+class_name WorldSlot
 
+var piece: PieceData
+var tween: Tween
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func set_piece(data: PieceData) -> void:
+	piece = data
+	piece.pick_icon()
+	$TextureRect.texture = piece.selected_icon
 
+func _on_button_mouse_entered() -> void:
+	_kill_tween()
+	tween = create_tween().set_loops(2)
+	tween.tween_property($TextureRect, "position:x", 3.0, 0.02)
+	tween.tween_property($TextureRect, "position:x", -3.0, 0.02)
+	tween.tween_property($TextureRect, "position:x", 0.0, 0.02)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_button_pressed() -> void:
+	_kill_tween()
+	tween = create_tween()
+	tween.tween_property($TextureRect, "position:y", 6.0, 0.08)\
+		.set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position:y", 0.0, 0.20)\
+		.set_ease(Tween.EASE_OUT)\
+		.set_trans(Tween.TRANS_ELASTIC)
+
+func _remove() -> void:
+	piece = null
+	$TextureRect.texture = null
+	_kill_tween()
+	tween = create_tween()
+	tween.tween_property($TextureRect, "position:y", -8.0, 0.1)\
+		.set_ease(Tween.EASE_OUT)
+	tween.tween_property($TextureRect, "position:y", 20.0, 0.2)\
+		.set_ease(Tween.EASE_IN)
+	tween.tween_callback(queue_free)
+
+func _kill_tween() -> void:
+	if tween and tween.is_valid():
+		tween.kill()
+	$TextureRect.position = Vector2.ZERO

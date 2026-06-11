@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://26i6hohxno2e"]
+
+[node name="LeftPanel" type="Panel" unique_id=1825938487]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LeftInfo" type="VBoxContainer" parent="." unique_id=746198552]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 289.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+
+[node name="Health" type="ProgressBar" parent="LeftInfo" unique_id=975123645]
+layout_mode = 2
+show_percentage = false
+
+[node name="Energy" type="ProgressBar" parent="LeftInfo" unique_id=1018340218]
+layout_mode = 2
+show_percentage = false

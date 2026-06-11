@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Forest" format=3 uid="uid://da44qyio5b7gh"]
+
+[ext_resource type="Script" uid="uid://3gsdiru01kxl" path="res://pieces/forest/forest.gd" id="1_8qdey"]
+[ext_resource type="Texture2D" uid="uid://cjnwcpckhxxhb" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Decidous_1.png" id="1_bm8n2"]
+[ext_resource type="Texture2D" uid="uid://cl47thn04r8ax" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Decidous_2.png" id="2_e00b2"]
+[ext_resource type="Texture2D" uid="uid://bxbujih4nnktr" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Pine.png" id="3_6bule"]
+
+[resource]
+script = ExtResource("1_8qdey")
+name = "Forest"
+icons = Array[Texture2D]([ExtResource("1_bm8n2"), ExtResource("2_e00b2"), ExtResource("3_6bule")])
+metadata/_custom_type_script = "uid://3gsdiru01kxl"

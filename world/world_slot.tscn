@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dpncstvsv70dt" path="res://world/world_slot.gd" id="1_m8job"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m8job"]
+
 [node name="WorldSlot" type="MarginContainer" unique_id=1348747963]
+custom_minimum_size = Vector2(45, 45)
 anchors_preset = -1
 anchor_right = 0.055555556
 anchor_bottom = 0.09876543
@@ -11,6 +14,12 @@ grow_vertical = 2
 script = ExtResource("1_m8job")
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="." unique_id=813968399]
-custom_minimum_size = Vector2(50, 50)
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1213107571]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="." unique_id=1519346606]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_m8job")
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

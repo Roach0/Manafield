@@ -1,12 +1,11 @@
 extends Resource
 class_name PieceData
 
+@export var name: String
+@export var icons: Array[Texture2D]
+var health: int
+var selected_icon: Texture2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func pick_icon() -> void:
+	if icons.size() > 0:
+		selected_icon = icons[randi() % icons.size()]
