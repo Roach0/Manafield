@@ -12,12 +12,40 @@ border_width_bottom = 3
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j440y"]
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6xjk"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hujsc"]
+bg_color = Color(0.94650394, 0.26375416, 0.34975347, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1r2d"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_utjjv"]
+bg_color = Color(0.03339066, 0.5720991, 0.5137155, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r3pqr"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pduen"]
+bg_color = Color(0.34831277, 0.548428, 0.8621506, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_re4s5"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss3ix"]
+bg_color = Color(0.94509804, 0.7529412, 0.34901962, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhfb7"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f86fl"]
 bg_color = Color(0, 0, 0, 1)
@@ -25,6 +53,10 @@ border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="LeftPanel" type="Panel" unique_id=1825938487]
 anchors_preset = 15
@@ -72,25 +104,65 @@ theme_override_constants/margin_bottom = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="Margin/LeftInfo/Player/Margin" unique_id=508057646]
 layout_mode = 2
 
-[node name="Health" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1370197568]
+[node name="HealthLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1370197568]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Health"
+fit_content = true
+scroll_active = false
 
-[node name="Hunger" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1248300212]
+[node name="Health" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1660940916]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_styles/background = SubResource("StyleBoxFlat_f6xjk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hujsc")
+value = 50.0
+show_percentage = false
+
+[node name="HungerLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1248300212]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Hunger"
 
-[node name="Energy" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1713771385]
+[node name="Hunger" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1917472616]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_styles/background = SubResource("StyleBoxFlat_p1r2d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_utjjv")
+value = 50.0
+show_percentage = false
+
+[node name="EnergyLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1713771385]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Energy"
 
-[node name="Nerve" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=876359879]
+[node name="Energy" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=35800917]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_styles/background = SubResource("StyleBoxFlat_r3pqr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pduen")
+value = 50.0
+show_percentage = false
+
+[node name="NerveLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=876359879]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Nerve"
+fit_content = true
+scroll_active = false
+
+[node name="Nerve" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=519468171]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+theme_override_styles/background = SubResource("StyleBoxFlat_re4s5")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ss3ix")
+value = 50.0
+show_percentage = false
 
 [node name="Loot" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 layout_mode = 2
@@ -104,10 +176,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="LootContainer" type="GridContainer" parent="Margin/LeftInfo/Loot/Margin" unique_id=57238652]
 layout_mode = 2
@@ -127,10 +199,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="PerkContainer" type="GridContainer" parent="Margin/LeftInfo/Perks/Margin" unique_id=1716563160]
 layout_mode = 2
