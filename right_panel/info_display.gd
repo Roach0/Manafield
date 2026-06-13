@@ -4,12 +4,12 @@ class_name InfoDisplay
 
 @onready var condition: ProgressBar = %Condition
 @onready var tile_name: RichTextLabel = %Name
-@onready var descrition: RichTextLabel = %Description
+@onready var description: RichTextLabel = %Description
+@onready var modifiers: RichTextLabel = %Modifiers
 
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

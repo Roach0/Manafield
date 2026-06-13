@@ -7,7 +7,7 @@ class_name World
 @onready var grid: GridContainer = %WorldSlots
 
 func _ready() -> void:
-	generate_world()
+	pass
 
 func generate_world() -> void:
 	for i in 169:

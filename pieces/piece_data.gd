@@ -6,9 +6,13 @@ class_name PieceData
 @export var health_max: int
 @export var progress_max: int
 
+var mods: Array
 var health: int
 var progress: int
 var selected_icon: Texture2D
+
+var loot1: LootData
+var loot2: LootData
 
 func pick_icon() -> void:
 	if icons.size() > 0:
