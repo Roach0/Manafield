@@ -36,6 +36,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_x86a1")
 script = ExtResource("1_m8cxt")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1579045854]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

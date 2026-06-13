@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cgbgsgl4srwo4"]
 
 [ext_resource type="Script" uid="uid://dakvp1plry7yd" path="res://world/world.gd" id="1_f3sb7"]
-[ext_resource type="PackedScene" uid="uid://c24ku0r18sfo4" path="res://world/world_slot.tscn" id="2_4717r"]
+[ext_resource type="PackedScene" uid="uid://c24ku0r18sfo4" path="res://world/world_slot/world_slot.tscn" id="2_4717r"]
 [ext_resource type="Resource" uid="uid://da44qyio5b7gh" path="res://pieces/forest/forest.tres" id="3_h5o24"]
 
 [node name="World" type="MarginContainer" unique_id=982076166]

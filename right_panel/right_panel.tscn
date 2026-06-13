@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cwirhrnv8yf3p"]
 
 [ext_resource type="Script" uid="uid://c0lt2qdaajnnx" path="res://right_panel/right_panel.gd" id="1_07peb"]
+[ext_resource type="Script" uid="uid://bqdqkmja40rva" path="res://right_panel/info_display.gd" id="2_x6jq5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07peb"]
 bg_color = Color(0, 0, 0, 1)
@@ -15,7 +16,7 @@ grow_begin = -1.0
 grow_end = -1.0
 thickness = 3
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nr2se"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3jfd"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 3
 border_width_top = 3
@@ -46,28 +47,36 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="Info" type="MarginContainer" parent="Layout" unique_id=2035901824]
+[node name="InfoDisplay" type="MarginContainer" parent="Layout" unique_id=2035901824]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 7
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+script = ExtResource("2_x6jq5")
 
-[node name="InfoLayout" type="VBoxContainer" parent="Layout/Info" unique_id=1451789655]
+[node name="InfoLayout" type="VBoxContainer" parent="Layout/InfoDisplay" unique_id=1451789655]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Name" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1469394625]
+[node name="Condition" type="ProgressBar" parent="Layout/InfoDisplay/InfoLayout" unique_id=1253011945]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=1469394625]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Piece Name:"
 
-[node name="Hp" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1794382111]
+[node name="Description" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=1604803740]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Piece HP:"
+text = "Description:"
 
-[node name="Description" type="RichTextLabel" parent="Layout/Info/InfoLayout" unique_id=1604803740]
+[node name="Modifiers" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=980272238]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description:"
@@ -81,8 +90,8 @@ theme_override_styles/separator = SubResource("StyleBoxLine_07peb")
 [node name="Upgrades" type="MarginContainer" parent="Layout" unique_id=1923645387]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 8
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 18
 
 [node name="UpgradesLayout" type="VBoxContainer" parent="Layout/Upgrades" unique_id=1038315842]
@@ -90,35 +99,17 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="Margin1" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=523292765]
+[node name="Upgrade1" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=232957184]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_right = 7
+theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin1" unique_id=742918448]
+[node name="Upgrade2" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=1624129656]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")
+theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Margin2" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=969870773]
+[node name="Upgrade3" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=19399406]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_right = 7
-
-[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin2" unique_id=1253571078]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")
-
-[node name="Margin3" type="MarginContainer" parent="Layout/Upgrades/UpgradesLayout" unique_id=1004330229]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_right = 7
-
-[node name="Panel" type="Panel" parent="Layout/Upgrades/UpgradesLayout/Margin3" unique_id=468521519]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_nr2se")
+theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")

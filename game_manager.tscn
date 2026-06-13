@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cgbgsgl4srwo4" path="res://world/world.tscn" id="1_70yv6"]
 [ext_resource type="Script" uid="uid://cpk6vihybnmmr" path="res://effects/effects_manager.gd" id="1_d5upp"]
+[ext_resource type="Script" uid="uid://mtccbmskwl00" path="res://game_manager.gd" id="1_shwjl"]
 [ext_resource type="PackedScene" uid="uid://26i6hohxno2e" path="res://left_panel/LeftPanel.tscn" id="1_smx3j"]
 [ext_resource type="PackedScene" uid="uid://cwirhrnv8yf3p" path="res://right_panel/right_panel.tscn" id="3_o2178"]
 [ext_resource type="Script" uid="uid://dsentxpkea1a0" path="res://left_panel/left_panel.gd" id="3_vk86k"]
@@ -15,12 +16,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_shwjl")
 
 [node name="BG" type="Panel" parent="." unique_id=952238281]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_o2178")
 
 [node name="EffectsManager" type="HBoxContainer" parent="." unique_id=292837239]
+unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("1_d5upp")
 
