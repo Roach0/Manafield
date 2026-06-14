@@ -3,12 +3,13 @@ class_name PieceData
 
 @export var name: String
 @export var icons: Array[Texture2D]
+@export var health: int
 @export var health_max: int
+@export var progress: int
 @export var progress_max: int
+@export var description: String
 
 var mods: Array
-var health: int
-var progress: int
 var selected_icon: Texture2D
 
 var loot1: LootData

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Field" format=3 uid="uid://bd8ujfhrb8r11"]
+
+[ext_resource type="Texture2D" uid="uid://drrdw06oh8sxo" path="res://pieces/field/icon/field1.png" id="1_j3d0x"]
+[ext_resource type="Texture2D" uid="uid://b2y3n12etd7lf" path="res://pieces/field/icon/field2.png" id="2_t7kyd"]
+[ext_resource type="Texture2D" uid="uid://d0ccor27ijrug" path="res://pieces/field/icon/field3.png" id="3_ja4mi"]
+[ext_resource type="Script" uid="uid://bbf7035dqtram" path="res://pieces/field/field.gd" id="4_thtcl"]
+
+[resource]
+script = ExtResource("4_thtcl")
+icons = Array[Texture2D]([ExtResource("1_j3d0x"), ExtResource("2_t7kyd"), ExtResource("3_ja4mi")])
+health = 1000
+health_max = 1000
+progress = 50
+progress_max = 100
+description = "A lonely little field."
+metadata/_custom_type_script = "uid://bbf7035dqtram"

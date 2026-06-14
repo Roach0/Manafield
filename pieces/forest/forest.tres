@@ -9,4 +9,9 @@
 script = ExtResource("1_8qdey")
 name = "Forest"
 icons = Array[Texture2D]([ExtResource("1_bm8n2"), ExtResource("2_e00b2"), ExtResource("3_6bule")])
+health = 10
+health_max = 10
+progress = 25
+progress_max = 100
+description = "Trees, winding into the dark."
 metadata/_custom_type_script = "uid://3gsdiru01kxl"

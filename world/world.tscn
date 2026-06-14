@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dakvp1plry7yd" path="res://world/world.gd" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://c24ku0r18sfo4" path="res://world/world_slot/world_slot.tscn" id="2_4717r"]
 [ext_resource type="Resource" uid="uid://da44qyio5b7gh" path="res://pieces/forest/forest.tres" id="3_h5o24"]
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="3_mmdvd"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="5_mmdvd"]
 
 [node name="World" type="MarginContainer" unique_id=982076166]
 anchors_preset = 15
@@ -15,7 +17,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 script = ExtResource("1_f3sb7")
 slot_scene = ExtResource("2_4717r")
-piece_data = ExtResource("3_h5o24")
+piece_data_list = Array[ExtResource("3_mmdvd")]([ExtResource("3_h5o24"), ExtResource("5_mmdvd")])
 
 [node name="WorldSlots" type="GridContainer" parent="." unique_id=1972382574]
 unique_name_in_owner = true
