@@ -7,6 +7,7 @@ var piece: PieceData
 var tween: Tween
 var health: int
 
+signal update_display
 
 func set_piece(data: PieceData) -> void:
 	piece = data
@@ -14,6 +15,7 @@ func set_piece(data: PieceData) -> void:
 	icon.texture = piece.selected_icon
 
 func _on_button_mouse_entered() -> void:
+	update_display.emit(piece)
 	_kill_tween()
 	tween = create_tween().set_loops(2)
 	tween.tween_property(icon, "position:x", 3.0, 0.02)

@@ -8,6 +8,8 @@ class_name EffectsManager
 # gonna catch most things with signals here.
 # And orchestrate out using methods via connected the connected variables.
 
+
+
 func _ready() -> void:
 	pass
 
