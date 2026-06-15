@@ -1,14 +1,17 @@
 [gd_resource type="Resource" script_class="Field" format=3 uid="uid://bd8ujfhrb8r11"]
 
-[ext_resource type="Texture2D" uid="uid://drrdw06oh8sxo" path="res://pieces/field/icon/field1.png" id="1_j3d0x"]
 [ext_resource type="Texture2D" uid="uid://b2y3n12etd7lf" path="res://pieces/field/icon/field2.png" id="2_t7kyd"]
 [ext_resource type="Texture2D" uid="uid://d0ccor27ijrug" path="res://pieces/field/icon/field3.png" id="3_ja4mi"]
+[ext_resource type="Texture2D" uid="uid://qodhjsonfpot" path="res://pieces/field/icon/field4.png" id="4_ja4mi"]
 [ext_resource type="Script" uid="uid://bbf7035dqtram" path="res://pieces/field/field.gd" id="4_thtcl"]
+[ext_resource type="Texture2D" uid="uid://boi8cvmok8x8" path="res://pieces/field/icon/field6.png" id="5_thtcl"]
+[ext_resource type="Texture2D" uid="uid://cbi46tbcssikr" path="res://pieces/field/icon/field7.png" id="6_thtcl"]
+[ext_resource type="Texture2D" uid="uid://b0yg15nu24qre" path="res://pieces/field/icon/field8.png" id="7_s105l"]
 
 [resource]
 script = ExtResource("4_thtcl")
 name = "Field"
-icons = Array[Texture2D]([ExtResource("1_j3d0x"), ExtResource("2_t7kyd"), ExtResource("3_ja4mi")])
+icons = Array[Texture2D]([ExtResource("2_t7kyd"), ExtResource("3_ja4mi"), ExtResource("5_thtcl"), ExtResource("5_thtcl"), ExtResource("6_thtcl"), ExtResource("7_s105l"), ExtResource("4_ja4mi")])
 progress_max = 12
 description = "A lonely little field."
 metadata/_custom_type_script = "uid://bbf7035dqtram"
