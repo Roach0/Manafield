@@ -8,8 +8,6 @@ class_name RightPanel
 func _ready() -> void:
 	pass
 
-func _process(delta: float) -> void:
-	pass
 
 func update_display(piece):
 	info_display.update(piece) # "if" piece in just a sec to make this force between updating and clearing if null.

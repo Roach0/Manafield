@@ -13,8 +13,6 @@ func _ready() -> void:
 	world.update_display.connect(_on_update_display)
 
 
-func _process(delta: float) -> void:
-	pass
 
 
 func _on_update_display(piece: PieceData) -> void:

@@ -9,9 +9,6 @@
 script = ExtResource("4_thtcl")
 name = "Field"
 icons = Array[Texture2D]([ExtResource("1_j3d0x"), ExtResource("2_t7kyd"), ExtResource("3_ja4mi")])
-health = 1000
-health_max = 1000
-progress = 50
-progress_max = 100
+progress_max = 12
 description = "A lonely little field."
 metadata/_custom_type_script = "uid://bbf7035dqtram"

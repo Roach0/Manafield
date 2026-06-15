@@ -7,4 +7,5 @@
 script = ExtResource("2_qlmmg")
 name = "River"
 icons = Array[Texture2D]([ExtResource("1_vccjj")])
+description = "Calmly running water."
 metadata/_custom_type_script = "uid://dxjjisis664hn"

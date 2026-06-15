@@ -9,6 +9,3 @@ class_name GameManager
 
 func _ready() -> void:
 	world.generate_world()
-
-func _process(delta: float) -> void:
-	pass

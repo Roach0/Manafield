@@ -11,13 +11,18 @@ class_name InfoDisplay
 func _ready() -> void:
 	pass
 
-func _process(delta: float) -> void:
-	pass
 
 func update(piece: PieceData):
-	health.value = piece.health
-	progress.value = piece.progress
+	health.visible = piece.health_max > 0
+	progress.visible = piece.progress_max > 0
+	
+	if health.visible:
+		health.max_value = piece.health_max
+		health.value = piece.health
+	
+	if progress.visible:
+		progress.max_value = piece.progress_max
+		progress.value = piece.progress
+	
 	tile_name.text = piece.name
 	description.text = piece.description
-	# still gotta handle the mods though, iterate through array of string?
-	pass
