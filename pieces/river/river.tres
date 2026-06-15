@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="River" format=3 uid="uid://k7r102iitpfa"]
+
+[ext_resource type="Texture2D" uid="uid://bilmcrttuh7qy" path="res://pieces/river/icons/Weather_Water_Sea_Ocean_Waves_Wavy.png" id="1_vccjj"]
+[ext_resource type="Script" uid="uid://dxjjisis664hn" path="res://pieces/river/river.gd" id="2_qlmmg"]
+
+[resource]
+script = ExtResource("2_qlmmg")
+name = "River"
+icons = Array[Texture2D]([ExtResource("1_vccjj")])
+metadata/_custom_type_script = "uid://dxjjisis664hn"
