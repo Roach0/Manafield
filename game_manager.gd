@@ -1,6 +1,7 @@
 extends Node
 class_name GameManager
 
+@export var camp_piece_data: PieceData  # add this
 
 @onready var effects: EffectsManager = %EffectsManager
 @onready var left_panel: LeftPanel = %LeftPanel
@@ -9,3 +10,12 @@ class_name GameManager
 
 func _ready() -> void:
 	world.generate_world()
+	world.piece_placed.connect(_on_piece_placed)
+	world.build_mode_ended.connect(_on_build_mode_ended)
+	world.begin_build_mode([camp_piece_data])
+
+func _on_piece_placed(piece_data: PieceData) -> void:
+	print("placed: ", piece_data.name)
+
+func _on_build_mode_ended() -> void:
+	pass

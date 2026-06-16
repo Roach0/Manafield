@@ -5,10 +5,15 @@ class_name World
 @export var piece_data_list: Array[PieceData]
 @export var river_piece_data: PieceData
 
-
 @onready var grid: GridContainer = %WorldSlots
 
 signal update_display(piece)
+signal build_mode_started
+signal piece_placed(piece_data)
+signal build_mode_ended
+
+var _build_queue: Array[PieceData] = []
+var _in_build_mode := false
 
 func _ready() -> void:
 	pass
@@ -33,19 +38,51 @@ func generate_world() -> void:
 			slot.set_piece(data)
 		
 		slot.update_display.connect(func(piece): update_display.emit(piece))
+		slot.clicked.connect(_on_slot_clicked.bind(slot))
 
+# --- Build Mode ---
 
-# note: river path is generated, but returns an array of coordinates that form a path
-# from one edge of the map to another, these are used as reference for tile laying during generation.
+func begin_build_mode(pieces: Array[PieceData]) -> void:
+	if pieces.is_empty():
+		return
+	_build_queue = pieces.duplicate()
+	_in_build_mode = true
+	build_mode_started.emit()
+
+func _on_slot_clicked(slot: WorldSlot) -> void:
+	if not _in_build_mode:
+		return
+	
+	var next_piece: PieceData = _build_queue.front()
+	
+	# placement validation hook — expand this as needed
+	if not _can_place(next_piece, slot):
+		return
+	
+	var data := next_piece.duplicate() as PieceData
+	slot.set_piece(data)
+	piece_placed.emit(data)
+	
+	_build_queue.pop_front()
+	
+	if _build_queue.is_empty():
+		_in_build_mode = false
+		build_mode_ended.emit()
+
+func _can_place(incoming: PieceData, slot: WorldSlot) -> bool:
+	# stub — add type checks here later, e.g.:
+	# if slot.piece.type == "river": return false
+	# if incoming.requires_flat and slot.piece.type != "flat": return false
+	return true
+
+# --- River Generation ---
+
 func generate_river_path() -> Array[Vector2i]:
 	var path: Array[Vector2i] = []
 	
-	# Pick two different edges (0=top, 1=bottom, 2=left, 3=right)
 	var edge_a := randi() % 4
 	var edge_b := randi() % 4
 	while edge_b == edge_a or (edge_b == 1 - edge_a) == false and abs(edge_b - edge_a) != 1:
-		# Ensure edges aren't the same; opposite edges also fine, adjacent is fine too
-		# Actually let's just prevent same edge only:
 		edge_b = randi() % 4
 		if edge_b != edge_a:
 			break
@@ -56,7 +93,7 @@ func generate_river_path() -> Array[Vector2i]:
 	var current := start
 	path.append(current)
 	
-	var max_steps := 169  # safety cap
+	var max_steps := 169
 	var steps := 0
 	
 	while current != end and steps < max_steps:
@@ -64,22 +101,19 @@ func generate_river_path() -> Array[Vector2i]:
 		var dx: int = sign(end.x - current.x)
 		var dy: int = sign(end.y - current.y)
 		
-		# Build weighted candidate list — bias toward goal, allow drift
 		var candidates: Array[Vector2i] = []
 		
 		if dx != 0:
 			candidates.append(Vector2i(current.x + dx, current.y))
-			candidates.append(Vector2i(current.x + dx, current.y))  # double weight
+			candidates.append(Vector2i(current.x + dx, current.y))
 		if dy != 0:
 			candidates.append(Vector2i(current.x, current.y + dy))
-			candidates.append(Vector2i(current.x, current.y + dy))  # double weight
-		# Occasional lateral drift
+			candidates.append(Vector2i(current.x, current.y + dy))
 		candidates.append(Vector2i(current.x + 1, current.y))
 		candidates.append(Vector2i(current.x - 1, current.y))
 		candidates.append(Vector2i(current.x, current.y + 1))
 		candidates.append(Vector2i(current.x, current.y - 1))
 		
-		# Shuffle and pick first valid, unvisited, in-bounds candidate
 		candidates.shuffle()
 		var moved := false
 		for candidate in candidates:
@@ -90,25 +124,21 @@ func generate_river_path() -> Array[Vector2i]:
 				break
 		
 		if not moved:
-			break  # Stuck — shouldn't happen often with 13x13
+			break
 	
-	# Make sure we actually reach the end cell
 	if not path.has(end):
 		path.append(end)
 	
 	return path
 
-# also generated, this is used to select a random point along one of the maps edges.
 func _random_edge_point(edge: int) -> Vector2i:
-	# Leave corners free — start from column/row 1..11
 	var pos := 1 + randi() % 11
 	match edge:
-		0: return Vector2i(pos, 0)       # top
-		1: return Vector2i(pos, 12)      # bottom
-		2: return Vector2i(0, pos)       # left
-		3: return Vector2i(12, pos)      # right
+		0: return Vector2i(pos, 0)
+		1: return Vector2i(pos, 12)
+		2: return Vector2i(0, pos)
+		3: return Vector2i(12, pos)
 	return Vector2i(0, 0)
 
-# this is an easy check to maintain boundries in case a point exceeds the map dimension i intend.
 func _in_bounds(coord: Vector2i) -> bool:
 	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13

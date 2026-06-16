@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beeatu3d6h8vo"
-path="res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-40280773215bfb197265eb81822bc848.ctex"
+uid="uid://dk5m4jbcwcatd"
+path="res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-d73cb9d7037f5e4d92cad88d93b36b30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/buildings/campfire/Tools_Crafting_Smithing_Forge_Smelter.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-40280773215bfb197265eb81822bc848.ctex"]
+source_file="res://pieces/home/buildings/campfire/icons/Weather_Campfire_Camping_Site_Rest.png"
+dest_files=["res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-d73cb9d7037f5e4d92cad88d93b36b30.ctex"]
 
 [params]
 

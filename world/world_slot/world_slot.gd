@@ -1,13 +1,14 @@
 extends MarginContainer
 class_name WorldSlot
 
-
 @onready var icon: TextureRect = %TextureRect
+
 var piece: PieceData
 var tween: Tween
 var health: int
 
-signal update_display
+signal update_display(piece)
+signal clicked
 
 func set_piece(data: PieceData) -> void:
 	piece = data
@@ -23,6 +24,7 @@ func _on_button_mouse_entered() -> void:
 	tween.tween_property(icon, "position:x", 0.0, 0.02)
 
 func _on_button_pressed() -> void:
+	clicked.emit()
 	_kill_tween()
 	tween = create_tween()
 	tween.tween_property(icon, "position:y", -8.0, 0.03)\
@@ -32,7 +34,7 @@ func _on_button_pressed() -> void:
 		.set_trans(Tween.TRANS_ELASTIC)
 
 func _remove() -> void:
-	piece = null # make a default spawn bank later :p
+	piece = null
 	icon.texture = null
 	_kill_tween()
 	tween = create_tween()
