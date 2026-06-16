@@ -70,9 +70,7 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 		build_mode_ended.emit()
 
 func _can_place(incoming: PieceData, slot: WorldSlot) -> bool:
-	# stub — add type checks here later, e.g.:
-	# if slot.piece.type == "river": return false
-	# if incoming.requires_flat and slot.piece.type != "flat": return false
+	# needa put some logic here
 	return true
 
 # --- River Generation ---
