@@ -34,3 +34,7 @@ func _complete() -> void:
 func _destroy() -> void:
 	# When my health is emptied.
 	pass
+
+# for animations
+func should_float() -> bool:
+	return false

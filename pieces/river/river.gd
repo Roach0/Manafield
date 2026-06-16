@@ -16,3 +16,6 @@ func _destroy() -> void:
 
 func _complete() -> void:
 	pass
+
+func should_float() -> bool:
+	return true

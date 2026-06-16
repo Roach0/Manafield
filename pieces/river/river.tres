@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="River" format=3 uid="uid://k7r102iitpfa"]
 
 [ext_resource type="Script" uid="uid://dxjjisis664hn" path="res://pieces/river/river.gd" id="2_qlmmg"]
+[ext_resource type="Texture2D" uid="uid://diisaqjrgxuax" path="res://pieces/river/icons/river8.png" id="3_7hgsk"]
 [ext_resource type="Texture2D" uid="uid://dp6u1otsjwam1" path="res://pieces/river/icons/river3.png" id="3_ed8kv"]
 [ext_resource type="Texture2D" uid="uid://06671qw71qw" path="res://pieces/river/icons/river5.png" id="5_ed8kv"]
 
 [resource]
 script = ExtResource("2_qlmmg")
 name = "River"
-icons = Array[Texture2D]([ExtResource("3_ed8kv"), ExtResource("5_ed8kv")])
+icons = Array[Texture2D]([ExtResource("3_ed8kv"), ExtResource("5_ed8kv"), ExtResource("3_7hgsk")])
 description = "Calmly running water."
 metadata/_custom_type_script = "uid://dxjjisis664hn"
