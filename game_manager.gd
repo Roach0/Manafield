@@ -9,3 +9,9 @@ class_name GameManager
 
 func _ready() -> void:
 	world.generate_world()
+	world.camp_placed.connect(_on_camp_placed)
+	world.begin_camp_placement()
+
+func _on_camp_placed() -> void:
+	# generation phase is done, begin normal gameplay
+	pass

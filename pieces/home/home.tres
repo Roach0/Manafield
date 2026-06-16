@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Home" format=3 uid="uid://rc1i046byctn"]
+
+[ext_resource type="Texture2D" uid="uid://bhotodchd7rx" path="res://pieces/home/icon/Map_Markers_Building_Home_House.png" id="1_u6j5l"]
+[ext_resource type="Script" uid="uid://08tf6hi3emi2" path="res://pieces/home/home.gd" id="2_spsr1"]
+
+[resource]
+script = ExtResource("2_spsr1")
+name = "Home"
+icons = Array[Texture2D]([ExtResource("1_u6j5l")])
+description = "Home sweet home!"
+metadata/_custom_type_script = "uid://08tf6hi3emi2"
