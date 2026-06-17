@@ -32,7 +32,7 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 	
 	var data := next_piece.duplicate() as PieceData
 	slot.set_piece(data)
-	piece_placed.emit(data)
+	piece_placed.emit(data, null) # null here because it want 2 args, but I just need emit
 	
 	_build_queue.pop_front()
 	

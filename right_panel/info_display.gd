@@ -8,6 +8,7 @@ class_name InfoDisplay
 @onready var description: RichTextLabel = %Description
 @onready var modifiers: RichTextLabel = %Modifiers
 
+
 func _ready() -> void:
 	pass
 

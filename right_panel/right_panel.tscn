@@ -72,18 +72,21 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Piece Name:"
+horizontal_alignment = 1
 
 [node name="Description" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=1604803740]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description:"
+horizontal_alignment = 1
 
 [node name="Modifiers" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=980272238]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Mods:"
+horizontal_alignment = 1
 
 [node name="Health" type="ProgressBar" parent="Layout/InfoDisplay/InfoLayout" unique_id=1253011945]
 unique_name_in_owner = true
@@ -152,13 +155,16 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_alignment = 1
 
 [node name="Order2" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=2038042405]
 layout_mode = 2
 size_flags_vertical = 3
-text = "You can build this on:"
+text = "Can only be placed on:"
+horizontal_alignment = 1
 
 [node name="Allowed" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=1963849821]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_alignment = 1

@@ -13,11 +13,12 @@ class_name PieceData
 @export var can_build_on: Array[PieceData]
 
 
+
 var mods: Array
 var selected_icon: Texture2D
 
-var loot1: LootData
-var loot2: LootData
+var loot1: Prefix
+var loot2: Prefix
 
 func pick_icon() -> void:
 	if icons.size() > 0:
@@ -39,6 +40,6 @@ func _destroy() -> void:
 	# When my health is emptied.
 	pass
 
-# for animations
+# animation flags
 func should_float() -> bool:
 	return false
