@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beeatu3d6h8vo"
-path="res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-cbbda564d451d7326867b29983fc205e.ctex"
+uid="uid://bhotodchd7rx"
+path="res://.godot/imported/Map_Markers_Building_Home_House.png-0d726923a73413fd516d003036aa2b7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/expansions/campfire/icons/Tools_Crafting_Smithing_Forge_Smelter.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-cbbda564d451d7326867b29983fc205e.ctex"]
+source_file="res://pieces/home/expansions/cabin/icon/Map_Markers_Building_Home_House.png"
+dest_files=["res://.godot/imported/Map_Markers_Building_Home_House.png-0d726923a73413fd516d003036aa2b7d.ctex"]
 
 [params]
 

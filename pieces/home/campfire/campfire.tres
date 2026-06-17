@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Campfire" format=3 uid="uid://deov883olrhv7"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_tppjt"]
+[ext_resource type="Texture2D" uid="uid://dk5m4jbcwcatd" path="res://pieces/home/campfire/icons/Weather_Campfire_Camping_Site_Rest.png" id="2_jeveu"]
+[ext_resource type="Script" uid="uid://cib83pbny5lnj" path="res://pieces/home/campfire/campfire.gd" id="2_ow07p"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_yo2cq"]
+
+[resource]
+script = ExtResource("2_ow07p")
+name = "Campfire"
+type_id = "Campfire"
+icons = Array[Texture2D]([ExtResource("2_jeveu")])
+progress_max = 30
+description = "A warm fire."
+can_build_on = Array[ExtResource("1_tppjt")]([ExtResource("2_yo2cq")])
+metadata/_custom_type_script = "uid://cib83pbny5lnj"
