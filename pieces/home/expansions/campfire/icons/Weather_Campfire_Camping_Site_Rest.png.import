@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blr3f6werb4vu"
-path="res://.godot/imported/Tools_Crafting_Smithing_Anvil.png-9d2d8e6599fa9149cdcd65f77aa7304a.ctex"
+uid="uid://dk5m4jbcwcatd"
+path="res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-4ba8fdd67b7f97cb72eb33f3c738a99b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/buildings/smithy/icons/Tools_Crafting_Smithing_Anvil.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Anvil.png-9d2d8e6599fa9149cdcd65f77aa7304a.ctex"]
+source_file="res://pieces/home/expansions/campfire/icons/Weather_Campfire_Camping_Site_Rest.png"
+dest_files=["res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-4ba8fdd67b7f97cb72eb33f3c738a99b.ctex"]
 
 [params]
 

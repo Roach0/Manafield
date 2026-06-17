@@ -2,10 +2,14 @@
 
 [ext_resource type="Script" uid="uid://b7e0fsblhhsmb" path="res://pieces/home/home.gd" id="1_p1wbv"]
 [ext_resource type="Texture2D" uid="uid://bhotodchd7rx" path="res://pieces/home/icon/Map_Markers_Building_Home_House.png" id="1_u6j5l"]
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wkrv1"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_dht6q"]
 
 [resource]
 script = ExtResource("1_p1wbv")
 name = "Home"
+type_id = "Home"
 icons = Array[Texture2D]([ExtResource("1_u6j5l")])
 description = "Home sweet home!"
+can_build_on = Array[ExtResource("1_wkrv1")]([ExtResource("2_dht6q")])
 metadata/_custom_type_script = "uid://b7e0fsblhhsmb"

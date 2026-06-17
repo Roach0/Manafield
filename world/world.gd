@@ -18,36 +18,6 @@ var _in_build_mode := false
 func _ready() -> void:
 	pass
 
-func generate_world() -> void:
-	var river_path := generate_river_path()
-	
-	for i in 169:
-		var col := i % 13
-		var row := i / 13
-		var coord := Vector2i(col, row)
-		
-		var slot := slot_scene.instantiate() as WorldSlot
-		grid.add_child(slot)
-		
-		if river_path.has(coord):
-			var river_data := river_piece_data.duplicate() as PieceData
-			slot.set_piece(river_data)
-		else:
-			var piece_data := piece_data_list[randi() % piece_data_list.size()]
-			var data := piece_data.duplicate() as PieceData
-			slot.set_piece(data)
-		
-		slot.update_display.connect(func(piece): update_display.emit(piece))
-		slot.clicked.connect(_on_slot_clicked.bind(slot))
-
-# --- Build Mode ---
-
-func begin_build_mode(pieces: Array[PieceData]) -> void:
-	if pieces.is_empty():
-		return
-	_build_queue = pieces.duplicate()
-	_in_build_mode = true
-	build_mode_started.emit()
 
 func _on_slot_clicked(slot: WorldSlot) -> void:
 	if not _in_build_mode:
@@ -69,11 +39,48 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 		_in_build_mode = false
 		build_mode_ended.emit()
 
-func _can_place(incoming: PieceData, slot: WorldSlot) -> bool:
-	# needa put some logic here
-	return true
+func _in_bounds(coord: Vector2i) -> bool:
+	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13
 
-# --- River Generation ---
+func _get_slot_at(coord: Vector2i) -> WorldSlot:
+	var index := coord.y * 13 + coord.x
+	return grid.get_child(index) as WorldSlot
+
+# --- Building ---
+
+func begin_build_mode(pieces: Array[PieceData]) -> void:
+	if pieces.is_empty():
+		return
+	_build_queue = pieces.duplicate()
+	_in_build_mode = true
+	build_mode_started.emit()
+
+func _can_place(incoming: PieceData, slot: WorldSlot) -> bool:
+	return incoming.can_build_on.any(func(p): return p.type_id == slot.piece.type_id)
+
+# --- World Gen ---
+
+func generate_world() -> void:
+	var river_path := generate_river_path()
+	
+	for i in 169:
+		var col := i % 13
+		var row := i / 13
+		var coord := Vector2i(col, row)
+		
+		var slot := slot_scene.instantiate() as WorldSlot
+		grid.add_child(slot)
+		
+		if river_path.has(coord):
+			var river_data := river_piece_data.duplicate() as PieceData
+			slot.set_piece(river_data)
+		else:
+			var piece_data := piece_data_list[randi() % piece_data_list.size()]
+			var data := piece_data.duplicate() as PieceData
+			slot.set_piece(data)
+		
+		slot.update_display.connect(func(piece): update_display.emit(piece))
+		slot.clicked.connect(_on_slot_clicked.bind(slot))
 
 func generate_river_path() -> Array[Vector2i]:
 	var path: Array[Vector2i] = []
@@ -137,6 +144,3 @@ func _random_edge_point(edge: int) -> Vector2i:
 		2: return Vector2i(0, pos)
 		3: return Vector2i(12, pos)
 	return Vector2i(0, 0)
-
-func _in_bounds(coord: Vector2i) -> bool:
-	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13

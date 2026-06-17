@@ -16,6 +16,5 @@ func _ready() -> void:
 
 
 func _on_update_display(piece: PieceData) -> void:
-	print(piece) # piece data on slot hover currently ends here, pass down to display later
 	right_panel.update_display(piece)
 	pass

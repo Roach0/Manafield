@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beeatu3d6h8vo"
-path="res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-322903071fa576f89c2c5b5035cb18a3.ctex"
+uid="uid://blr3f6werb4vu"
+path="res://.godot/imported/Tools_Crafting_Smithing_Anvil.png-72e026fe963b28bff7a90d6cd7ee5002.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/buildings/campfire/icons/Tools_Crafting_Smithing_Forge_Smelter.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-322903071fa576f89c2c5b5035cb18a3.ctex"]
+source_file="res://pieces/home/expansions/smithy/icons/Tools_Crafting_Smithing_Anvil.png"
+dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Anvil.png-72e026fe963b28bff7a90d6cd7ee5002.ctex"]
 
 [params]
 

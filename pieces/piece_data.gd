@@ -1,13 +1,17 @@
 extends Resource
 class_name PieceData
 
+
 @export var name: String
+@export var type_id: String # do not change like ever
 @export var icons: Array[Texture2D]
 @export var health: int
 @export var health_max: int
 @export var progress: int
 @export var progress_max: int
 @export var description: String
+@export var can_build_on: Array[PieceData]
+
 
 var mods: Array
 var selected_icon: Texture2D
