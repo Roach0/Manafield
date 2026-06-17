@@ -3,7 +3,6 @@ class_name Camp
 
 
 func _ready() -> void:
-	print("Camp is established!")
 	pass
 
 func _click() -> void:

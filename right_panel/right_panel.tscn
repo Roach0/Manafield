@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0lt2qdaajnnx" path="res://right_panel/right_panel.gd" id="1_07peb"]
 [ext_resource type="Script" uid="uid://bqdqkmja40rva" path="res://right_panel/info_display.gd" id="2_x6jq5"]
-[ext_resource type="Script" uid="uid://d82w4wjvl2ob" path="res://right_panel/upgrades.gd" id="3_7tri6"]
+[ext_resource type="Script" uid="uid://d82w4wjvl2ob" path="res://right_panel/interaction_display.gd" id="3_7tri6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07peb"]
 bg_color = Color(0, 0, 0, 1)
@@ -101,7 +101,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme_override_styles/separator = SubResource("StyleBoxLine_07peb")
 
-[node name="Upgrades" type="MarginContainer" parent="Layout" unique_id=1923645387]
+[node name="InteractionDisplay" type="MarginContainer" parent="Layout" unique_id=1923645387]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -110,25 +110,55 @@ theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 18
 script = ExtResource("3_7tri6")
 
-[node name="UpgradesLayout" type="VBoxContainer" parent="Layout/Upgrades" unique_id=1038315842]
+[node name="UpgradesLayout" type="VBoxContainer" parent="Layout/InteractionDisplay" unique_id=1038315842]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="Upgrade1" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=232957184]
+[node name="Upgrade1" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=232957184]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Upgrade2" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=1624129656]
+[node name="Upgrade2" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=1624129656]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Upgrade3" type="Panel" parent="Layout/Upgrades/UpgradesLayout" unique_id=19399406]
+[node name="Upgrade3" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=19399406]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
+
+[node name="BuildLayout" type="VBoxContainer" parent="Layout/InteractionDisplay" unique_id=547824156]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 7
+
+[node name="Order" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=1000642420]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "You are building:"
+horizontal_alignment = 1
+
+[node name="PieceName" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=731159291]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Order2" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=2038042405]
+layout_mode = 2
+size_flags_vertical = 3
+text = "You can build this on:"
+
+[node name="Allowed" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=1963849821]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3

@@ -9,6 +9,7 @@ class_name World
 
 signal update_display(piece)
 signal build_mode_started
+signal build_queue_advanced(piece: PieceData)   # ← make sure this line exists
 signal piece_placed(piece_data)
 signal build_mode_ended
 
@@ -38,6 +39,8 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 	if _build_queue.is_empty():
 		_in_build_mode = false
 		build_mode_ended.emit()
+	else:
+		build_queue_advanced.emit(_build_queue.front())
 
 func _in_bounds(coord: Vector2i) -> bool:
 	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13
@@ -54,9 +57,11 @@ func begin_build_mode(pieces: Array[PieceData]) -> void:
 	_build_queue = pieces.duplicate()
 	_in_build_mode = true
 	build_mode_started.emit()
+	build_queue_advanced.emit(_build_queue.front())
 
 func _can_place(incoming: PieceData, slot: WorldSlot) -> bool:
 	return incoming.can_build_on.any(func(p): return p.type_id == slot.piece.type_id)
+	# gonna expand to do adjacency and presence checks later.
 
 # --- World Gen ---
 
