@@ -6,7 +6,7 @@ func _ready() -> void:
 	pass
 
 func _click() -> Dictionary:
-	return {}
+	return {"effect": "update_nerve", "amount": 1}
 
 func _tick() -> void:
 	pass

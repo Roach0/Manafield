@@ -72,6 +72,7 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 text = "Piece Name:"
 horizontal_alignment = 1
 
@@ -79,6 +80,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 text = "Description:"
 horizontal_alignment = 1
 
@@ -86,6 +88,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 text = "Mods:"
 horizontal_alignment = 1
 
@@ -153,6 +156,7 @@ theme_override_constants/separation = 7
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 text = "You are building:"
 horizontal_alignment = 1
 
@@ -160,11 +164,13 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 horizontal_alignment = 1
 
 [node name="Order2" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=2038042405]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 text = "Can only be placed on:"
 horizontal_alignment = 1
 
@@ -172,4 +178,5 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
 horizontal_alignment = 1
