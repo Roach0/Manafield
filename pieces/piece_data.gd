@@ -27,9 +27,8 @@ func _tick() -> void:
 	# When a different piece is clicked.
 	pass
 
-func _click() -> void:
-	# When I am the clciked piece.
-	pass
+func _click() -> Dictionary:
+	return {}
 
 func _complete() -> void:
 	# When my progress is complete.

@@ -5,7 +5,8 @@ class_name River
 func _ready() -> void:
 	pass
 
-func _click() -> void:
+func _click() -> Dictionary:
+	return {}
 	pass
 
 func _tick() -> void:

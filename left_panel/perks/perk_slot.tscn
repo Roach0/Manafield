@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://t7xbn7j3bcpb"]
 
-[ext_resource type="Script" uid="uid://btu4umbkd8p4v" path="res://left_panel/perk_slot.gd" id="1_m8cxt"]
+[ext_resource type="Script" uid="uid://btu4umbkd8p4v" path="res://left_panel/perks/perk_slot.gd" id="1_ba5dx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x86a1"]
 bg_color = Color(0, 0, 0, 1)
@@ -33,7 +33,7 @@ offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_x86a1")
-script = ExtResource("1_m8cxt")
+script = ExtResource("1_ba5dx")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1579045854]
 unique_name_in_owner = true

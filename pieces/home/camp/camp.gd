@@ -5,8 +5,8 @@ class_name Camp
 func _ready() -> void:
 	pass
 
-func _click() -> void:
-	pass
+func _click() -> Dictionary:
+	return {}
 
 func _tick() -> void:
 	pass

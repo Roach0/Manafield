@@ -12,6 +12,7 @@ signal build_mode_started
 signal build_queue_advanced(piece: PieceData)   # ← make sure this line exists
 signal piece_placed(piece_data)
 signal build_mode_ended
+signal piece_effect_triggered(effect_name: String, amount: int)
 
 var _build_queue: Array[PieceData] = []
 var _in_build_mode := false
@@ -22,25 +23,31 @@ func _ready() -> void:
 
 func _on_slot_clicked(slot: WorldSlot) -> void:
 	if not _in_build_mode:
+		_handle_piece_click(slot)
 		return
-	
+
 	var next_piece: PieceData = _build_queue.front()
-	
-	# placement validation hook — expand this as needed
 	if not _can_place(next_piece, slot):
 		return
-	
+
 	var data := next_piece.duplicate() as PieceData
 	slot.set_piece(data)
-	piece_placed.emit(data, null) # null here because it want 2 args, but I just need emit
-	
+	piece_placed.emit(data, null)
+
 	_build_queue.pop_front()
-	
 	if _build_queue.is_empty():
 		_in_build_mode = false
 		build_mode_ended.emit()
 	else:
 		build_queue_advanced.emit(_build_queue.front())
+
+func _handle_piece_click(slot: WorldSlot) -> void:
+	if slot.piece == null:
+		return
+	var result: Dictionary = slot.piece._click()
+	if result.is_empty():
+		return
+	piece_effect_triggered.emit(result.get("effect", ""), result.get("amount", 0))
 
 func _in_bounds(coord: Vector2i) -> bool:
 	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13
