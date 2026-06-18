@@ -2,6 +2,7 @@ extends Panel
 class_name LeftPanel
 
 @onready var player := %Player
+@onready  var inventory := %Inventory
 
 func _ready() -> void:
 	pass

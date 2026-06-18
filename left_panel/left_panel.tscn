@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://26i6hohxno2e"]
 
 [ext_resource type="Script" uid="uid://dsentxpkea1a0" path="res://left_panel/left_panel.gd" id="1_cbvlt"]
-[ext_resource type="PackedScene" uid="uid://t7xbn7j3bcpb" path="res://left_panel/perks/perk_slot.tscn" id="1_f6xjk"]
+[ext_resource type="PackedScene" uid="uid://t7xbn7j3bcpb" path="res://left_panel/perks/inventory_slot.tscn" id="1_f6xjk"]
 [ext_resource type="Script" uid="uid://br70njij2w35t" path="res://left_panel/player/player.gd" id="1_ss3ix"]
 [ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://left_panel/smooth_progress_bar.gd" id="3_pqash"]
+[ext_resource type="Script" uid="uid://c3c65vxqvbls8" path="res://left_panel/player/inventory/inventory.gd" id="4_3nw6p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
 bg_color = Color(0, 0, 0, 1)
@@ -234,12 +235,14 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ss3ix")
 show_percentage = false
 script = ExtResource("3_pqash")
 
-[node name="Loot" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
+[node name="Inventory" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_lhfb7")
+script = ExtResource("4_3nw6p")
 
-[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Loot" unique_id=1592771526]
+[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Inventory" unique_id=1592771526]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -251,18 +254,18 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="LootContainer" type="GridContainer" parent="Margin/LeftInfo/Loot/Margin" unique_id=57238652]
+[node name="LootContainer" type="GridContainer" parent="Margin/LeftInfo/Inventory/Margin" unique_id=57238652]
 layout_mode = 2
 
-[node name="Panel" parent="Margin/LeftInfo/Loot/Margin/LootContainer" unique_id=1198460113 instance=ExtResource("1_f6xjk")]
+[node name="Panel" parent="Margin/LeftInfo/Inventory/Margin/LootContainer" unique_id=1198460113 instance=ExtResource("1_f6xjk")]
 layout_mode = 2
 
-[node name="Perks" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
+[node name="PerkBank" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_f86fl")
 
-[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Perks" unique_id=1005372988]
+[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/PerkBank" unique_id=1005372988]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -274,9 +277,9 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="PerkContainer" type="GridContainer" parent="Margin/LeftInfo/Perks/Margin" unique_id=1716563160]
+[node name="PerkContainer" type="GridContainer" parent="Margin/LeftInfo/PerkBank/Margin" unique_id=1716563160]
 layout_mode = 2
 columns = 8
 
-[node name="Panel" parent="Margin/LeftInfo/Perks/Margin/PerkContainer" unique_id=250509048 instance=ExtResource("1_f6xjk")]
+[node name="Panel" parent="Margin/LeftInfo/PerkBank/Margin/PerkContainer" unique_id=250509048 instance=ExtResource("1_f6xjk")]
 layout_mode = 2

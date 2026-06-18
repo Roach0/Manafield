@@ -54,8 +54,8 @@ class_name Player
 		_update_value_label(nerve_value_label, nerve, max_nerve)
 
 @onready var health_bar := %Health
-@onready var health_label: RichTextLabel = %HealthLabel       # name tag, static
-@onready var health_value_label: RichTextLabel = %HealthLabel2 # 0/100 display
+@onready var health_label: RichTextLabel = %HealthLabel
+@onready var health_value_label: RichTextLabel = %HealthLabel2
 
 @onready var energy_bar := %Energy
 @onready var energy_label: RichTextLabel = %EnergyLabel
@@ -91,7 +91,7 @@ func _ready() -> void:
 	_update_value_label(hunger_value_label, hunger, max_hunger)
 	_update_value_label(nerve_value_label, nerve, max_nerve)
 
-func _update_bar(bar: ProgressBar, value: int) -> void:
+func _update_bar(bar: SmoothProgressBar, value: int) -> void:
 	if bar == null:
 		return
 	bar.target_value = value

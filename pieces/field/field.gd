@@ -5,8 +5,12 @@ class_name Field
 func _ready() -> void:
 	pass
 
+func get_click_cost() -> Dictionary:
+	return {"resource": "nerve", "amount": 1}
+
 func _click() -> Dictionary:
-	return {}
+	progress += 1
+	return{}
 
 func _tick() -> void:
 	pass

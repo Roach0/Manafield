@@ -29,7 +29,7 @@ func update(piece: PieceData):
 	
 	if progress.visible:
 		progress.max_value = piece.progress_max
-		progress.target_value = piece.health
+		progress.target_value = piece.progress
 
 	
 	tile_name.text = piece.name
