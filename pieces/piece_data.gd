@@ -13,7 +13,6 @@ class_name PieceData
 @export var can_build_on: Array[PieceData]
 
 
-
 var mods: Array
 var selected_icon: Texture2D
 

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://26i6hohxno2e"]
 
 [ext_resource type="PackedScene" uid="uid://t7xbn7j3bcpb" path="res://left_panel/perk_slot.tscn" id="1_f6xjk"]
+[ext_resource type="Script" uid="uid://br70njij2w35t" path="res://left_panel/player.gd" id="1_ss3ix"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
 bg_color = Color(0, 0, 0, 1)
@@ -88,6 +89,8 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_j440y")
+script = ExtResource("1_ss3ix")
+health = 50
 
 [node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/Player" unique_id=1635173076]
 layout_mode = 1
@@ -105,6 +108,7 @@ theme_override_constants/margin_bottom = 3
 layout_mode = 2
 
 [node name="HealthLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1370197568]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Health"
@@ -112,43 +116,46 @@ fit_content = true
 scroll_active = false
 
 [node name="Health" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1660940916]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_f6xjk")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hujsc")
-value = 50.0
 show_percentage = false
 
 [node name="HungerLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1248300212]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Hunger"
 
 [node name="Hunger" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1917472616]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_p1r2d")
 theme_override_styles/fill = SubResource("StyleBoxFlat_utjjv")
-value = 50.0
 show_percentage = false
 
 [node name="EnergyLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1713771385]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Energy"
 
 [node name="Energy" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=35800917]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_r3pqr")
 theme_override_styles/fill = SubResource("StyleBoxFlat_pduen")
-value = 50.0
 show_percentage = false
 
 [node name="NerveLabel" type="RichTextLabel" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=876359879]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "Nerve"
@@ -156,12 +163,12 @@ fit_content = true
 scroll_active = false
 
 [node name="Nerve" type="ProgressBar" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=519468171]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_re4s5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ss3ix")
-value = 50.0
 show_percentage = false
 
 [node name="Loot" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
