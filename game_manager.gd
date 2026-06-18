@@ -2,6 +2,7 @@ extends Node
 class_name GameManager
 
 @export var start_pieces: Array[PieceData]
+
 @onready var effects: EffectsManager = %EffectsManager
 @onready var left_panel: LeftPanel = %LeftPanel
 @onready var right_panel: RightPanel = %RightPanel
@@ -10,14 +11,11 @@ class_name GameManager
 func _ready() -> void:
 	new_game()
 
-
 func new_game() -> void:
 	world.generate_world()
-	world.update_display.connect(right_panel.update_display)
 	world.build_queue_advanced.connect(right_panel.update_build_display)
 	world.piece_placed.connect(_on_piece_placed)
 	world.build_mode_ended.connect(_on_build_mode_ended)
-	world.piece_effect_triggered.connect(_on_piece_effect_triggered)
 	world.begin_build_mode(start_pieces)
 	left_panel.set_new_player()
 
@@ -28,11 +26,3 @@ func _on_piece_placed(piece_data: PieceData, next_piece: PieceData) -> void:
 
 func _on_build_mode_ended() -> void:
 	right_panel.interaction_display.set_visibility(InteractionDisplay.Mode.IDLE)
-
-func _on_piece_effect_triggered(effect_name: String, amount: int) -> void:
-	print("effect is being triggered")
-	match effect_name:
-		"damage_health":
-			left_panel.player.health -= amount
-		_:
-			push_warning("Unhandled piece effect: %s" % effect_name)
