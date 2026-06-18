@@ -24,11 +24,13 @@ func update(piece: PieceData):
 	
 	if health.visible:
 		health.max_value = piece.health_max
-		health.value = piece.health
+		health.target_value = piece.health
+
 	
 	if progress.visible:
 		progress.max_value = piece.progress_max
-		progress.value = piece.progress
+		progress.target_value = piece.health
+
 	
 	tile_name.text = piece.name
 	description.text = piece.description

@@ -94,7 +94,7 @@ func _ready() -> void:
 func _update_bar(bar: ProgressBar, value: int) -> void:
 	if bar == null:
 		return
-	bar.value = value
+	bar.target_value = value
 
 func _update_max(bar: ProgressBar, value: int) -> void:
 	if bar == null:

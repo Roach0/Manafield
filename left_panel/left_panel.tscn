@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dsentxpkea1a0" path="res://left_panel/left_panel.gd" id="1_cbvlt"]
 [ext_resource type="PackedScene" uid="uid://t7xbn7j3bcpb" path="res://left_panel/perks/perk_slot.tscn" id="1_f6xjk"]
 [ext_resource type="Script" uid="uid://br70njij2w35t" path="res://left_panel/player/player.gd" id="1_ss3ix"]
+[ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://left_panel/smooth_progress_bar.gd" id="3_pqash"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
 bg_color = Color(0, 0, 0, 1)
@@ -141,6 +142,7 @@ size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_f6xjk")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hujsc")
 show_percentage = false
+script = ExtResource("3_pqash")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=1124212806]
 layout_mode = 2
@@ -168,6 +170,7 @@ size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_p1r2d")
 theme_override_styles/fill = SubResource("StyleBoxFlat_utjjv")
 show_percentage = false
+script = ExtResource("3_pqash")
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=331109103]
 layout_mode = 2
@@ -196,6 +199,7 @@ size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_r3pqr")
 theme_override_styles/fill = SubResource("StyleBoxFlat_pduen")
 show_percentage = false
+script = ExtResource("3_pqash")
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Margin/LeftInfo/Player/Margin/VBoxContainer" unique_id=74079469]
 layout_mode = 2
@@ -228,6 +232,7 @@ size_flags_stretch_ratio = 0.6
 theme_override_styles/background = SubResource("StyleBoxFlat_re4s5")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ss3ix")
 show_percentage = false
+script = ExtResource("3_pqash")
 
 [node name="Loot" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 layout_mode = 2

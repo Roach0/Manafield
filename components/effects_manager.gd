@@ -38,13 +38,13 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		piece._destroy()
 		world.replace_with(slot, piece)
 
-func _can_afford(resource_name: String, amount: int) -> bool:
-	match resource_name:
-		"energy": return left_panel.player.energy >= amount
-		"health": return left_panel.player.health >= amount
-		"hunger": return left_panel.player.hunger >= amount
-		"nerve":  return left_panel.player.nerve >= amount
-		_: return true # unrecognized resource — don't block on something we don't understand
+func _apply_effect(effect_name: String, amount: int) -> void:
+	match effect_name:
+		"update_health": left_panel.player.health += amount
+		"update_energy": left_panel.player.energy += amount
+		"update_hunger": left_panel.player.hunger += amount
+		"update_nerve": left_panel.player.nerve += amount
+		_: push_warning("Unhandled piece effect: %s" % effect_name)
 
 func _pay_cost(resource_name: String, amount: int) -> void:
 	match resource_name:
@@ -53,11 +53,13 @@ func _pay_cost(resource_name: String, amount: int) -> void:
 		"hunger": left_panel.player.hunger -= amount
 		"nerve":  left_panel.player.nerve -= amount
 
-func _apply_effect(effect_name: String, amount: int) -> void:
-	match effect_name:
-		"damage_health": left_panel.player.health -= amount
-		"update_energy": left_panel.player.energy += amount
-		_: push_warning("Unhandled piece effect: %s" % effect_name)
+func _can_afford(resource_name: String, amount: int) -> bool:
+	match resource_name:
+		"energy": return left_panel.player.energy >= amount
+		"health": return left_panel.player.health >= amount
+		"hunger": return left_panel.player.hunger >= amount
+		"nerve":  return left_panel.player.nerve >= amount
+		_: return true # unrecognized resource — don't block on something we don't understand
 
 func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
