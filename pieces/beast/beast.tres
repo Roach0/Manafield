@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Beast" format=3 uid="uid://ckv4rhdhye0lk"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wbti8"]
+[ext_resource type="Texture2D" uid="uid://2jkamvypbkqr" path="res://pieces/beast/icon/RPG_Skill_Teeth_Fangs_Bite_Beast_Vampire_Blood_Leech_Damage.png" id="2_klb2x"]
+[ext_resource type="Script" uid="uid://bhgqbkp45h6e8" path="res://pieces/beast/beast.gd" id="2_v6hhs"]
+
+[resource]
+script = ExtResource("2_v6hhs")
+name = "The Beast"
+type_id = "Beast"
+icons = Array[Texture2D]([ExtResource("2_klb2x")])
+health = 500
+health_max = 500
+progress_max = 200
+description = "Beneath this land, lay in slumber, a monster soon to wake."
+metadata/_custom_type_script = "uid://bhgqbkp45h6e8"

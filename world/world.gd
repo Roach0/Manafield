@@ -4,13 +4,14 @@ class_name World
 @export var slot_scene: PackedScene
 @export var piece_data_list: Array[PieceData]
 @export var river_piece_data: PieceData
-@export var field_piece_data: PieceData
+@export var field_piece_data: PieceData # default replace for removed pieces
+@export var required_pieces: Array[PieceData]
 
 @onready var grid: GridContainer = %WorldSlots
 
 signal update_display(piece)
 signal build_mode_started
-signal build_queue_advanced(piece: PieceData)   # ← make sure this line exists
+signal build_queue_advanced(piece: PieceData)
 signal piece_placed(piece_data)
 signal build_mode_ended
 signal piece_click_requested(slot: WorldSlot)
@@ -95,6 +96,21 @@ func generate_world() -> void:
 		
 		slot.update_display.connect(func(piece): update_display.emit(piece))
 		slot.clicked.connect(_on_slot_clicked.bind(slot))
+	
+	# Place each required piece into a unique non-river slot
+	var available_slots: Array[WorldSlot] = []
+	for child in grid.get_children():
+		var slot := child as WorldSlot
+		if slot and slot.piece.type_id != river_piece_data.type_id:
+			available_slots.append(slot)
+	available_slots.shuffle()
+	
+	for i in required_pieces.size():
+		if i >= available_slots.size():
+			push_warning("Not enough non-river slots for all required_pieces!")
+			break
+		var data := required_pieces[i].duplicate() as PieceData
+		available_slots[i].set_piece(data)
 
 func generate_river_path() -> Array[Vector2i]:
 	var path: Array[Vector2i] = []
