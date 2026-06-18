@@ -14,6 +14,11 @@ func _ready() -> void:
 
 
 func update(piece: PieceData):
+	if piece == null:
+		visible = false
+		return
+	visible = true
+	
 	health.visible = piece.health_max > 0
 	progress.visible = piece.progress_max > 0
 	

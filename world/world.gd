@@ -4,6 +4,7 @@ class_name World
 @export var slot_scene: PackedScene
 @export var piece_data_list: Array[PieceData]
 @export var river_piece_data: PieceData
+@export var field_piece_data: PieceData
 
 @onready var grid: GridContainer = %WorldSlots
 
@@ -12,7 +13,7 @@ signal build_mode_started
 signal build_queue_advanced(piece: PieceData)   # ← make sure this line exists
 signal piece_placed(piece_data)
 signal build_mode_ended
-signal piece_effect_triggered(effect_name: String, amount: int)
+signal piece_click_requested(slot: WorldSlot)
 
 var _build_queue: Array[PieceData] = []
 var _in_build_mode := false
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 func _on_slot_clicked(slot: WorldSlot) -> void:
 	if not _in_build_mode:
-		_handle_piece_click(slot)
+		piece_click_requested.emit(slot)
 		return
 
 	var next_piece: PieceData = _build_queue.front()
@@ -41,13 +42,14 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 	else:
 		build_queue_advanced.emit(_build_queue.front())
 
-func _handle_piece_click(slot: WorldSlot) -> void:
-	if slot.piece == null:
-		return
-	var result: Dictionary = slot.piece._click()
-	if result.is_empty():
-		return
-	piece_effect_triggered.emit(result.get("effect", ""), result.get("amount", 0))
+# interaction level
+func replace_with(slot: WorldSlot, destroyed_piece: PieceData) -> void:
+	var pool := destroyed_piece.get_destroy_replacements()
+	var source: PieceData = field_piece_data
+	if not pool.is_empty():
+		source = pool[randi() % pool.size()]
+	var data := source.duplicate() as PieceData
+	slot._swap_piece(data)
 
 func _in_bounds(coord: Vector2i) -> bool:
 	return coord.x >= 0 and coord.x < 13 and coord.y >= 0 and coord.y < 13

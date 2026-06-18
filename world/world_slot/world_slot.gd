@@ -65,26 +65,23 @@ func phase_offset() -> float:
 
 
 func _on_button_mouse_entered() -> void:
+	if piece == null:
+		return
 	update_display.emit(piece)
-
 	_kill_tween()
-
 	tween = create_tween().set_loops(2)
-
 	tween.tween_property(
 		self,
 		"interaction_offset:x",
 		3.0,
 		0.02
 	)
-
 	tween.tween_property(
 		self,
 		"interaction_offset:x",
 		-3.0,
 		0.02
 	)
-
 	tween.tween_property(
 		self,
 		"interaction_offset:x",
@@ -92,21 +89,15 @@ func _on_button_mouse_entered() -> void:
 		0.02
 	)
 
-
 func _on_button_pressed() -> void:
-	clicked.emit()
-
 	_kill_tween()
-
 	tween = create_tween()
-
 	tween.tween_property(
 		self,
 		"interaction_offset:y",
 		-8.0,
 		0.03
 	).set_ease(Tween.EASE_OUT)
-
 	tween.tween_property(
 		self,
 		"interaction_offset:y",
@@ -114,6 +105,7 @@ func _on_button_pressed() -> void:
 		0.31
 	).set_ease(Tween.EASE_OUT)\
 	 .set_trans(Tween.TRANS_ELASTIC)
+	clicked.emit()
 
 
 func _remove() -> void:
@@ -147,3 +139,13 @@ func _kill_tween() -> void:
 		tween.kill()
 
 	interaction_offset = Vector2.ZERO
+
+
+func _swap_piece(new_data: PieceData) -> void:
+	_kill_tween()
+	set_piece(new_data)                          # new piece appears instantly
+	interaction_offset.y = -8.0
+	tween = create_tween()
+	tween.tween_property(self, "interaction_offset:y", 0.0, 0.12)\
+		.set_ease(Tween.EASE_OUT)\
+		.set_trans(Tween.TRANS_BACK)

@@ -27,6 +27,9 @@ func _tick() -> void:
 	# When a different piece is clicked.
 	pass
 
+func get_click_cost() -> Dictionary:
+	return {}
+
 func _click() -> Dictionary:
 	return {}
 
@@ -41,3 +44,8 @@ func _destroy() -> void:
 # animation flags
 func should_float() -> bool:
 	return false
+
+## Override in subclasses to offer a specific replacement pool.
+## Empty array = "use the world's default field piece."
+func get_destroy_replacements() -> Array[PieceData]:
+	return []
