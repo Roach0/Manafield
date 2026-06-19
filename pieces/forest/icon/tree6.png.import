@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxbujih4nnktr"
-path="res://.godot/imported/Map_Markers_Tree_Forest_Pine.png-7fc60875ced1081d982a1c7c2b80e1e5.ctex"
+uid="uid://c25bicjgndpuq"
+path="res://.godot/imported/tree6.png-6c5d97f1191bac9534f2e9bd376186ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/forest/icon/Map_Markers_Tree_Forest_Pine.png"
-dest_files=["res://.godot/imported/Map_Markers_Tree_Forest_Pine.png-7fc60875ced1081d982a1c7c2b80e1e5.ctex"]
+source_file="res://pieces/forest/icon/tree6.png"
+dest_files=["res://.godot/imported/tree6.png-6c5d97f1191bac9534f2e9bd376186ec.ctex"]
 
 [params]
 

@@ -11,6 +11,6 @@ name = "Campfire"
 type_id = "Campfire"
 icons = Array[Texture2D]([ExtResource("2_jeveu")])
 progress_max = 30
-description = "A warm fire."
+description = "A warm fire.  On click, restore 1 Nerve."
 can_build_on = Array[ExtResource("1_tppjt")]([ExtResource("2_yo2cq")])
 metadata/_custom_type_script = "uid://cib83pbny5lnj"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl47thn04r8ax"
-path="res://.godot/imported/Map_Markers_Tree_Forest_Decidous_2.png-8616a6216c8f156564fae8368672b206.ctex"
+uid="uid://2jkamvypbkqr"
+path="res://.godot/imported/beast.png-0dbc634e744f9b4b521f99cc335dd6ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/forest/icon/Map_Markers_Tree_Forest_Decidous_2.png"
-dest_files=["res://.godot/imported/Map_Markers_Tree_Forest_Decidous_2.png-8616a6216c8f156564fae8368672b206.ctex"]
+source_file="res://pieces/beast/icon/beast.png"
+dest_files=["res://.godot/imported/beast.png-0dbc634e744f9b4b521f99cc335dd6ee.ctex"]
 
 [params]
 

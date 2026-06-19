@@ -1,16 +1,18 @@
 [gd_resource type="Resource" script_class="Forest" format=3 uid="uid://da44qyio5b7gh"]
 
 [ext_resource type="Script" uid="uid://3gsdiru01kxl" path="res://pieces/forest/forest.gd" id="1_8qdey"]
-[ext_resource type="Texture2D" uid="uid://cjnwcpckhxxhb" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Decidous_1.png" id="1_bm8n2"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_e00b2"]
-[ext_resource type="Texture2D" uid="uid://cl47thn04r8ax" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Decidous_2.png" id="2_e00b2"]
-[ext_resource type="Texture2D" uid="uid://bxbujih4nnktr" path="res://pieces/forest/icon/Map_Markers_Tree_Forest_Pine.png" id="3_6bule"]
+[ext_resource type="Texture2D" uid="uid://bsenb04tx3ytg" path="res://pieces/forest/icon/tree2.png" id="3_e00b2"]
+[ext_resource type="Texture2D" uid="uid://c3f8xtlir0gsn" path="res://pieces/forest/icon/tree3.png" id="4_6bule"]
+[ext_resource type="Texture2D" uid="uid://kmn1lsw5bafy" path="res://pieces/forest/icon/tree1.png" id="5_6bule"]
+[ext_resource type="Texture2D" uid="uid://cw3qm68iqtllo" path="res://pieces/forest/icon/tree4.png" id="5_32jas"]
+[ext_resource type="Texture2D" uid="uid://c25bicjgndpuq" path="res://pieces/forest/icon/tree6.png" id="6_32jas"]
 
 [resource]
 script = ExtResource("1_8qdey")
 name = "Forest"
 type_id = "Forest"
-icons = Array[Texture2D]([ExtResource("1_bm8n2"), ExtResource("2_e00b2"), ExtResource("3_6bule")])
+icons = Array[Texture2D]([ExtResource("5_6bule"), ExtResource("3_e00b2"), ExtResource("4_6bule"), ExtResource("5_32jas"), ExtResource("6_32jas")])
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."
