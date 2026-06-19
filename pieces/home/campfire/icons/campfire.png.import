@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk5m4jbcwcatd"
-path="res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-c39e0c6d379f9999ee1854f91165c125.ctex"
+uid="uid://r1e5y2icdokx"
+path="res://.godot/imported/campfire.png-24e32d265f36f2d48bab0a7ed25874f1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/campfire/icons/Weather_Campfire_Camping_Site_Rest.png"
-dest_files=["res://.godot/imported/Weather_Campfire_Camping_Site_Rest.png-c39e0c6d379f9999ee1854f91165c125.ctex"]
+source_file="res://pieces/home/campfire/icons/campfire.png"
+dest_files=["res://.godot/imported/campfire.png-24e32d265f36f2d48bab0a7ed25874f1.ctex"]
 
 [params]
 
