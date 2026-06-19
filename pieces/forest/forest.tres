@@ -2,17 +2,17 @@
 
 [ext_resource type="Script" uid="uid://3gsdiru01kxl" path="res://pieces/forest/forest.gd" id="1_8qdey"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_e00b2"]
-[ext_resource type="Texture2D" uid="uid://bsenb04tx3ytg" path="res://pieces/forest/icon/tree2.png" id="3_e00b2"]
+[ext_resource type="Texture2D" uid="uid://5ru0ch6n4ief" path="res://pieces/forest/icon/tree1re.png" id="2_32jas"]
+[ext_resource type="Texture2D" uid="uid://cy3b2oitu4h8j" path="res://pieces/forest/icon/tree2re.png" id="3_32jas"]
 [ext_resource type="Texture2D" uid="uid://c3f8xtlir0gsn" path="res://pieces/forest/icon/tree3.png" id="4_6bule"]
-[ext_resource type="Texture2D" uid="uid://kmn1lsw5bafy" path="res://pieces/forest/icon/tree1.png" id="5_6bule"]
-[ext_resource type="Texture2D" uid="uid://cw3qm68iqtllo" path="res://pieces/forest/icon/tree4.png" id="5_32jas"]
+[ext_resource type="Texture2D" uid="uid://c1xn8kkq81fwg" path="res://pieces/forest/icon/tree3re.png" id="5_hsi70"]
 [ext_resource type="Texture2D" uid="uid://c25bicjgndpuq" path="res://pieces/forest/icon/tree6.png" id="6_32jas"]
 
 [resource]
 script = ExtResource("1_8qdey")
 name = "Forest"
 type_id = "Forest"
-icons = Array[Texture2D]([ExtResource("5_6bule"), ExtResource("3_e00b2"), ExtResource("4_6bule"), ExtResource("5_32jas"), ExtResource("6_32jas")])
+icons = Array[Texture2D]([ExtResource("2_32jas"), ExtResource("3_32jas"), ExtResource("4_6bule"), ExtResource("5_hsi70"), ExtResource("6_32jas")])
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."
