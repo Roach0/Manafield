@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Dungeon" format=3 uid="uid://cedll3qwv4fx1"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_jpnej"]
+[ext_resource type="Texture2D" uid="uid://bmhqopw00i1yn" path="res://pieces/dungeon/icon/Map_Markers_Enterance_Exit_Stairs_Down.png" id="2_qsrod"]
+[ext_resource type="Script" uid="uid://dw4b8pkyk7wqb" path="res://pieces/dungeon/dungeon.gd" id="2_ulfsw"]
+
+[resource]
+script = ExtResource("2_ulfsw")
+name = "Dungeon"
+type_id = "Dungeon"
+icons = Array[Texture2D]([ExtResource("2_qsrod")])
+progress_max = 50
+description = "Delve the darkness, seek riches.  On complete, gain a Perk."
+metadata/_custom_type_script = "uid://dw4b8pkyk7wqb"

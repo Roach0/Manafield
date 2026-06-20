@@ -1,5 +1,5 @@
 extends PieceData
-class_name River
+class_name Dungeon
 
 
 func _ready() -> void:
@@ -16,6 +16,4 @@ func _destroy() -> void:
 
 func _complete() -> void:
 	pass
-
-func should_float() -> bool:
-	return true
+ 

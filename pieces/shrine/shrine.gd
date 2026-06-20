@@ -1,5 +1,5 @@
 extends PieceData
-class_name River
+class_name Shrine
 
 
 func _ready() -> void:
@@ -18,4 +18,4 @@ func _complete() -> void:
 	pass
 
 func should_float() -> bool:
-	return true
+	return false

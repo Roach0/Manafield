@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Shrine" format=3 uid="uid://c7wr2gf7olc5b"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_of5rk"]
+[ext_resource type="Texture2D" uid="uid://b5ftltiyu8kst" path="res://pieces/shrine/icon/Map_Markers_Graveyard_Gravestone_Death_5.png" id="2_87lil"]
+[ext_resource type="Script" uid="uid://duadpxexigrp" path="res://pieces/shrine/shrine.gd" id="2_nopk8"]
+
+[resource]
+script = ExtResource("2_nopk8")
+name = "Shrine"
+type_id = "Shrine"
+icons = Array[Texture2D]([ExtResource("2_87lil")])
+progress_max = 10
+description = "Offer to the goddess.  On complete, level up."
+metadata/_custom_type_script = "uid://duadpxexigrp"

@@ -7,6 +7,8 @@
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="5_mmdvd"]
 [ext_resource type="Resource" uid="uid://k7r102iitpfa" path="res://pieces/river/river.tres" id="6_fn3g3"]
 [ext_resource type="Resource" uid="uid://ckv4rhdhye0lk" path="res://pieces/beast/beast.tres" id="7_sc4t8"]
+[ext_resource type="Resource" uid="uid://c7wr2gf7olc5b" path="res://pieces/shrine/shrine.tres" id="8_ai45w"]
+[ext_resource type="Resource" uid="uid://cedll3qwv4fx1" path="res://pieces/dungeon/dungeon.tres" id="9_4papg"]
 
 [node name="World" type="MarginContainer" unique_id=982076166]
 anchors_preset = 15
@@ -22,7 +24,7 @@ slot_scene = ExtResource("2_4717r")
 piece_data_list = Array[ExtResource("3_mmdvd")]([ExtResource("3_h5o24"), ExtResource("5_mmdvd")])
 river_piece_data = ExtResource("6_fn3g3")
 field_piece_data = ExtResource("5_mmdvd")
-required_pieces = Array[ExtResource("3_mmdvd")]([ExtResource("7_sc4t8")])
+required_pieces = Array[ExtResource("3_mmdvd")]([ExtResource("7_sc4t8"), ExtResource("8_ai45w"), ExtResource("9_4papg")])
 
 [node name="WorldSlots" type="GridContainer" parent="." unique_id=1972382574]
 unique_name_in_owner = true
