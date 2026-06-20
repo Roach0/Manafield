@@ -1,8 +1,6 @@
 extends Node
 class_name GameManager
-
 @export var start_pieces: Array[PieceData]
-
 @onready var effects: EffectsManager = %EffectsManager
 @onready var left_panel: LeftPanel = %LeftPanel
 @onready var right_panel: RightPanel = %RightPanel
@@ -12,6 +10,7 @@ func _ready() -> void:
 	new_game()
 
 func new_game() -> void:
+	world.effects = effects          # give World access to the prefix pools
 	world.generate_world()
 	world.build_queue_advanced.connect(right_panel.update_build_display)
 	world.piece_placed.connect(_on_piece_placed)

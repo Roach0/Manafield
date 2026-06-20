@@ -16,4 +16,6 @@ icons = Array[Texture2D]([ExtResource("2_32jas"), ExtResource("3_32jas"), ExtRes
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."
+prefix_pool = 3
+prefix_count = 2
 metadata/_custom_type_script = "uid://3gsdiru01kxl"

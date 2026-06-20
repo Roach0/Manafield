@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Prefix" format=3 uid="uid://dpjf8838fb8tv"]
+
+[ext_resource type="Script" uid="uid://01pt1rp5gf0p" path="res://components/prefix/prefix.gd" id="1_qdbj5"]
+
+[resource]
+script = ExtResource("1_qdbj5")
+color = Color(0.38827303, 0.29422808, 0.6896202, 1)
+metadata/_custom_type_script = "uid://01pt1rp5gf0p"

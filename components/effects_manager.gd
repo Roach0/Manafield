@@ -1,10 +1,8 @@
 extends HBoxContainer
 class_name EffectsManager
-
 @onready var world: World = %World
 @onready var right_panel: RightPanel = %RightPanel
 @onready var left_panel: LeftPanel = %LeftPanel
-
 @export var prefix_pool_1: Array[Prefix]
 @export var prefix_pool_2: Array[Prefix]
 @export var prefix_pool_3: Array[Prefix]
@@ -29,7 +27,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 			return
 		_pay_cost(resource_name, amount)
 	var result: Dictionary = piece._click()
-	print("click → ", piece.name, " h=", piece.health, " hm=", piece.health_max)   # ← add this
+	print("click → ", piece.name, " h=", piece.health, " hm=", piece.health_max)
 	slot.health = piece.health
 	right_panel.update_display(piece)
 	if not result.is_empty():
@@ -64,6 +62,27 @@ func _can_afford(resource_name: String, amount: int) -> bool:
 func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
 	# hook for feedback later — flash the slot, play a sound, shake the UI, etc.
+
+# --- Prefix assignment ---
+
+func roll_prefixes(piece: PieceData) -> void:
+	var pool := _pool_for(piece.prefix_pool)
+	if pool.is_empty() or piece.prefix_count <= 0:
+		return
+	piece.loot1 = pool.pick_random()
+	if piece.prefix_count >= 2:
+		piece.loot2 = pool.pick_random()
+		# avoid both regions landing on the same color when the pool allows it
+		if pool.size() > 1:
+			while piece.loot2 == piece.loot1:
+				piece.loot2 = pool.pick_random()
+
+func _pool_for(i: int) -> Array[Prefix]:
+	match i:
+		1: return prefix_pool_1
+		2: return prefix_pool_2
+		3: return prefix_pool_3
+		_: return []
 
 func fill_prefix_pools():
 	#welcome back

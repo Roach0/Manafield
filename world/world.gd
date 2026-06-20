@@ -18,6 +18,7 @@ signal piece_click_requested(slot: WorldSlot)
 
 var _build_queue: Array[PieceData] = []
 var _in_build_mode := false
+var effects: EffectsManager   # set by GameManager before generate_world()
 
 func _ready() -> void:
 	pass
@@ -33,6 +34,8 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 		return
 
 	var data := next_piece.duplicate() as PieceData
+	if effects:
+		effects.roll_prefixes(data)
 	slot.set_piece(data)
 	piece_placed.emit(data, null)
 
@@ -50,6 +53,8 @@ func replace_with(slot: WorldSlot, destroyed_piece: PieceData) -> void:
 	if not pool.is_empty():
 		source = pool[randi() % pool.size()]
 	var data := source.duplicate() as PieceData
+	if effects:
+		effects.roll_prefixes(data)
 	slot._swap_piece(data)
 
 func _in_bounds(coord: Vector2i) -> bool:
@@ -88,10 +93,14 @@ func generate_world() -> void:
 		
 		if river_path.has(coord):
 			var river_data := river_piece_data.duplicate() as PieceData
+			if effects:
+				effects.roll_prefixes(river_data)
 			slot.set_piece(river_data)
 		else:
 			var piece_data := piece_data_list[randi() % piece_data_list.size()]
 			var data := piece_data.duplicate() as PieceData
+			if effects:
+				effects.roll_prefixes(data)
 			slot.set_piece(data)
 		
 		slot.update_display.connect(func(piece): update_display.emit(piece))
@@ -110,6 +119,8 @@ func generate_world() -> void:
 			push_warning("Not enough non-river slots for all required_pieces!")
 			break
 		var data := required_pieces[i].duplicate() as PieceData
+		if effects:
+			effects.roll_prefixes(data)
 		available_slots[i].set_piece(data)
 
 func generate_river_path() -> Array[Vector2i]:

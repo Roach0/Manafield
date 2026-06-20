@@ -1,7 +1,5 @@
 extends Resource
 class_name PieceData
-
-
 @export var name: String
 @export var type_id: String # do not change like ever
 @export var icons: Array[Texture2D]
@@ -12,10 +10,12 @@ class_name PieceData
 @export var description: String
 @export var can_build_on: Array[PieceData]
 
+# --- Prefix / coloring ---
+@export var prefix_pool: int = 0   # 0 = none, 1/2/3 = which EffectsManager pool
+@export var prefix_count: int = 0  # 0, 1, or 2 colored regions
 
 var mods: Array
 var selected_icon: Texture2D
-
 var loot1: Prefix
 var loot2: Prefix
 
