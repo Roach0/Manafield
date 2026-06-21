@@ -10,6 +10,8 @@ class_name PieceData
 @export var description: String
 @export var can_build_on: Array[PieceData]
 
+@export var destroy_replacements: Array[PieceData] # assign Field, Deer, etc. in the inspector
+
 # --- Prefix / coloring ---
 @export var prefix_pool: int = 0   # 0 = none, 1/2/3 = which EffectsManager pool
 @export var prefix_count: int = 0  # 0, 1, or 2 colored regions

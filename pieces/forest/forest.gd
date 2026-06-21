@@ -1,8 +1,6 @@
 extends PieceData
 class_name Forest
 
-@export var destroy_replacements: Array[PieceData] # assign Field, Deer, etc. in the inspector
-
 func get_click_cost() -> Dictionary:
 	return {"resource": "energy", "amount": 1}
 

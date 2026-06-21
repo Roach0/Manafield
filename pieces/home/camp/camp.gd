@@ -1,7 +1,6 @@
 extends PieceData
 class_name Camp
 
-@export var destroy_replacements: Array[PieceData] # assign Field, Deer, etc. in the inspector
 
 func get_click_cost() -> Dictionary:
 	return {}

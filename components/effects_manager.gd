@@ -66,21 +66,18 @@ func _on_click_denied(resource_name: String, amount: int) -> void:
 # --- Prefix assignment ---
 
 func roll_prefixes(piece: PieceData) -> void:
-	piece.mods.clear()   # safe even on a fresh duplicate; avoids stale carryover
-
+	piece.mods.clear()
 	var pool := _pool_for(piece.prefix_pool)
 	if pool.is_empty() or piece.prefix_count <= 0:
 		return
-
 	piece.loot1 = pool.pick_random()
-	piece.mods.append(piece.loot1.prefix_name)
-
+	piece.mods.append(piece.loot1)
 	if piece.prefix_count >= 2:
 		piece.loot2 = pool.pick_random()
 		if pool.size() > 1:
 			while piece.loot2 == piece.loot1:
 				piece.loot2 = pool.pick_random()
-		piece.mods.append(piece.loot2.prefix_name)
+		piece.mods.append(piece.loot2)
 
 func _pool_for(i: int) -> Array[Prefix]:
 	match i:
