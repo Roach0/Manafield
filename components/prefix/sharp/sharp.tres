@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Sharp" format=3 uid="uid://bvpdkj20fj1ju"]
+
+[ext_resource type="Script" uid="uid://b5rfsnmpdj56o" path="res://components/prefix/sharp/sharp.gd" id="1_cj00o"]
+
+[resource]
+script = ExtResource("1_cj00o")
+color = Color(0.42745098, 0.5019608, 0.98039216, 1)
+metadata/_custom_type_script = "uid://b5rfsnmpdj56o"

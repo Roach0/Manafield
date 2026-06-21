@@ -12,4 +12,6 @@ name = "River"
 type_id = "River"
 icons = Array[Texture2D]([ExtResource("5_ed8kv"), ExtResource("3_7hgsk"), ExtResource("3_yj2pk")])
 description = "Calmly running water."
+prefix_pool = 3
+prefix_count = 1
 metadata/_custom_type_script = "uid://dxjjisis664hn"
