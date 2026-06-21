@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Armored" format=3 uid="uid://bartx2rdwneox"]
+
+[ext_resource type="Script" uid="uid://bdexyrl3qtk1f" path="res://components/prefix/armored/armored.gd" id="1_8not2"]
+
+[resource]
+script = ExtResource("1_8not2")
+prefix_name = "Armored"
+metadata/_custom_type_script = "uid://bdexyrl3qtk1f"
