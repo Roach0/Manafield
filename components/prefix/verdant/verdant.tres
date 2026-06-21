@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_mnfxi")
 color = Color(0.35686275, 0.6509804, 0.45882353, 1)
+prefix_name = "Verdant"
 metadata/_custom_type_script = "uid://jw2kl60yxxl7"

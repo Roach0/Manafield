@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_cj00o")
 color = Color(0.42745098, 0.5019608, 0.98039216, 1)
+prefix_name = "Sharp"
 metadata/_custom_type_script = "uid://b5rfsnmpdj56o"

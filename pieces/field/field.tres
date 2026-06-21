@@ -15,6 +15,6 @@ type_id = "Field"
 icons = Array[Texture2D]([ExtResource("3_ja4mi"), ExtResource("7_s105l"), ExtResource("7_rcx5a"), ExtResource("8_1y10a"), ExtResource("6_s105l")])
 progress_max = 15
 description = "A lonely little field for thinking.  On complete, gain a Building."
-prefix_pool = 1
+prefix_pool = 2
 prefix_count = 1
 metadata/_custom_type_script = "uid://bbf7035dqtram"

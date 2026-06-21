@@ -18,6 +18,7 @@ func update(piece: PieceData):
 		visible = false
 		return
 	visible = true
+	print("InfoDisplay.update mods=", piece.mods, " size=", piece.mods.size())
 	
 	health.visible = piece.health_max > 0
 	progress.visible = piece.progress_max > 0
@@ -34,3 +35,4 @@ func update(piece: PieceData):
 	
 	tile_name.text = piece.name
 	description.text = piece.description
+	modifiers.text = ", ".join(piece.mods)
