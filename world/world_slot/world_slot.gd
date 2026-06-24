@@ -2,6 +2,7 @@ extends MarginContainer
 class_name WorldSlot
 
 const RECOLOR_SHADER := preload("res://shaders/recolor.gdshader")
+const SHINE_SHADER := preload("res://shaders/water_shine.gdshader")
 
 # Named back-variants, keyed by the base name of the front icon.
 # river1.png -> river1back.png, etc.
@@ -32,12 +33,15 @@ var interaction_offset := Vector2.ZERO
 var _is_river := false
 var _icon2_base := Vector2.ZERO      # icon2's resting position from the scene
 var _trail: Array[Vector2] = []      # recent offsets of icon1
+var _shimmer_seed := randf() * 100.0 # per-tile noise offset so rivers don't sync
 
 signal update_display(piece)
 signal clicked
 
 func _ready() -> void:
 	_icon2_base = icon2.position
+	# Defensive: ensure no shine material leaks from the scene onto a fresh tile.
+	icon2.material = null
 	icon2.visible = false
 
 func _process(delta: float) -> void:
@@ -88,10 +92,22 @@ func _refresh_river_back() -> void:
 		icon2.texture = RIVER_BACKS[key]
 		icon2.position = _icon2_base
 		icon2.visible = true
+		_apply_shine()
 	else:
+		# Non-river: strip texture, material, and hide. Clearing the material
+		# here is what prevents the shine from leaking onto every tile.
 		_is_river = false
 		icon2.texture = null
+		icon2.material = null
 		icon2.visible = false
+
+func _apply_shine() -> void:
+	var mat := icon2.material as ShaderMaterial
+	if mat == null:
+		mat = ShaderMaterial.new()
+		mat.shader = SHINE_SHADER
+		icon2.material = mat
+	mat.set_shader_parameter("seed", _shimmer_seed)
 
 func _apply_icon_colors() -> void:
 	if piece == null:
@@ -139,6 +155,7 @@ func _remove() -> void:
 	icon.texture = null
 	_is_river = false
 	icon2.texture = null
+	icon2.material = null
 	icon2.visible = false
 	_trail.clear()
 	floating = false
