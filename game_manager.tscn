@@ -10,9 +10,9 @@
 [ext_resource type="Resource" uid="uid://deov883olrhv7" path="res://pieces/home/campfire/campfire.tres" id="4_8jrwq"]
 [ext_resource type="Script" uid="uid://01pt1rp5gf0p" path="res://components/prefix/prefix.gd" id="6_le433"]
 [ext_resource type="Resource" uid="uid://cm80a3hak45x6" path="res://components/prefix/verdant/verdant.tres" id="7_2tadr"]
-[ext_resource type="Resource" uid="uid://dpjf8838fb8tv" path="res://components/prefix/rot/rot.tres" id="8_tmn8n"]
-[ext_resource type="Resource" uid="uid://bvpdkj20fj1ju" path="res://components/prefix/sharp/sharp.tres" id="9_2tadr"]
+[ext_resource type="Resource" uid="uid://bartx2rdwneox" path="res://components/prefix/armored/armored.tres" id="7_tmn8n"]
 [ext_resource type="Resource" uid="uid://c8e1yva16qlgt" path="res://components/prefix/ember/ember.tres" id="9_es4nv"]
+[ext_resource type="Resource" uid="uid://bvpdkj20fj1ju" path="res://components/prefix/sharp/sharp.tres" id="10_anra8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2178"]
 bg_color = Color(0, 0, 0, 1)
@@ -34,9 +34,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_o2178")
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("1_d5upp")
-prefix_pool_1 = Array[ExtResource("6_le433")]([ExtResource("7_2tadr"), ExtResource("9_2tadr")])
-prefix_pool_2 = Array[ExtResource("6_le433")]([ExtResource("8_tmn8n"), ExtResource("7_2tadr")])
-prefix_pool_3 = Array[ExtResource("6_le433")]([ExtResource("9_es4nv"), ExtResource("8_tmn8n"), ExtResource("7_2tadr"), ExtResource("9_2tadr")])
+prefix_pool_1 = Array[ExtResource("6_le433")]([ExtResource("7_tmn8n")])
+prefix_pool_2 = Array[ExtResource("6_le433")]([ExtResource("7_tmn8n"), ExtResource("7_2tadr")])
+prefix_pool_3 = Array[ExtResource("6_le433")]([ExtResource("7_2tadr"), ExtResource("9_es4nv"), ExtResource("7_tmn8n"), ExtResource("10_anra8")])
 
 [node name="LeftPanel" parent="EffectsManager" unique_id=1825938487 instance=ExtResource("1_smx3j")]
 unique_name_in_owner = true

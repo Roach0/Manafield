@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_qdbj5")
-color = Color(0.30588236, 0.09411765, 0.4862745, 1)
+color = Color(0.5137255, 0.3019608, 0.76862746, 1)
 prefix_name = "Rot"
 metadata/_custom_type_script = "uid://01pt1rp5gf0p"

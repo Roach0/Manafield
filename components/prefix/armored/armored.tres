@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_8not2")
+color = Color(0.42745098, 0.5019608, 0.98039216, 1)
 prefix_name = "Armored"
 metadata/_custom_type_script = "uid://bdexyrl3qtk1f"
