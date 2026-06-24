@@ -12,12 +12,21 @@ const RIVER_BACKS := {
 	"river3": preload("res://pieces/river/icons/river3back.png"),
 }
 
+const RIVER_FRONTS := {
+	"river1": preload("res://pieces/river/icons/river1front.png"),
+	"river2": preload("res://pieces/river/icons/river2front.png"),
+	"river3": preload("res://pieces/river/icons/river3front.png"),
+}
+
 # How many frames icon2 trails behind icon1. 1 = literal one step (basically
 # invisible at 60fps); 6-10 reads as a nice drag.
-const TRAIL_DELAY := 8
+const TRAIL_DELAY := 10
+
+
 
 @onready var icon: TextureRect = %TextureRect
 @onready var icon2: TextureRect = %TextureRect2
+@onready var icon3: TextureRect = %TextureRect3
 
 var piece: PieceData
 var tween: Tween
@@ -32,6 +41,7 @@ var interaction_offset := Vector2.ZERO
 
 var _is_river := false
 var _icon2_base := Vector2.ZERO      # icon2's resting position from the scene
+var _icon3_base := Vector2.ZERO      # icon3's resting position from the scene
 var _trail: Array[Vector2] = []      # recent offsets of icon1
 var _shimmer_seed := randf() * 100.0 # per-tile noise offset so rivers don't sync
 
@@ -40,9 +50,12 @@ signal clicked
 
 func _ready() -> void:
 	_icon2_base = icon2.position
+	_icon3_base = icon3.position
 	# Defensive: ensure no shine material leaks from the scene onto a fresh tile.
 	icon2.material = null
 	icon2.visible = false
+	icon3.material = null
+	icon3.visible = false
 
 func _process(delta: float) -> void:
 	if floating:
@@ -60,11 +73,13 @@ func _process(delta: float) -> void:
 	var offset := float_offset + interaction_offset
 	icon.position = offset
 
-	# icon2 replays icon1's offset, TRAIL_DELAY frames late.
+	# icon2 and icon3 replay icon1's offset, TRAIL_DELAY frames late.
 	if _is_river:
 		_trail.push_back(offset)
 		if _trail.size() > TRAIL_DELAY:
-			icon2.position = _icon2_base + _trail.pop_front()
+			var trailed: Vector2 = _trail.pop_front()
+			icon2.position = _icon2_base + trailed
+			icon3.position = _icon3_base + trailed
 
 func set_piece(data: PieceData) -> void:
 	piece = data
@@ -93,6 +108,24 @@ func _refresh_river_back() -> void:
 		icon2.position = _icon2_base
 		icon2.visible = true
 		_apply_shine()
+
+		# Front layer: same trailing float, no shader.
+	if RIVER_BACKS.has(key):
+		_is_river = true
+		icon2.texture = RIVER_BACKS[key]
+		icon2.position = _icon2_base
+		icon2.visible = true
+		_apply_shine()
+
+		# Front layer: same trailing float, no shader.
+		if RIVER_FRONTS.has(key):
+			icon3.texture = RIVER_FRONTS[key]
+			icon3.position = _icon3_base
+			icon3.modulate.a = 0.2
+			icon3.visible = true
+		else:
+			icon3.texture = null
+			icon3.visible = false
 	else:
 		# Non-river: strip texture, material, and hide. Clearing the material
 		# here is what prevents the shine from leaking onto every tile.
@@ -100,6 +133,8 @@ func _refresh_river_back() -> void:
 		icon2.texture = null
 		icon2.material = null
 		icon2.visible = false
+		icon3.texture = null
+		icon3.visible = false
 
 func _apply_shine() -> void:
 	var mat := icon2.material as ShaderMaterial
@@ -157,6 +192,8 @@ func _remove() -> void:
 	icon2.texture = null
 	icon2.material = null
 	icon2.visible = false
+	icon3.texture = null
+	icon3.visible = false
 	_trail.clear()
 	floating = false
 	_kill_tween()
