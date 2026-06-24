@@ -3,15 +3,25 @@ class_name WorldSlot
 
 const RECOLOR_SHADER := preload("res://shaders/recolor.gdshader")
 
+# Named back-variants, keyed by the base name of the front icon.
+# river1.png -> river1back.png, etc.
+const RIVER_BACKS := {
+	"river1": preload("res://pieces/river/icons/river1back.png"),
+	"river2": preload("res://pieces/river/icons/river2back.png"),
+	"river3": preload("res://pieces/river/icons/river3back.png"),
+}
+
+# How many frames icon2 trails behind icon1. 1 = literal one step (basically
+# invisible at 60fps); 6-10 reads as a nice drag.
+const TRAIL_DELAY := 8
+
 @onready var icon: TextureRect = %TextureRect
+@onready var icon2: TextureRect = %TextureRect2
+
 var piece: PieceData
 var tween: Tween
 var health: int
-var phase := (
-	grid_pos.x * 0.3 +
-	grid_pos.y * 0.2 +
-	float_phase
-)
+
 var grid_pos: Vector2i
 var floating := false
 var float_time := 0.0
@@ -19,8 +29,16 @@ var float_phase := randf() * 1.5
 var float_offset := Vector2.ZERO
 var interaction_offset := Vector2.ZERO
 
+var _is_river := false
+var _icon2_base := Vector2.ZERO      # icon2's resting position from the scene
+var _trail: Array[Vector2] = []      # recent offsets of icon1
+
 signal update_display(piece)
 signal clicked
+
+func _ready() -> void:
+	_icon2_base = icon2.position
+	icon2.visible = false
 
 func _process(delta: float) -> void:
 	if floating:
@@ -34,13 +52,22 @@ func _process(delta: float) -> void:
 		)
 	else:
 		float_offset = Vector2.ZERO
-	icon.position = float_offset + interaction_offset
+
+	var offset := float_offset + interaction_offset
+	icon.position = offset
+
+	# icon2 replays icon1's offset, TRAIL_DELAY frames late.
+	if _is_river:
+		_trail.push_back(offset)
+		if _trail.size() > TRAIL_DELAY:
+			icon2.position = _icon2_base + _trail.pop_front()
 
 func set_piece(data: PieceData) -> void:
 	piece = data
 	piece.pick_icon()
 	icon.texture = piece.selected_icon
 	_apply_icon_colors()
+	_refresh_river_back()
 	floating = piece.should_float()
 	if floating:
 		float_phase = randf() * TAU
@@ -49,6 +76,22 @@ func set_piece(data: PieceData) -> void:
 		float_phase = 0.0
 		float_time = 0.0
 		float_offset = Vector2.ZERO
+
+func _refresh_river_back() -> void:
+	_trail.clear()
+	var key := ""
+	if piece and piece.selected_icon:
+		key = piece.selected_icon.resource_path.get_file().get_basename()
+
+	if RIVER_BACKS.has(key):
+		_is_river = true
+		icon2.texture = RIVER_BACKS[key]
+		icon2.position = _icon2_base
+		icon2.visible = true
+	else:
+		_is_river = false
+		icon2.texture = null
+		icon2.visible = false
 
 func _apply_icon_colors() -> void:
 	if piece == null:
@@ -78,61 +121,31 @@ func _on_button_mouse_entered() -> void:
 	update_display.emit(piece)
 	_kill_tween()
 	tween = create_tween().set_loops(2)
-	tween.tween_property(
-		self,
-		"interaction_offset:x",
-		3.0,
-		0.02
-	)
-	tween.tween_property(
-		self,
-		"interaction_offset:x",
-		-3.0,
-		0.02
-	)
-	tween.tween_property(
-		self,
-		"interaction_offset:x",
-		0.0,
-		0.02
-	)
+	tween.tween_property(self, "interaction_offset:x", 3.0, 0.02)
+	tween.tween_property(self, "interaction_offset:x", -3.0, 0.02)
+	tween.tween_property(self, "interaction_offset:x", 0.0, 0.02)
 
 func _on_button_pressed() -> void:
 	_kill_tween()
 	tween = create_tween()
-	tween.tween_property(
-		self,
-		"interaction_offset:y",
-		-8.0,
-		0.03
-	).set_ease(Tween.EASE_OUT)
-	tween.tween_property(
-		self,
-		"interaction_offset:y",
-		0.0,
-		0.31
-	).set_ease(Tween.EASE_OUT)\
-	 .set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "interaction_offset:y", -8.0, 0.03).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "interaction_offset:y", 0.0, 0.31)\
+		.set_ease(Tween.EASE_OUT)\
+		.set_trans(Tween.TRANS_ELASTIC)
 	clicked.emit()
 
 func _remove() -> void:
 	piece = null
 	icon.texture = null
+	_is_river = false
+	icon2.texture = null
+	icon2.visible = false
+	_trail.clear()
 	floating = false
 	_kill_tween()
 	tween = create_tween()
-	tween.tween_property(
-		self,
-		"interaction_offset:y",
-		-8.0,
-		0.1
-	).set_ease(Tween.EASE_OUT)
-	tween.tween_property(
-		self,
-		"interaction_offset:y",
-		20.0,
-		0.2
-	).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "interaction_offset:y", -8.0, 0.1).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "interaction_offset:y", 20.0, 0.2).set_ease(Tween.EASE_IN)
 	tween.tween_callback(queue_free)
 
 func _kill_tween() -> void:

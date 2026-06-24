@@ -51,17 +51,6 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f86fl"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [node name="LeftPanel" type="Panel" unique_id=1825938487]
 anchors_preset = 15
 anchor_right = 1.0
@@ -247,6 +236,7 @@ script = ExtResource("3_pqash")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.81
 theme_override_styles/panel = SubResource("StyleBoxFlat_lhfb7")
 script = ExtResource("4_3nw6p")
 
@@ -266,28 +256,4 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 
 [node name="Panel" parent="Margin/LeftInfo/Inventory/Margin/LootContainer" unique_id=1198460113 instance=ExtResource("1_f6xjk")]
-layout_mode = 2
-
-[node name="PerkBank" type="Panel" parent="Margin/LeftInfo" unique_id=852154192]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_f86fl")
-
-[node name="Margin" type="MarginContainer" parent="Margin/LeftInfo/PerkBank" unique_id=1005372988]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="PerkContainer" type="GridContainer" parent="Margin/LeftInfo/PerkBank/Margin" unique_id=1716563160]
-layout_mode = 2
-columns = 8
-
-[node name="Panel" parent="Margin/LeftInfo/PerkBank/Margin/PerkContainer" unique_id=250509048 instance=ExtResource("1_f6xjk")]
 layout_mode = 2

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GnomeVillage" format=3 uid="uid://dofjcpdcs8jai"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_nuj4p"]
+[ext_resource type="Texture2D" uid="uid://cknbxs5qyr13e" path="res://pieces/gnome_village/icon/Map_Markers_Buildings_Houses_Homes_Village_Town.png" id="2_apnnd"]
+[ext_resource type="Script" uid="uid://c8843fnol5x3v" path="res://pieces/gnome_village/gnome_village.gd" id="2_f7tka"]
+
+[resource]
+script = ExtResource("2_f7tka")
+name = "Gnome Village"
+type_id = "Gnome Village"
+icons = Array[Texture2D]([ExtResource("2_apnnd")])
+metadata/_custom_type_script = "uid://c8843fnol5x3v"

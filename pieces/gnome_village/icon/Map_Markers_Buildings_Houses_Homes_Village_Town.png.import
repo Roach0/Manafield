@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bilmcrttuh7qy"
-path="res://.godot/imported/Weather_Water_Sea_Ocean_Waves_Wavy.png-5ede250d9dbea80c370ead8a646d7c23.ctex"
+uid="uid://cknbxs5qyr13e"
+path="res://.godot/imported/Map_Markers_Buildings_Houses_Homes_Village_Town.png-7ec6680f1da109f57f46082b8967e381.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/river/icons/Weather_Water_Sea_Ocean_Waves_Wavy.png"
-dest_files=["res://.godot/imported/Weather_Water_Sea_Ocean_Waves_Wavy.png-5ede250d9dbea80c370ead8a646d7c23.ctex"]
+source_file="res://pieces/gnome_village/icon/Map_Markers_Buildings_Houses_Homes_Village_Town.png"
+dest_files=["res://.godot/imported/Map_Markers_Buildings_Houses_Homes_Village_Town.png-7ec6680f1da109f57f46082b8967e381.ctex"]
 
 [params]
 

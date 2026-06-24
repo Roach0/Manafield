@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjcf0vijqqmer"
-path="res://.godot/imported/Tools_Crafting_Graphic_Design_Shapes_Trapezoid_Outlined.png-2a00c353fbaa2c9d4ec213d165b0e3b0.ctex"
+uid="uid://t234nu03pe06"
+path="res://.godot/imported/boulder3.png-46ac5609373d3a349db21aac00815c94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/rocks/icon/Tools_Crafting_Graphic_Design_Shapes_Trapezoid_Outlined.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Graphic_Design_Shapes_Trapezoid_Outlined.png-2a00c353fbaa2c9d4ec213d165b0e3b0.ctex"]
+source_file="res://pieces/boulder/icon/boulder3.png"
+dest_files=["res://.godot/imported/boulder3.png-46ac5609373d3a349db21aac00815c94.ctex"]
 
 [params]
 

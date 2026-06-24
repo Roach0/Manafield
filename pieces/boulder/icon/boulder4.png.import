@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cknbxs5qyr13e"
-path="res://.godot/imported/Map_Markers_Buildings_Houses_Homes_Village_Town.png-2a2587062b623578f447d1005a720027.ctex"
+uid="uid://c6esqgk8uo2v2"
+path="res://.godot/imported/boulder4.png-62e0065feffdfee542718d93903d07ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/gnome_village/Map_Markers_Buildings_Houses_Homes_Village_Town.png"
-dest_files=["res://.godot/imported/Map_Markers_Buildings_Houses_Homes_Village_Town.png-2a2587062b623578f447d1005a720027.ctex"]
+source_file="res://pieces/boulder/icon/boulder4.png"
+dest_files=["res://.godot/imported/boulder4.png-62e0065feffdfee542718d93903d07ae.ctex"]
 
 [params]
 

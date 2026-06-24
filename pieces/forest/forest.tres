@@ -11,7 +11,7 @@
 script = ExtResource("1_8qdey")
 name = "Forest"
 type_id = "Forest"
-icons = Array[Texture2D]([ExtResource("2_6bule"), ExtResource("2_32jas"), ExtResource("5_hsi70"), ExtResource("6_32jas")])
+icons = Array[Texture2D]([ExtResource("2_6bule"), ExtResource("2_32jas"), ExtResource("6_32jas"), ExtResource("5_hsi70")])
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."

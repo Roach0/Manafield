@@ -13,6 +13,10 @@
 [ext_resource type="Resource" uid="uid://bartx2rdwneox" path="res://components/prefix/armored/armored.tres" id="7_tmn8n"]
 [ext_resource type="Resource" uid="uid://c8e1yva16qlgt" path="res://components/prefix/ember/ember.tres" id="9_es4nv"]
 [ext_resource type="Resource" uid="uid://bvpdkj20fj1ju" path="res://components/prefix/sharp/sharp.tres" id="10_anra8"]
+[ext_resource type="Resource" uid="uid://ckv4rhdhye0lk" path="res://pieces/beast/beast.tres" id="13_f0lch"]
+[ext_resource type="Resource" uid="uid://c7wr2gf7olc5b" path="res://pieces/shrine/shrine.tres" id="14_lx373"]
+[ext_resource type="Resource" uid="uid://btay04weubreh" path="res://pieces/boulder/boulder.tres" id="15_lx373"]
+[ext_resource type="Resource" uid="uid://cedll3qwv4fx1" path="res://pieces/dungeon/dungeon.tres" id="15_s6dek"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2178"]
 bg_color = Color(0, 0, 0, 1)
@@ -46,6 +50,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_stretch_ratio = 1.8
+required_pieces = Array[ExtResource("2_eakoi")]([ExtResource("13_f0lch"), ExtResource("14_lx373"), ExtResource("15_s6dek"), ExtResource("15_lx373"), ExtResource("15_lx373"), ExtResource("15_lx373"), ExtResource("15_lx373"), ExtResource("15_lx373")])
 
 [node name="RightPanel" parent="EffectsManager" unique_id=903372235 instance=ExtResource("3_o2178")]
 unique_name_in_owner = true
