@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bmnmipokpxwi5" path="res://items/wood/icon/wood.png" id="2_qt0gs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x86a1"]
-bg_color = Color(0.089632116, 0.15048444, 0.20625767, 1)
+bg_color = Color(0.09019608, 0.14901961, 0.20784314, 0)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2

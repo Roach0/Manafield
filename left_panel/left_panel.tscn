@@ -9,7 +9,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lx373"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhfb7"]
-bg_color = Color(0.0010609161, 0.040156808, 0.072424375, 1)
+bg_color = Color(0.011764706, 0.0627451, 0.10980392, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
