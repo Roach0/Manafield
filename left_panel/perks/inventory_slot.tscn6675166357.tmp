@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://t7xbn7j3bcpb"]
 
 [ext_resource type="Script" uid="uid://btu4umbkd8p4v" path="res://left_panel/perks/inventory_slot.gd" id="1_0lahr"]
-[ext_resource type="Texture2D" uid="uid://bmnmipokpxwi5" path="res://items/wood/icon/wood.png" id="2_qt0gs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x86a1"]
-bg_color = Color(0.089632116, 0.15048444, 0.20625767, 1)
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
@@ -40,7 +43,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_qt0gs")
 
 [node name="Button" type="Button" parent="." unique_id=335626090]
 unique_name_in_owner = true

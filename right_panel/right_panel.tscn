@@ -5,12 +5,14 @@
 [ext_resource type="Script" uid="uid://d82w4wjvl2ob" path="res://right_panel/interaction_display.gd" id="3_7tri6"]
 [ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://left_panel/smooth_progress_bar.gd" id="3_au8jh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07peb"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+bg_color = Color(0, 0.039215688, 0.07058824, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7tri6"]
 bg_color = Color(0.794799, 0.25762743, 0.21659368, 1)
@@ -18,11 +20,12 @@ bg_color = Color(0.794799, 0.25762743, 0.21659368, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_au8jh"]
 bg_color = Color(0.2077123, 0.56861573, 0.48378932, 1)
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_07peb"]
-color = Color(0.8, 0.8, 0.8, 1)
-grow_begin = -1.0
-grow_end = -1.0
-thickness = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0, 0.039215688, 0.07058824, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3jfd"]
 bg_color = Color(0, 0, 0, 1)
@@ -43,32 +46,58 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_07peb")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 script = ExtResource("1_07peb")
 
-[node name="Layout" type="VBoxContainer" parent="." unique_id=503189534]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=414102800]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
 
-[node name="InfoDisplay" type="MarginContainer" parent="Layout" unique_id=2035901824]
+[node name="Layout" type="VBoxContainer" parent="MarginContainer" unique_id=503189534]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="InfoDisplay" type="MarginContainer" parent="MarginContainer/Layout" unique_id=2035901824]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 script = ExtResource("2_x6jq5")
 
-[node name="InfoLayout" type="VBoxContainer" parent="Layout/InfoDisplay" unique_id=1451789655]
+[node name="Panel" type="Panel" parent="MarginContainer/Layout/InfoDisplay" unique_id=1703273242]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Layout/InfoDisplay/Panel" unique_id=2051015209]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="InfoLayout" type="VBoxContainer" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer" unique_id=1451789655]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Name" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=1469394625]
+[node name="Name" type="RichTextLabel" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer/InfoLayout" unique_id=1469394625]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -76,83 +105,85 @@ theme_override_font_sizes/normal_font_size = 28
 text = "Piece Name:"
 horizontal_alignment = 1
 
-[node name="Description" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=1604803740]
+[node name="Description" type="RichTextLabel" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer/InfoLayout" unique_id=1604803740]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
 theme_override_font_sizes/normal_font_size = 28
 text = "Description:"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Modifiers" type="RichTextLabel" parent="Layout/InfoDisplay/InfoLayout" unique_id=980272238]
+[node name="Modifiers" type="RichTextLabel" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer/InfoLayout" unique_id=980272238]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
 text = "Mods:"
 horizontal_alignment = 1
+vertical_alignment = 2
 
-[node name="Health" type="ProgressBar" parent="Layout/InfoDisplay/InfoLayout" unique_id=1253011945]
+[node name="Health" type="ProgressBar" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer/InfoLayout" unique_id=1253011945]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_7tri6")
 show_percentage = false
 script = ExtResource("3_au8jh")
 
-[node name="Progress" type="ProgressBar" parent="Layout/InfoDisplay/InfoLayout" unique_id=1664096747]
+[node name="Progress" type="ProgressBar" parent="MarginContainer/Layout/InfoDisplay/Panel/MarginContainer/InfoLayout" unique_id=1664096747]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_au8jh")
 show_percentage = false
 script = ExtResource("3_au8jh")
 
-[node name="Sep" type="HSeparator" parent="Layout" unique_id=514728999]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-theme_override_styles/separator = SubResource("StyleBoxLine_07peb")
-
-[node name="InteractionDisplay" type="MarginContainer" parent="Layout" unique_id=1923645387]
+[node name="InteractionDisplay" type="MarginContainer" parent="MarginContainer/Layout" unique_id=1923645387]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 9
 script = ExtResource("3_7tri6")
 
-[node name="UpgradesLayout" type="VBoxContainer" parent="Layout/InteractionDisplay" unique_id=1038315842]
+[node name="Panel" type="Panel" parent="MarginContainer/Layout/InteractionDisplay" unique_id=2051518015]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="UpgradesLayout" type="VBoxContainer" parent="MarginContainer/Layout/InteractionDisplay" unique_id=1038315842]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="Upgrade1" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=232957184]
+[node name="Upgrade1" type="Panel" parent="MarginContainer/Layout/InteractionDisplay/UpgradesLayout" unique_id=232957184]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Upgrade2" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=1624129656]
+[node name="Upgrade2" type="Panel" parent="MarginContainer/Layout/InteractionDisplay/UpgradesLayout" unique_id=1624129656]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="Upgrade3" type="Panel" parent="Layout/InteractionDisplay/UpgradesLayout" unique_id=19399406]
+[node name="Upgrade3" type="Panel" parent="MarginContainer/Layout/InteractionDisplay/UpgradesLayout" unique_id=19399406]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3jfd")
 
-[node name="BuildLayout" type="VBoxContainer" parent="Layout/InteractionDisplay" unique_id=547824156]
+[node name="BuildLayout" type="VBoxContainer" parent="MarginContainer/Layout/InteractionDisplay" unique_id=547824156]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="Order" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=1000642420]
+[node name="Order" type="RichTextLabel" parent="MarginContainer/Layout/InteractionDisplay/BuildLayout" unique_id=1000642420]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -160,21 +191,21 @@ theme_override_font_sizes/normal_font_size = 28
 text = "You are building:"
 horizontal_alignment = 1
 
-[node name="PieceName" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=731159291]
+[node name="PieceName" type="RichTextLabel" parent="MarginContainer/Layout/InteractionDisplay/BuildLayout" unique_id=731159291]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
 horizontal_alignment = 1
 
-[node name="Order2" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=2038042405]
+[node name="Order2" type="RichTextLabel" parent="MarginContainer/Layout/InteractionDisplay/BuildLayout" unique_id=2038042405]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
 text = "Can only be placed on:"
 horizontal_alignment = 1
 
-[node name="Allowed" type="RichTextLabel" parent="Layout/InteractionDisplay/BuildLayout" unique_id=1963849821]
+[node name="Allowed" type="RichTextLabel" parent="MarginContainer/Layout/InteractionDisplay/BuildLayout" unique_id=1963849821]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

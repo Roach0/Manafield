@@ -6,26 +6,21 @@
 [ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://left_panel/smooth_progress_bar.gd" id="3_pqash"]
 [ext_resource type="Script" uid="uid://c3c65vxqvbls8" path="res://left_panel/player/inventory/inventory.gd" id="4_3nw6p"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtft1"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lx373"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhfb7"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+bg_color = Color(0.0010609161, 0.040156808, 0.072424375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j440y"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0.039215688, 0.07058824, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6xjk"]
 bg_color = Color(0, 0, 0, 1)
@@ -59,7 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_vtft1")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lx373")
 script = ExtResource("1_cbvlt")
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=106773676]
@@ -77,6 +72,7 @@ theme_override_constants/margin_bottom = 7
 [node name="LeftInfo" type="VBoxContainer" parent="Margin" unique_id=746198552]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
 [node name="Inventory" type="Panel" parent="Margin/LeftInfo" unique_id=1689589123]
 unique_name_in_owner = true

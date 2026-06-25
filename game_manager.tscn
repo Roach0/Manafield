@@ -20,7 +20,7 @@
 [ext_resource type="Resource" uid="uid://beha40s6h5fbr" path="res://pieces/shadehoof/shadehoof.tres" id="17_lx373"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2178"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0.011422378, 0.06099104, 0.10800127, 1)
 
 [node name="GameManager" type="MarginContainer" unique_id=262446007]
 anchors_preset = 15
