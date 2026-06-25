@@ -20,7 +20,7 @@ corner_radius_bottom_left = 2
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o010e"]
 
 [node name="Panel" type="Panel" unique_id=1198460113]
-custom_minimum_size = Vector2(30, 30)
+custom_minimum_size = Vector2(50, 50)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

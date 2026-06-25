@@ -3,14 +3,14 @@
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_xk7tl"]
 [ext_resource type="Texture2D" uid="uid://c4o4yxowftl04" path="res://pieces/boulder/icon/boulder1.png" id="2_s50rj"]
 [ext_resource type="Script" uid="uid://b0cxjfocxuuj6" path="res://pieces/boulder/boulder.gd" id="2_yqdge"]
-[ext_resource type="Texture2D" uid="uid://t234nu03pe06" path="res://pieces/boulder/icon/boulder3.png" id="4_cx4do"]
+[ext_resource type="Texture2D" uid="uid://ctwpfn5khjhh8" path="res://pieces/boulder/icon/boulder3.png" id="4_cx4do"]
 [ext_resource type="Texture2D" uid="uid://c6esqgk8uo2v2" path="res://pieces/boulder/icon/boulder4.png" id="4_loopk"]
 
 [resource]
 script = ExtResource("2_yqdge")
 name = "Boulder"
 type_id = "Boulder"
-icons = Array[Texture2D]([ExtResource("2_s50rj"), ExtResource("4_cx4do"), ExtResource("4_loopk")])
+icons = Array[Texture2D]([ExtResource("2_s50rj"), ExtResource("4_loopk"), ExtResource("4_cx4do")])
 prefix_pool = 2
 prefix_count = 1
 metadata/_custom_type_script = "uid://b0cxjfocxuuj6"

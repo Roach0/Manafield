@@ -4,25 +4,40 @@ class_name WorldSlot
 const RECOLOR_SHADER := preload("res://shaders/recolor.gdshader")
 const SHINE_SHADER := preload("res://shaders/water_shine.gdshader")
 
-# Named back-variants, keyed by the base name of the front icon.
-# river1.png -> river1back.png, etc.
+# Default frames a trailing layer lags behind icon1.
+# 1 = literal one step (invisible at 60fps); 6-10 reads as a nice drag.
+const TRAIL_DELAY := 10
+
+# --- Effect texture sets -----------------------------------------------------
+# Each set maps a front-icon base name to the variant that layer draws.
+# river1.png -> river1back.png / river1front.png, etc.
 const RIVER_BACKS := {
 	"river1": preload("res://pieces/river/icons/river1back.png"),
 	"river2": preload("res://pieces/river/icons/river2back.png"),
 	"river3": preload("res://pieces/river/icons/river3back.png"),
 }
-
 const RIVER_FRONTS := {
 	"river1": preload("res://pieces/river/icons/river1front.png"),
 	"river2": preload("res://pieces/river/icons/river2front.png"),
 	"river3": preload("res://pieces/river/icons/river3front.png"),
 }
 
-# How many frames icon2 trails behind icon1. 1 = literal one step (basically
-# invisible at 60fps); 6-10 reads as a nice drag.
-const TRAIL_DELAY := 10
+# A trailing layer: a TextureRect that replays icon1's motion `delay` frames
+# late, draws whatever textures[key] resolves to, and optionally runs a
+# per-show setup hook. Adding an effect = adding one of these in _ready().
+class TrailLayer:
+	var node: TextureRect
+	var textures: Dictionary
+	var on_show: Callable
+	var delay: int
+	var base_pos: Vector2
 
-
+	func _init(layer_node: TextureRect, layer_textures: Dictionary,
+			setup := Callable(), trail_delay := 0) -> void:
+		node = layer_node
+		textures = layer_textures
+		on_show = setup
+		delay = trail_delay
 
 @onready var icon: TextureRect = %TextureRect
 @onready var icon2: TextureRect = %TextureRect2
@@ -39,23 +54,28 @@ var float_phase := randf() * 1.5
 var float_offset := Vector2.ZERO
 var interaction_offset := Vector2.ZERO
 
-var _is_river := false
-var _icon2_base := Vector2.ZERO      # icon2's resting position from the scene
-var _icon3_base := Vector2.ZERO      # icon3's resting position from the scene
-var _trail: Array[Vector2] = []      # recent offsets of icon1
-var _shimmer_seed := randf() * 100.0 # per-tile noise offset so rivers don't sync
+var _layers: Array[TrailLayer] = []
+var _layers_active := false           # any trailing layer showing for this piece
+var _max_delay := 0                   # longest layer delay; bounds trail history
+var _trail: Array[Vector2] = []       # recent offsets of icon1
+var _shimmer_seed := randf() * 100.0  # per-tile noise offset so rivers don't sync
 
 signal update_display(piece)
 signal clicked
 
 func _ready() -> void:
-	_icon2_base = icon2.position
-	_icon3_base = icon3.position
-	# Defensive: ensure no shine material leaks from the scene onto a fresh tile.
-	icon2.material = null
-	icon2.visible = false
-	icon3.material = null
-	icon3.visible = false
+	# Register trailing layers. Order here is intent only — actual draw order
+	# is the TextureRects' stacking in the scene tree, so keep them matched.
+	_layers = [
+		TrailLayer.new(icon2, RIVER_BACKS, _setup_shine_layer, TRAIL_DELAY),
+		TrailLayer.new(icon3, RIVER_FRONTS, _setup_front_layer, TRAIL_DELAY),
+	]
+	for layer in _layers:
+		layer.base_pos = layer.node.position
+		_max_delay = max(_max_delay, layer.delay)
+		# Defensive: ensure no material/visibility leaks from the scene.
+		layer.node.material = null
+		layer.node.visible = false
 
 func _process(delta: float) -> void:
 	if floating:
@@ -73,20 +93,25 @@ func _process(delta: float) -> void:
 	var offset := float_offset + interaction_offset
 	icon.position = offset
 
-	# icon2 and icon3 replay icon1's offset, TRAIL_DELAY frames late.
-	if _is_river:
+	# Each visible layer replays icon1's offset, its own `delay` frames late.
+	if _layers_active:
 		_trail.push_back(offset)
-		if _trail.size() > TRAIL_DELAY:
-			var trailed: Vector2 = _trail.pop_front()
-			icon2.position = _icon2_base + trailed
-			icon3.position = _icon3_base + trailed
+		while _trail.size() > _max_delay + 1:
+			_trail.pop_front()
+		var newest := _trail.size() - 1
+		for layer in _layers:
+			if not layer.node.visible:
+				continue
+			var idx := newest - layer.delay
+			if idx >= 0:
+				layer.node.position = layer.base_pos + _trail[idx]
 
 func set_piece(data: PieceData) -> void:
 	piece = data
 	piece.pick_icon()
 	icon.texture = piece.selected_icon
 	_apply_icon_colors()
-	_refresh_river_back()
+	_refresh_layers()
 	floating = piece.should_float()
 	if floating:
 		float_phase = randf() * TAU
@@ -96,53 +121,39 @@ func set_piece(data: PieceData) -> void:
 		float_time = 0.0
 		float_offset = Vector2.ZERO
 
-func _refresh_river_back() -> void:
+func _refresh_layers() -> void:
 	_trail.clear()
 	var key := ""
 	if piece and piece.selected_icon:
 		key = piece.selected_icon.resource_path.get_file().get_basename()
 
-	if RIVER_BACKS.has(key):
-		_is_river = true
-		icon2.texture = RIVER_BACKS[key]
-		icon2.position = _icon2_base
-		icon2.visible = true
-		_apply_shine()
-
-		# Front layer: same trailing float, no shader.
-	if RIVER_BACKS.has(key):
-		_is_river = true
-		icon2.texture = RIVER_BACKS[key]
-		icon2.position = _icon2_base
-		icon2.visible = true
-		_apply_shine()
-
-		# Front layer: same trailing float, no shader.
-		if RIVER_FRONTS.has(key):
-			icon3.texture = RIVER_FRONTS[key]
-			icon3.position = _icon3_base
-			icon3.modulate.a = 0.2
-			icon3.visible = true
+	_layers_active = false
+	for layer in _layers:
+		if layer.textures.has(key):
+			_layers_active = true
+			layer.node.texture = layer.textures[key]
+			layer.node.position = layer.base_pos
+			layer.node.visible = true
+			if layer.on_show.is_valid():
+				layer.on_show.call(layer)
 		else:
-			icon3.texture = null
-			icon3.visible = false
-	else:
-		# Non-river: strip texture, material, and hide. Clearing the material
-		# here is what prevents the shine from leaking onto every tile.
-		_is_river = false
-		icon2.texture = null
-		icon2.material = null
-		icon2.visible = false
-		icon3.texture = null
-		icon3.visible = false
+			# Strip texture + material and hide. Clearing the material is what
+			# stops an effect (e.g. shine) leaking onto tiles without it.
+			layer.node.texture = null
+			layer.node.material = null
+			layer.node.visible = false
 
-func _apply_shine() -> void:
-	var mat := icon2.material as ShaderMaterial
+func _setup_shine_layer(layer: TrailLayer) -> void:
+	var mat := layer.node.material as ShaderMaterial
 	if mat == null:
 		mat = ShaderMaterial.new()
 		mat.shader = SHINE_SHADER
-		icon2.material = mat
+		layer.node.material = mat
 	mat.set_shader_parameter("seed", _shimmer_seed)
+
+func _setup_front_layer(layer: TrailLayer) -> void:
+	# Plain faded layer. modulate.a only, so RGB stays untinted.
+	layer.node.modulate.a = 0.2
 
 func _apply_icon_colors() -> void:
 	if piece == null:
@@ -188,12 +199,11 @@ func _on_button_pressed() -> void:
 func _remove() -> void:
 	piece = null
 	icon.texture = null
-	_is_river = false
-	icon2.texture = null
-	icon2.material = null
-	icon2.visible = false
-	icon3.texture = null
-	icon3.visible = false
+	_layers_active = false
+	for layer in _layers:
+		layer.node.texture = null
+		layer.node.material = null
+		layer.node.visible = false
 	_trail.clear()
 	floating = false
 	_kill_tween()

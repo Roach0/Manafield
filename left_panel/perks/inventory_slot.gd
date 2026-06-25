@@ -1,15 +1,10 @@
 extends Panel
-class_name PlayerSlot
+class_name InventorySlot
 
 @onready var button: Button = %Button
-@onready var icon: TextureRect = %TextureRect
+@export var icon: Texture2D = %TextureRect.texture
 
-@export var slot_type: player_slot_type
 
-enum player_slot_type {
-	ITEM = 0,
-	PERK = 1
-}
 
 func _ready() -> void:
 	pass

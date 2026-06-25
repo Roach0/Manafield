@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Shadehoof" format=3 uid="uid://beha40s6h5fbr"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_vtluq"]
+[ext_resource type="Script" uid="uid://du20e84738usb" path="res://pieces/shadehoof/shadehoof.gd" id="2_pgpti"]
+[ext_resource type="Texture2D" uid="uid://be0luy7iqu2ox" path="res://pieces/shadehoof/icon/manabeast.png" id="2_ykevw"]
+
+[resource]
+script = ExtResource("2_pgpti")
+name = "Shadehoof"
+type_id = "Shadehoof"
+icons = Array[Texture2D]([ExtResource("2_ykevw")])
+health = 8
+health_max = 8
+description = "On kill, receive Meat, Hide or Horn"
+prefix_pool = 1
+prefix_count = 1
+metadata/_custom_type_script = "uid://du20e84738usb"

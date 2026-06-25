@@ -1,5 +1,5 @@
 extends PieceData
-class_name Cabin
+class_name Shadehoof
 
 
 func _ready() -> void:

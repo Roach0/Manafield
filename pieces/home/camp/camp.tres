@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_w40fa"]
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_4r1t3"]
-[ext_resource type="Texture2D" uid="uid://bn5pr3rs8hkg4" path="res://pieces/home/camp/icon/Map_Markers_Building_Tent_Campsite.png" id="2_eej1w"]
 [ext_resource type="Script" uid="uid://d2xmqtknaf0cg" path="res://pieces/home/camp/camp.gd" id="3_4r1t3"]
+[ext_resource type="Texture2D" uid="uid://d1rdcffisx3dw" path="res://pieces/home/expansions/cabin/icon/cabin1.png" id="3_eej1w"]
 
 [resource]
 script = ExtResource("3_4r1t3")
 name = "Camp"
 type_id = "Camp"
-icons = Array[Texture2D]([ExtResource("2_eej1w")])
+icons = Array[Texture2D]([ExtResource("3_eej1w")])
 description = "Campsite"
 can_build_on = Array[ExtResource("1_w40fa")]([ExtResource("2_4r1t3")])
 metadata/_custom_type_script = "uid://d2xmqtknaf0cg"

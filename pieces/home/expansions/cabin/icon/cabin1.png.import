@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctwpfn5khjhh8"
-path="res://.godot/imported/boulder3.png-46ac5609373d3a349db21aac00815c94.ctex"
+uid="uid://d1rdcffisx3dw"
+path="res://.godot/imported/cabin1.png-3450404e8c0a68394905514c22d6def9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/boulder/icon/boulder3.png"
-dest_files=["res://.godot/imported/boulder3.png-46ac5609373d3a349db21aac00815c94.ctex"]
+source_file="res://pieces/home/expansions/cabin/icon/cabin1.png"
+dest_files=["res://.godot/imported/cabin1.png-3450404e8c0a68394905514c22d6def9.ctex"]
 
 [params]
 
