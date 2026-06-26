@@ -25,11 +25,15 @@ bg_color = Color(0.011422378, 0.06099104, 0.10800127, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s6dek"]
 shader = ExtResource("19_s6dek")
+shader_parameter/curvature = 6.0
 shader_parameter/scanline_intensity = 0.25
 shader_parameter/scanline_count = 400.0
+shader_parameter/aberration = 0.0015
+shader_parameter/vignette_intensity = 0.35
 shader_parameter/brightness = 1.25
-shader_parameter/glow_amount = 0.3
-shader_parameter/glow_size = 0.0015
+shader_parameter/noise_amount = 0.04
+shader_parameter/vhs_wobble = 0.0015
+shader_parameter/vhs_tracking = 0.4
 shader_parameter/enabled = true
 
 [node name="GameManager" type="MarginContainer" unique_id=262446007]

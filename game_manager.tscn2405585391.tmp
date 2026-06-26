@@ -18,19 +18,9 @@
 [ext_resource type="Resource" uid="uid://btay04weubreh" path="res://pieces/boulder/boulder.tres" id="15_lx373"]
 [ext_resource type="Resource" uid="uid://cedll3qwv4fx1" path="res://pieces/dungeon/dungeon.tres" id="15_s6dek"]
 [ext_resource type="Resource" uid="uid://beha40s6h5fbr" path="res://pieces/shadehoof/shadehoof.tres" id="17_lx373"]
-[ext_resource type="Shader" uid="uid://bofrej8p12kkb" path="res://shaders/crt_vhs.gdshader" id="19_s6dek"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2178"]
 bg_color = Color(0.011422378, 0.06099104, 0.10800127, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s6dek"]
-shader = ExtResource("19_s6dek")
-shader_parameter/scanline_intensity = 0.25
-shader_parameter/scanline_count = 400.0
-shader_parameter/brightness = 1.25
-shader_parameter/glow_amount = 0.3
-shader_parameter/glow_size = 0.0015
-shader_parameter/enabled = true
 
 [node name="GameManager" type="MarginContainer" unique_id=262446007]
 anchors_preset = 15
@@ -67,15 +57,3 @@ required_pieces = Array[ExtResource("2_eakoi")]([ExtResource("13_f0lch"), ExtRes
 [node name="RightPanel" parent="EffectsManager" unique_id=903372235 instance=ExtResource("3_o2178")]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=6668032]
-layer = 100
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1460694986]
-material = SubResource("ShaderMaterial_s6dek")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2

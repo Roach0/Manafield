@@ -10,6 +10,10 @@ class_name PieceData
 @export var description: String
 @export var can_build_on: Array[PieceData]
 
+@export var loot_pool: Array[ItemData]
+
+@export var damage_received:int = 1
+
 @export var destroy_replacements: Array[PieceData] # assign Field, Deer, etc. in the inspector
 
 # --- Prefix / coloring ---
@@ -42,6 +46,13 @@ func _complete() -> void:
 func _destroy() -> void:
 	# When my health is emptied.
 	pass
+
+
+func pick_loot() -> ItemData:
+	if loot_pool.is_empty():
+		return null
+	return loot_pool[randi() % loot_pool.size()]
+
 
 # animation flags
 func should_float() -> bool:

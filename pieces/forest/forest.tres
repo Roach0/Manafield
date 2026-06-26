@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bn3n3aans3126" path="res://pieces/forest/icon/tree1re.png" id="2_32jas"]
 [ext_resource type="Texture2D" uid="uid://dp4iiflcjinlg" path="res://pieces/forest/icon/tree3re.png" id="5_hsi70"]
 [ext_resource type="Texture2D" uid="uid://dul8fp86sc7jq" path="res://pieces/forest/icon/tree6.png" id="6_32jas"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="6_hsi70"]
+[ext_resource type="Resource" uid="uid://boysq2qoqyykl" path="res://items/wood/wood.tres" id="7_3cwt3"]
+[ext_resource type="Resource" uid="uid://dih2ifg3dw0gf" path="res://items/leaves/leaves.tres" id="8_tspdg"]
 
 [resource]
 script = ExtResource("1_8qdey")
@@ -15,6 +18,7 @@ icons = Array[Texture2D]([ExtResource("2_6bule"), ExtResource("2_32jas"), ExtRes
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."
+loot_pool = Array[ExtResource("6_hsi70")]([ExtResource("7_3cwt3"), ExtResource("8_tspdg")])
 prefix_pool = 3
 prefix_count = 2
 metadata/_custom_type_script = "uid://3gsdiru01kxl"

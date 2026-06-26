@@ -17,5 +17,5 @@ func set_new_player():
 	player.max_nerve = 10
 	player.nerve = 10
 
-func add_item(item:ItemData):
-	inventory.add_item(item)
+func add_item(item: ItemData) -> bool:
+	return inventory.add_item(item)

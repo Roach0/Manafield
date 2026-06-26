@@ -1,16 +1,18 @@
 extends Node
 class_name GameManager
-@export var start_pieces: Array[PieceData]
 
+@export var start_pieces: Array[PieceData]
 @onready var effects: EffectsManager = %EffectsManager
 @onready var left_panel: LeftPanel = %LeftPanel
 @onready var right_panel: RightPanel = %RightPanel
 @onready var world: World = %World
+@onready var crt_filter: ColorRect = %CRTFilter
 
 @export var remaining_turns: int
-
+@export var crt_enabled: bool = true
 
 func _ready() -> void:
+	set_crt_enabled(crt_enabled)
 	new_game()
 
 func new_game() -> void:
@@ -29,3 +31,17 @@ func _on_piece_placed(piece_data: PieceData, next_piece: PieceData) -> void:
 
 func _on_build_mode_ended() -> void:
 	right_panel.interaction_display.set_visibility(InteractionDisplay.Mode.IDLE)
+
+# --- CRT filter control ---
+
+func set_crt_enabled(value: bool) -> void:
+	crt_enabled = value
+	if crt_filter and crt_filter.material:
+		crt_filter.material.set_shader_parameter("enabled", value)
+
+func toggle_crt() -> void:
+	set_crt_enabled(not crt_enabled)
+
+func set_crt_parameter(param: String, value: Variant) -> void:
+	if crt_filter and crt_filter.material:
+		crt_filter.material.set_shader_parameter(param, value)
