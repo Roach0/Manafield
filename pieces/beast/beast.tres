@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wbti8"]
 [ext_resource type="Texture2D" uid="uid://dwc0tk2wluw06" path="res://pieces/beast/icon/Map_Markers_Cave_Cavern_Enterance_Exit.png" id="2_klb2x"]
 [ext_resource type="Script" uid="uid://bhgqbkp45h6e8" path="res://pieces/beast/beast.gd" id="2_v6hhs"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="3_klb2x"]
 
 [resource]
 script = ExtResource("2_v6hhs")
@@ -12,5 +13,5 @@ icons = Array[Texture2D]([ExtResource("2_klb2x")])
 health = 500
 health_max = 500
 progress_max = 200
-description = "Beneath this land, lay in slumber, a monster soon to wake."
+description = "something lives here..."
 metadata/_custom_type_script = "uid://bhgqbkp45h6e8"

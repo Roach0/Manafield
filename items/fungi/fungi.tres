@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Fungi" format=3 uid="uid://dj7kyce6y0spw"]
+
+[ext_resource type="Texture2D" uid="uid://cvm07tcqb1v11" path="res://items/fungi/icon/fungi.png" id="1_dnif5"]
+[ext_resource type="Script" uid="uid://bo2prku334p6q" path="res://items/fungi/fungi.gd" id="1_x7ks8"]
+
+[resource]
+script = ExtResource("1_x7ks8")
+icons = Array[Texture2D]([ExtResource("1_dnif5")])
+metadata/_custom_type_script = "uid://bo2prku334p6q"

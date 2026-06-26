@@ -82,7 +82,7 @@ grow_vertical = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_bottom = 11
 
 [node name="LeftInfo" type="VBoxContainer" parent="Margin" unique_id=746198552]
 layout_mode = 2

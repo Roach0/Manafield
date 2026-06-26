@@ -9,8 +9,7 @@ func get_click_cost() -> Dictionary:
 	return {"resource": "nerve", "amount": 1}
 
 func _click() -> Dictionary:
-	progress += 1
-	return{}
+	return{"loot":true}
 
 func _tick() -> void:
 	pass
