@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Leaves" format=3 uid="uid://dih2ifg3dw0gf"]
+
+[ext_resource type="Texture2D" uid="uid://cs4qq6mhwht05" path="res://items/leaves/icon/leaves.png" id="1_fa7wo"]
+[ext_resource type="Script" uid="uid://vcbiomd8ndwo" path="res://items/leaves/leaves.gd" id="1_s35u5"]
+
+[resource]
+script = ExtResource("1_s35u5")
+name = "Leaves"
+type_id = "Leaves"
+icons = Array[Texture2D]([ExtResource("1_fa7wo")])
+description = "Foliage from plants."
+metadata/_custom_type_script = "uid://vcbiomd8ndwo"

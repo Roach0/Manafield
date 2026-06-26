@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Wood" format=3 uid="uid://boysq2qoqyykl"]
 
-[ext_resource type="Texture2D" uid="uid://bmnmipokpxwi5" path="res://items/wood/icon/wood.png" id="1_lgg6n"]
+[ext_resource type="Texture2D" uid="uid://7tif4t1sarky" path="res://items/wood/icon/wood.png" id="1_lgg6n"]
 [ext_resource type="Script" uid="uid://cckcqt1v2jkjn" path="res://items/wood/wood.gd" id="1_r0rgt"]
 
 [resource]

@@ -30,6 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_shwjl")
 start_pieces = Array[ExtResource("2_eakoi")]([ExtResource("3_8jrwq"), ExtResource("4_8jrwq")])
+remaining_turns = 200
 
 [node name="BG" type="Panel" parent="." unique_id=952238281]
 layout_mode = 2
