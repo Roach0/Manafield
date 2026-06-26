@@ -7,6 +7,7 @@ class_name EffectsManager
 @export var prefix_pool_1: Array[Prefix]
 @export var prefix_pool_2: Array[Prefix]
 @export var prefix_pool_3: Array[Prefix]
+var _loot_overlay: CanvasLayer
 
 func _ready() -> void:
 	world.update_display.connect(_on_update_display)
@@ -98,7 +99,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 	if not result.is_empty():
 		_apply_stat_effect(result.get("effect", ""), result.get("amount", 0))
 		if result.get("loot", false):
-			_grant_loot(piece)
+			_grant_loot(piece, slot)
 	if piece.health_max > 0 and piece.health <= 0:
 		piece._destroy()
 		world.replace_with(slot, piece)
@@ -107,9 +108,84 @@ func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
 	# hook for feedback later — flash the slot, play a sound, shake the UI, etc.
 
-func _grant_loot(piece: PieceData) -> void:
+func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	var item := piece.pick_loot()
 	if item == null:
 		return
-	if not left_panel.add_item(item):
+	if item.prefix_region > 0:
+		item = item.duplicate()
+		item.prefix = piece.get_prefix_for_region(item.prefix_region)
+	print("[loot] %s | region=%d | prefix=%s | from=%s" % [
+		item.name,
+		item.prefix_region,
+		item.prefix.prefix_name if item.prefix != null else "<none>",
+		piece.name,
+	])
+	var target := left_panel.claim_loot_slot(item)
+	if target == null:
 		push_warning("Inventory full — loot lost")
+		return
+	_fly_loot(item, world_slot, target)
+
+func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> void:
+	var tex: Texture2D = item.icons[0] if not item.icons.is_empty() else from_slot.icon.texture
+	var src_size: Vector2 = from_slot.icon.size
+	if src_size == Vector2.ZERO and tex:
+		src_size = tex.get_size()
+
+	# Where the icon will actually live once committed — match it so there's no jump.
+	var dest_icon: TextureRect = to_slot.icon
+	var dest_size: Vector2 = dest_icon.size
+	if dest_size == Vector2.ZERO:
+		dest_size = src_size
+
+	var flier := TextureRect.new()
+	flier.texture = tex
+	flier.stretch_mode = TextureRect.STRETCH_SCALE
+	flier.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	flier.size = src_size
+	flier.pivot_offset = src_size * 0.5
+	flier.modulate = item.prefix.color if item.prefix else Color.WHITE
+	_ensure_overlay().add_child(flier)
+
+	var start := from_slot.icon.global_position + src_size * 0.5
+	var end := to_slot.global_position + to_slot.size * 0.5
+
+	# Final scale so the flier matches the slot icon exactly on arrival.
+	var end_scale := (dest_size / src_size) if src_size != Vector2.ZERO else Vector2.ONE
+
+	# Randomly hop up or down before curving to the slot.
+	var vary := -1.0 if randf() < 0.5 else 1.0
+	var dir_to_end := (end - start).normalized()
+	var ctrl := start + Vector2(0.0, 70.0 * vary) + dir_to_end * 22.0
+
+	var set_center := func(t: float) -> void:
+		var c := _qbezier(start, ctrl, end, t)
+		flier.global_position = c - flier.size * 0.5
+	set_center.call(0.0)
+
+	var land := func() -> void:
+		left_panel.commit_loot(to_slot, item)
+		flier.queue_free()
+
+	var tw := create_tween()
+
+	# One continuous curve: easy launch, snappier dive — but no mid-path stop.
+	tw.tween_method(set_center, 0.0, 1.0, 0.40)\
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+
+	tw.parallel().tween_property(flier, "scale", end_scale, 0.40)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	tw.chain().tween_callback(land)
+
+func _qbezier(a: Vector2, b: Vector2, c: Vector2, t: float) -> Vector2:
+	return a.lerp(b, t).lerp(b.lerp(c, t), t)
+
+func _ensure_overlay() -> CanvasLayer:
+	if is_instance_valid(_loot_overlay):
+		return _loot_overlay
+	_loot_overlay = CanvasLayer.new()
+	_loot_overlay.layer = 100
+	get_tree().root.add_child(_loot_overlay)
+	return _loot_overlay

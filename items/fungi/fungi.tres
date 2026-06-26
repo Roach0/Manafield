@@ -5,5 +5,9 @@
 
 [resource]
 script = ExtResource("1_x7ks8")
+prefix_region = 1
+name = "Fungi"
+type_id = "Fungi"
 icons = Array[Texture2D]([ExtResource("1_dnif5")])
+description = "devours dead things."
 metadata/_custom_type_script = "uid://bo2prku334p6q"

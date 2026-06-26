@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_r0rgt")
+prefix_region = 2
 name = "Wood"
 type_id = "Wood"
 icons = Array[Texture2D]([ExtResource("1_lgg6n")])

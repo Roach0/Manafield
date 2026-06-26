@@ -48,10 +48,18 @@ func _destroy() -> void:
 	pass
 
 
+# looting
 func pick_loot() -> ItemData:
 	if loot_pool.is_empty():
 		return null
 	return loot_pool[randi() % loot_pool.size()]
+
+func get_prefix_for_region(region: int) -> Prefix:
+	var idx := region - 1
+	if idx < 0 or idx >= mods.size():
+		return null
+	return mods[idx] as Prefix
+
 
 
 # animation flags

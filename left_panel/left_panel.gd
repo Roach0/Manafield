@@ -19,3 +19,9 @@ func set_new_player():
 
 func add_item(item: ItemData) -> bool:
 	return inventory.add_item(item)
+
+func claim_loot_slot(item: ItemData) -> InventorySlot:
+	return inventory.claim_slot_for(item)
+
+func commit_loot(slot: InventorySlot, item: ItemData) -> void:
+	inventory.commit_item(slot, item)
