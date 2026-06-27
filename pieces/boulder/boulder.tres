@@ -5,12 +5,15 @@
 [ext_resource type="Script" uid="uid://b0cxjfocxuuj6" path="res://pieces/boulder/boulder.gd" id="2_yqdge"]
 [ext_resource type="Texture2D" uid="uid://ctwpfn5khjhh8" path="res://pieces/boulder/icon/boulder3.png" id="4_cx4do"]
 [ext_resource type="Texture2D" uid="uid://c6esqgk8uo2v2" path="res://pieces/boulder/icon/boulder4.png" id="4_loopk"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_nnlie"]
+[ext_resource type="Resource" uid="uid://cc1i3kq6rgp1q" path="res://items/stone/stone.tres" id="6_nqyhs"]
 
 [resource]
 script = ExtResource("2_yqdge")
 name = "Boulder"
 type_id = "Boulder"
 icons = Array[Texture2D]([ExtResource("2_s50rj"), ExtResource("4_loopk"), ExtResource("4_cx4do")])
+loot_pool = Array[ExtResource("5_nnlie")]([ExtResource("6_nqyhs")])
 prefix_pool = 2
 prefix_count = 1
 metadata/_custom_type_script = "uid://b0cxjfocxuuj6"

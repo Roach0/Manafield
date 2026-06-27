@@ -140,6 +140,7 @@ func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> 
 		dest_size = src_size
 
 	var flier := TextureRect.new()
+	flier.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	flier.texture = tex
 	flier.stretch_mode = TextureRect.STRETCH_SCALE
 	flier.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

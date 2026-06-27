@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b0yg15nu24qre" path="res://pieces/field/icon/field8.png" id="7_s105l"]
 [ext_resource type="Texture2D" uid="uid://byo27ykvyktsr" path="res://pieces/field/icon/field9.png" id="8_1y10a"]
 [ext_resource type="Resource" uid="uid://dj7kyce6y0spw" path="res://items/fungi/fungi.tres" id="8_hv03d"]
+[ext_resource type="Resource" uid="uid://bchc5cu78ab0e" path="res://items/insect/insect.tres" id="9_1y10a"]
 
 [resource]
 script = ExtResource("4_thtcl")
@@ -17,7 +18,7 @@ type_id = "Field"
 icons = Array[Texture2D]([ExtResource("3_ja4mi"), ExtResource("7_s105l"), ExtResource("7_rcx5a"), ExtResource("8_1y10a"), ExtResource("6_s105l")])
 progress_max = 15
 description = "A lonely little field for thinking.  On complete, gain a Building."
-loot_pool = Array[ExtResource("7_1y10a")]([ExtResource("8_hv03d")])
+loot_pool = Array[ExtResource("7_1y10a")]([ExtResource("8_hv03d"), ExtResource("9_1y10a")])
 prefix_pool = 2
 prefix_count = 1
 metadata/_custom_type_script = "uid://bbf7035dqtram"

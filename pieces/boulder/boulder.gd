@@ -6,7 +6,7 @@ func get_click_cost() -> Dictionary:
 	return {}
 
 func _click() -> Dictionary:
-	return {}
+	return {"loot":true}
 
 func get_destroy_replacements() -> Array[PieceData]:
 	return destroy_replacements

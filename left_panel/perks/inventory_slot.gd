@@ -33,7 +33,7 @@ func _build_count_label() -> void:
 	_count_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_count_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	_count_label.add_theme_font_size_override("font_size", 28)   # <- size of the number
+	_count_label.add_theme_font_size_override("font_size", 28)
 	_count_label.add_theme_constant_override("outline_size", 6)
 	_count_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	add_child(_count_label)

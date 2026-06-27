@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Insect" format=3 uid="uid://bchc5cu78ab0e"]
+
+[ext_resource type="Script" uid="uid://dlvqklij2lrik" path="res://items/insect/insect.gd" id="1_01uf4"]
+[ext_resource type="Texture2D" uid="uid://dyrxhye0f7cl4" path="res://items/insect/icon/insect.png" id="1_mbj5k"]
+
+[resource]
+script = ExtResource("1_01uf4")
+prefix_region = 1
+name = "Insect"
+type_id = "Insect"
+icons = Array[Texture2D]([ExtResource("1_mbj5k")])
+description = "an edible little friend"
+metadata/_custom_type_script = "uid://dlvqklij2lrik"
