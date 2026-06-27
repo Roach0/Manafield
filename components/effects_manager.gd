@@ -12,6 +12,9 @@ var _loot_overlay: CanvasLayer
 func _ready() -> void:
 	world.update_display.connect(_on_update_display)
 	world.piece_click_requested.connect(_on_piece_click_requested)
+	left_panel.inventory.yield_flight_requested.connect(_on_yield_flight_requested)
+	left_panel.inventory.sort_flight_requested.connect(_on_sort_flight_requested)
+
 
 
 
@@ -104,6 +107,9 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		piece._destroy()
 		world.replace_with(slot, piece)
 
+func _on_yield_flight_requested(item: ItemData, from_slot: InventorySlot, to_slot: InventorySlot) -> void:
+	_fly_item(item, from_slot.icon, to_slot)
+
 func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
 	# hook for feedback later — flash the slot, play a sound, shake the UI, etc.
@@ -128,12 +134,15 @@ func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	_fly_loot(item, world_slot, target)
 
 func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> void:
-	var tex: Texture2D = item.icons[0] if not item.icons.is_empty() else from_slot.icon.texture
-	var src_size: Vector2 = from_slot.icon.size
+	_fly_item(item, from_slot.icon, to_slot)
+
+# Slot-agnostic arc: flies `item` from any source icon into an inventory slot.
+func _fly_item(item: ItemData, from_icon: TextureRect, to_slot: InventorySlot, on_land: Callable = Callable()) -> void:
+	var tex: Texture2D = item.icons[0] if not item.icons.is_empty() else from_icon.texture
+	var src_size: Vector2 = from_icon.size
 	if src_size == Vector2.ZERO and tex:
 		src_size = tex.get_size()
 
-	# Where the icon will actually live once committed — match it so there's no jump.
 	var dest_icon: TextureRect = to_slot.icon
 	var dest_size: Vector2 = dest_icon.size
 	if dest_size == Vector2.ZERO:
@@ -149,13 +158,11 @@ func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> 
 	flier.modulate = item.prefix.color if item.prefix else Color.WHITE
 	_ensure_overlay().add_child(flier)
 
-	var start := from_slot.icon.global_position + src_size * 0.5
+	var start := from_icon.global_position + src_size * 0.5
 	var end := to_slot.global_position + to_slot.size * 0.5
 
-	# Final scale so the flier matches the slot icon exactly on arrival.
 	var end_scale := (dest_size / src_size) if src_size != Vector2.ZERO else Vector2.ONE
 
-	# Randomly hop up or down before curving to the slot.
 	var vary := -1.0 if randf() < 0.5 else 1.0
 	var dir_to_end := (end - start).normalized()
 	var ctrl := start + Vector2(0.0, 70.0 * vary) + dir_to_end * 22.0
@@ -166,18 +173,17 @@ func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> 
 	set_center.call(0.0)
 
 	var land := func() -> void:
-		left_panel.commit_loot(to_slot, item)
+		if on_land.is_valid():
+			on_land.call()
+		else:
+			left_panel.commit_loot(to_slot, item)
 		flier.queue_free()
 
 	var tw := create_tween()
-
-	# One continuous curve: easy launch, snappier dive — but no mid-path stop.
 	tw.tween_method(set_center, 0.0, 1.0, 0.40)\
 		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-
 	tw.parallel().tween_property(flier, "scale", end_scale, 0.40)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-
 	tw.chain().tween_callback(land)
 
 func _qbezier(a: Vector2, b: Vector2, c: Vector2, t: float) -> Vector2:
@@ -190,3 +196,10 @@ func _ensure_overlay() -> CanvasLayer:
 	_loot_overlay.layer = 100
 	get_tree().root.add_child(_loot_overlay)
 	return _loot_overlay
+
+func _on_sort_flight_requested(item: ItemData, count: int, from_slot: InventorySlot, to_slot: InventorySlot) -> void:
+	var inv := left_panel.inventory
+	var land := func() -> void:
+		inv.place_sorted(to_slot, item, count)
+	# from_slot may equal to_slot for an unmoved-but-resorted item; still flies.
+	_fly_item(item, from_slot.icon, to_slot, land)

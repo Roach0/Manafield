@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Oil" format=3 uid="uid://bcdllqo80vdpf"]
+
+[ext_resource type="Script" uid="uid://v2fc11t2scv7" path="res://items/oil/oil.gd" id="1_g3wsh"]
+[ext_resource type="Texture2D" uid="uid://rxr14t1pqd0s" path="res://items/oil/icon/oil.png" id="1_l67iw"]
+
+[resource]
+script = ExtResource("1_g3wsh")
+prefix_region = 1
+name = "Oil"
+type_id = "Oil"
+icons = Array[Texture2D]([ExtResource("1_l67iw")])
+description = "Carefully extracted oils"
+metadata/_custom_type_script = "uid://v2fc11t2scv7"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://isqi08rksmod"
-path="res://.godot/imported/Map_Markers_Farmland_Animals.png-c9b4e02c72730e7b2e389b7102b3b2ec.ctex"
+uid="uid://bwc4j2dm2mj6s"
+path="res://.godot/imported/cabin.png-501cfb8358e4362f013e2f88ccf2d0a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/cow/Map_Markers_Farmland_Animals.png"
-dest_files=["res://.godot/imported/Map_Markers_Farmland_Animals.png-c9b4e02c72730e7b2e389b7102b3b2ec.ctex"]
+source_file="res://pieces/home/expansions/cabin/icon/cabin.png"
+dest_files=["res://.godot/imported/cabin.png-501cfb8358e4362f013e2f88ccf2d0a8.ctex"]
 
 [params]
 

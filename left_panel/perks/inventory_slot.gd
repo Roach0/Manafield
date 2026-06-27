@@ -1,18 +1,22 @@
 extends Panel
 class_name InventorySlot
 
+signal use_requested(slot: InventorySlot)
+signal hover_changed(is_inside: bool)
+
 @onready var button: Button = %Button
 @onready var icon: TextureRect = %TextureRect
 @export var item_data: ItemData = null
 
-const HOVER_LIFT := 6.0
-const HOP_HEIGHT := 14.0
-const PULSE_SCALE := 1.50
+const HOVER_LIFT := 6.0      # how high it rests while hovered
+const HOP_HEIGHT := 14.0     # peak of the initial hop (above the rest height)
+const PULSE_SCALE := 1.50    # how big the blip pulse is.
 
 var count: int = 0           # 0 = empty, >=1 = occupied
 var _base_y: float
+var _base_x: float
 var _tween: Tween
-var _pulse_tween: Tween
+var _pulse_tween: Tween       # separate from _tween so they don't fight
 var _count_label: Label
 
 func _ready() -> void:
@@ -25,6 +29,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	icon.pivot_offset = icon.size / 2.0
 	_base_y = icon.position.y
+	_base_x = icon.position.x
 
 func _build_count_label() -> void:
 	_count_label = Label.new()
@@ -36,7 +41,7 @@ func _build_count_label() -> void:
 	_count_label.add_theme_font_size_override("font_size", 28)
 	_count_label.add_theme_constant_override("outline_size", 6)
 	_count_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	add_child(_count_label)
+	add_child(_count_label)            # added last -> drawn over the icon
 	_count_label.offset_right = -3
 	_count_label.offset_bottom = -2
 	_count_label.visible = false
@@ -45,7 +50,7 @@ func setup(data: ItemData) -> void:
 	item_data = data
 	count = 1
 	if data.prefix != null:
-		icon.material = null
+		icon.material = null            # ensure no leftover shader from a pooled node
 		icon.modulate = data.prefix.color
 	else:
 		icon.modulate = Color.WHITE
@@ -58,6 +63,22 @@ func add_to_stack(amount: int = 1) -> void:
 	count += amount
 	_refresh_count()
 	_blip()
+
+# Pay down the stack; clears the slot when it empties.
+func remove_from_stack(amount: int = 1) -> void:
+	count -= amount
+	if count <= 0:
+		_clear()
+	else:
+		_refresh_count()
+
+func _clear() -> void:
+	item_data = null
+	count = 0
+	icon.texture = null
+	icon.modulate = Color.WHITE
+	icon.material = null
+	_refresh_count()   # count is 0 -> badge hides, is_empty() now true
 
 # Does this occupied slot accept `data` into its stack?
 func matches(data: ItemData) -> bool:
@@ -90,6 +111,7 @@ func _blip() -> void:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_hover_start() -> void:
+	hover_changed.emit(true)
 	if _tween and _tween.is_running():
 		_tween.kill()
 	_tween = create_tween()
@@ -99,6 +121,7 @@ func _on_hover_start() -> void:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_hover_end() -> void:
+	hover_changed.emit(false)
 	if _tween and _tween.is_running():
 		_tween.kill()
 	_tween = create_tween()
@@ -106,6 +129,17 @@ func _on_hover_end() -> void:
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 func _on_pressed() -> void:
+	if is_empty() or not item_data.is_usable():
+		return
+	# Multi-click guard: a click that costs more than the stack holds is denied.
+	if count < item_data.consume_count:
+		_denied_feedback()
+		return
+	_click_feedback()
+	use_requested.emit(self)
+
+
+func _click_feedback() -> void:
 	if _pulse_tween and _pulse_tween.is_running():
 		_pulse_tween.kill()
 	icon.scale = Vector2.ONE
@@ -122,3 +156,34 @@ func _on_pressed() -> void:
 	wob.tween_property(icon, "rotation", deg_to_rad(-6), 0.06)
 	wob.tween_property(icon, "rotation", deg_to_rad(3), 0.05)
 	wob.tween_property(icon, "rotation", 0.0, 0.06)
+
+
+func _denied_feedback() -> void:
+	if _pulse_tween and _pulse_tween.is_running():
+		_pulse_tween.kill()
+	icon.position.x = _base_x
+	_pulse_tween = create_tween()
+	_pulse_tween.tween_property(icon, "position:x", _base_x - 4.0, 0.04)
+	_pulse_tween.tween_property(icon, "position:x", _base_x + 4.0, 0.04)
+	_pulse_tween.tween_property(icon, "position:x", _base_x, 0.04)
+
+# Place an item into this slot at a specific count (used by sort relocation,
+# where a whole stack moves as one unit). Unlike setup(), preserves count.
+func place(data: ItemData, amount: int) -> void:
+	item_data = data
+	count = max(amount, 1)
+	if data.prefix != null:
+		icon.material = null
+		icon.modulate = data.prefix.color
+	else:
+		icon.modulate = Color.WHITE
+	if is_node_ready():
+		_refresh()
+		_refresh_count()
+
+# Hide the icon without clearing data — slot still counts as occupied logically
+# during a sort, but shows nothing while its flier is in the air.
+func hide_icon() -> void:
+	icon.texture = null
+	if _count_label:
+		_count_label.visible = false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ds41gi5citgdv"
-path="res://.godot/imported/Map_Markers_Farmland_Animals_Penned_Fence.png-34b16b618d47c17dc520c60d2bd40b66.ctex"
+uid="uid://rxr14t1pqd0s"
+path="res://.godot/imported/oil.png-14b4851a50354dd7ecabb9d68b2e5e53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/cow/Map_Markers_Farmland_Animals_Penned_Fence.png"
-dest_files=["res://.godot/imported/Map_Markers_Farmland_Animals_Penned_Fence.png-34b16b618d47c17dc520c60d2bd40b66.ctex"]
+source_file="res://items/oil/icon/oil.png"
+dest_files=["res://.godot/imported/oil.png-14b4851a50354dd7ecabb9d68b2e5e53.ctex"]
 
 [params]
 
