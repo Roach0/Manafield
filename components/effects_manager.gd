@@ -14,6 +14,7 @@ func _ready() -> void:
 	world.piece_click_requested.connect(_on_piece_click_requested)
 	left_panel.inventory.yield_flight_requested.connect(_on_yield_flight_requested)
 	left_panel.inventory.sort_flight_requested.connect(_on_sort_flight_requested)
+	left_panel.inventory.item_hovered.connect(_on_inventory_item_hovered)
 
 
 
@@ -113,6 +114,12 @@ func _on_yield_flight_requested(item: ItemData, from_slot: InventorySlot, to_slo
 func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
 	# hook for feedback later — flash the slot, play a sound, shake the UI, etc.
+
+func _on_inventory_item_hovered(item: ItemData) -> void:
+	if item != null:
+		right_panel.update_item_display(item)
+	else:
+		right_panel.clear_display()
 
 func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	var item := piece.pick_loot()

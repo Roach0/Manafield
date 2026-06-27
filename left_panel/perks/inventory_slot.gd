@@ -3,6 +3,7 @@ class_name InventorySlot
 
 signal use_requested(slot: InventorySlot)
 signal hover_changed(is_inside: bool)
+signal item_hovered(item: ItemData)
 
 @onready var button: Button = %Button
 @onready var icon: TextureRect = %TextureRect
@@ -112,6 +113,7 @@ func _blip() -> void:
 
 func _on_hover_start() -> void:
 	hover_changed.emit(true)
+	item_hovered.emit(item_data)   # null if slot is empty -> display hides
 	if _tween and _tween.is_running():
 		_tween.kill()
 	_tween = create_tween()
@@ -122,6 +124,7 @@ func _on_hover_start() -> void:
 
 func _on_hover_end() -> void:
 	hover_changed.emit(false)
+	item_hovered.emit(null)
 	if _tween and _tween.is_running():
 		_tween.kill()
 	_tween = create_tween()
@@ -137,6 +140,8 @@ func _on_pressed() -> void:
 		return
 	_click_feedback()
 	use_requested.emit(self)
+
+
 
 
 func _click_feedback() -> void:

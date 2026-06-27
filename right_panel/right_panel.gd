@@ -11,3 +11,9 @@ func update_display(piece: PieceData):
 # interaction display stuff
 func update_build_display(piece: PieceData):
 	interaction_display.update_display(piece, InteractionDisplay.Mode.BUILD)
+
+func update_item_display(item: ItemData):
+	info_display.update_item(item)
+
+func clear_display():
+	info_display.clear()
