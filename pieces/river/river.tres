@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://di8n72gvqhpwa" path="res://pieces/river/icons/river1.png" id="2_yj2pk"]
 [ext_resource type="Texture2D" uid="uid://dr02dqkijqor6" path="res://pieces/river/icons/river2.png" id="3_ed8kv"]
 [ext_resource type="Texture2D" uid="uid://cq8nytxjsy6lj" path="res://pieces/river/icons/river3.png" id="4_kjrkh"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_kjrkh"]
+[ext_resource type="Resource" uid="uid://doluegqixjcjc" path="res://items/fish/fish.tres" id="6_kxboq"]
 
 [resource]
 script = ExtResource("2_qlmmg")
@@ -12,6 +14,7 @@ name = "River"
 type_id = "River"
 icons = Array[Texture2D]([ExtResource("2_yj2pk"), ExtResource("3_ed8kv"), ExtResource("4_kjrkh")])
 description = "Calmly running water."
+loot_pool = Array[ExtResource("5_kjrkh")]([ExtResource("6_kxboq")])
 prefix_pool = 1
 prefix_count = 1
 metadata/_custom_type_script = "uid://dxjjisis664hn"

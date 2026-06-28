@@ -3,13 +3,14 @@
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_tppjt"]
 [ext_resource type="Script" uid="uid://cib83pbny5lnj" path="res://pieces/home/campfire/campfire.gd" id="2_ow07p"]
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_yo2cq"]
-[ext_resource type="Texture2D" uid="uid://c380jsi42i3fu" path="res://pieces/home/campfire/icons/campfire.png" id="3_jeveu"]
+[ext_resource type="Texture2D" uid="uid://di6o0v8kg04oy" path="res://pieces/home/campfire/icons/bonfire.png" id="3_yo2cq"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="4_ompw2"]
 
 [resource]
 script = ExtResource("2_ow07p")
 name = "Campfire"
 type_id = "Campfire"
-icons = Array[Texture2D]([ExtResource("3_jeveu")])
+icons = Array[Texture2D]([ExtResource("3_yo2cq")])
 progress_max = 30
 description = "A warm fire.  On click, restore 1 Nerve."
 can_build_on = Array[ExtResource("1_tppjt")]([ExtResource("2_yo2cq")])

@@ -21,6 +21,9 @@ var _mouse_inside: bool = false
 # Sort state.
 var _sorting: bool = false
 var _pending_landings: int = 0
+var _sort_queued: bool = false          # a sort was requested but blocked; run it once settled
+var _in_flight: int = 0                  # count of ALL fliers in the air (yields + loot)
+var _deferred: Array[ItemData] = []      # loot that arrived mid-sort, added the instant it ends
 
 # Hover-display debounce (prevents the info panel flicker when gliding
 # between adjacent slots).
@@ -63,32 +66,60 @@ func add_item(data: ItemData) -> bool:
 #   1) an already-committed stack of the same kind
 #   2) a stack of the same kind still forming (item mid-flight)
 #   3) a freshly reserved empty slot
+# Returns null while a sort is running (grid is mid-rebuild — caller should
+# defer) or when the inventory is full.
 func claim_slot_for(data: ItemData) -> InventorySlot:
 	if data == null:
 		return null
+	# Grid is being torn down and rebuilt by sort fliers; any slot we hand out
+	# now is unreliable. Tell the caller to defer (see EffectsManager._grant_loot).
+	if _sorting:
+		return null
+
+	var result: InventorySlot = null
 	var key := data.stack_key()
 	if key != "":                                   # "" => non-stackable
 		var existing := _find_matching_slot(data)
 		if existing != null:
-			return existing
-		for slot in _incoming:
-			if _incoming[slot] == key:
-				return slot
-	for slot in slots:
-		if slot.is_empty() and not _incoming.has(slot):
-			_incoming[slot] = key
-			return slot
-	return null
+			result = existing
+		else:
+			for slot in _incoming:
+				if _incoming[slot] == key:
+					result = slot
+					break
+	if result == null:
+		for slot in slots:
+			if slot.is_empty() and not _incoming.has(slot):
+				_incoming[slot] = key
+				result = slot
+				break
+
+	# Count EVERY flier — including ones heading toward an existing stack, which
+	# never touch _incoming. The sort guard relies on this being complete.
+	if result != null:
+		_in_flight += 1
+	return result
 
 # Called when a flier lands: seed a new stack or grow an existing one.
 func commit_item(slot: InventorySlot, data: ItemData) -> void:
+	_in_flight = max(_in_flight - 1, 0)
 	_incoming.erase(slot)
 	if slot == null or data == null:
+		_try_queued_sort()
 		return
 	if slot.is_empty():
 		slot.setup(data.duplicate())
-	else:
+	elif slot.matches(data):
 		slot.add_to_stack()
+	else:
+		# Slot was taken by something else mid-flight. Don't fold this into the
+		# wrong stack — re-home it to a free slot.
+		var fallback := _find_empty_slot()
+		if fallback != null:
+			fallback.setup(data.duplicate())
+		else:
+			push_warning("Inventory full — landed item lost: %s" % data.name)
+	_try_queued_sort()
 
 
 # --- Click to use ---
@@ -96,6 +127,8 @@ func commit_item(slot: InventorySlot, data: ItemData) -> void:
 # A slot was clicked with a usable item: pay the cost, then fly each yield
 # out of the clicked slot into its destination stack (same arc as world loot).
 func _on_slot_use_requested(slot: InventorySlot) -> void:
+	if _sorting:
+		return   # grid is being rebuilt by sort fliers; ignore the click
 	var data := slot.item_data
 	if data == null or not data.is_usable():
 		return
@@ -203,8 +236,13 @@ func _deferred_clear_hover() -> void:
 # --- Alphabetical sort on mouse exit ---
 
 func sort_alphabetical() -> void:
-	if _sorting:
+	# Never sort while anything is moving (yields, loot). Clearing the grid out
+	# from under an in-flight item is what swallows stacks and creates dupes.
+	# Re-run once everything has settled (see _try_queued_sort).
+	if _sorting or _in_flight > 0:
+		_sort_queued = true
 		return
+	_sort_queued = false
 
 	# Gather occupied slots as (data, count) units, sorted by item name.
 	var units: Array = []
@@ -251,3 +289,31 @@ func place_sorted(slot: InventorySlot, item: ItemData, count: int) -> void:
 	_pending_landings -= 1
 	if _pending_landings <= 0:
 		_sorting = false
+		_flush_deferred()
+		_try_queued_sort()
+
+
+# --- Settle helpers ---
+
+# Run a sort that was requested while something was in flight, but only once the
+# grid is fully settled and the mouse is still outside.
+func _try_queued_sort() -> void:
+	if _sort_queued and not _sorting and _in_flight == 0 and not _mouse_inside:
+		sort_alphabetical()
+
+# Loot that couldn't claim a slot because a sort was running. Add it instantly
+# (correct stacking/prefix via setup) the moment the sort finishes.
+func _flush_deferred() -> void:
+	if _deferred.is_empty():
+		return
+	var pending := _deferred.duplicate()
+	_deferred.clear()
+	for d in pending:
+		add_item(d)
+
+# EffectsManager calls this when claim_slot_for returned null during a sort.
+func defer_add(data: ItemData) -> void:
+	_deferred.append(data)
+
+func is_sorting() -> bool:
+	return _sorting

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Fish" format=3 uid="uid://doluegqixjcjc"]
+
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="1_jstpo"]
+[ext_resource type="Script" uid="uid://c0tvjjg75laju" path="res://items/fish/fish.gd" id="2_nev1f"]
+[ext_resource type="Texture2D" uid="uid://bntx2xvti1l6q" path="res://items/fish/icon/fish.png" id="2_wxjr5"]
+
+[resource]
+script = ExtResource("2_nev1f")
+prefix_region = 1
+name = "Fish"
+type_id = "Fish"
+icons = Array[Texture2D]([ExtResource("2_wxjr5")])
+description = "Was minding his business before you came about."
+metadata/_custom_type_script = "uid://c0tvjjg75laju"

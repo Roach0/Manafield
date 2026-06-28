@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Metal" format=3 uid="uid://bn6sx0kopcq2h"]
+
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="1_f66pk"]
+[ext_resource type="Texture2D" uid="uid://dpia0f276anj6" path="res://items/metal/icon/metal.png" id="2_hc82p"]
+[ext_resource type="Script" uid="uid://8q3coyh5vrs2" path="res://items/metal/metal.gd" id="2_i4b0c"]
+
+[resource]
+script = ExtResource("2_i4b0c")
+prefix_region = 1
+name = "Metal"
+type_id = "Metal"
+icons = Array[Texture2D]([ExtResource("2_hc82p")])
+description = "Shiny."
+metadata/_custom_type_script = "uid://8q3coyh5vrs2"

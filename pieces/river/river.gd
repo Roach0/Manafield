@@ -6,7 +6,7 @@ func _ready() -> void:
 	pass
 
 func _click() -> Dictionary:
-	return {}
+	return {"loot":true}
 
 func _tick() -> void:
 	pass

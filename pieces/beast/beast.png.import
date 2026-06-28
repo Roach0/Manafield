@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beeatu3d6h8vo"
-path="res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-bd9bf7d3c60ce9eccb959569ac24254f.ctex"
+uid="uid://ceajah2kk1alc"
+path="res://.godot/imported/beast.png-42ed8841452099f6849e0016412627d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/home/campfire/icons/Tools_Crafting_Smithing_Forge_Smelter.png"
-dest_files=["res://.godot/imported/Tools_Crafting_Smithing_Forge_Smelter.png-bd9bf7d3c60ce9eccb959569ac24254f.ctex"]
+source_file="res://pieces/beast/beast.png"
+dest_files=["res://.godot/imported/beast.png-42ed8841452099f6849e0016412627d6.ctex"]
 
 [params]
 

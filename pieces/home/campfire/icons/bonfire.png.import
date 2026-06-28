@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwc0tk2wluw06"
-path="res://.godot/imported/Map_Markers_Cave_Cavern_Enterance_Exit.png-1f37d8949b35b5c67a0178c11fbb1357.ctex"
+uid="uid://di6o0v8kg04oy"
+path="res://.godot/imported/bonfire.png-393e280458d5b7a11a2d5e57b0996531.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pieces/beast/icon/Map_Markers_Cave_Cavern_Enterance_Exit.png"
-dest_files=["res://.godot/imported/Map_Markers_Cave_Cavern_Enterance_Exit.png-1f37d8949b35b5c67a0178c11fbb1357.ctex"]
+source_file="res://pieces/home/campfire/icons/bonfire.png"
+dest_files=["res://.godot/imported/bonfire.png-393e280458d5b7a11a2d5e57b0996531.ctex"]
 
 [params]
 

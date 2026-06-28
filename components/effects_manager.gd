@@ -136,7 +136,13 @@ func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	])
 	var target := left_panel.claim_loot_slot(item)
 	if target == null:
-		push_warning("Inventory full — loot lost")
+		# claim_slot_for returns null both when the inventory is full AND while a
+		# sort is rebuilding the grid. Distinguish the two: defer during a sort
+		# (it'll be added the instant the sort ends), only warn on a real full.
+		if left_panel.inventory.is_sorting():
+			left_panel.inventory.defer_add(item)
+		else:
+			push_warning("Inventory full — loot lost")
 		return
 	_fly_loot(item, world_slot, target)
 
