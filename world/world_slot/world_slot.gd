@@ -22,6 +22,43 @@ const RIVER_FRONTS := {
 	"river3": preload("res://pieces/river/icons/river3front.png"),
 }
 
+# --- Falling-leaf effect (forest tiles) --------------------------------------
+# Forest icons are detected by name prefix; rename to match your art
+# (e.g. "tree" if your sprites are tree1.png, tree2.png ...).
+const FOREST_PREFIX := "forest"
+# Sprite is 16x16 with ~50/50 trunk/canopy, so leaves only spawn in the top
+# rows. Columns are inset a touch so they start under the canopy, not its edge.
+const LEAF_COL_MIN := 2
+const LEAF_COL_MAX := 13
+const LEAF_ROW_MIN := 1
+const LEAF_ROW_MAX := 6
+# Spawn cadence per tile (seconds). Low + jittered = an occasional drift.
+const LEAF_INTERVAL_MIN := 1.8
+const LEAF_INTERVAL_MAX := 5.0
+const SECOND_LEAF_CHANCE := 0.25
+# Board-wide cap on how many trees may be mid-flurry at once. A tile can only
+# *start* dropping if it claims one of these tokens; it releases when its last
+# leaf lands. Already-dropping tiles are never interrupted.
+const MAX_CONCURRENT_DROPPERS := 4
+# All of these are in *sprite* pixels; they're multiplied by the tile's display
+# scale at spawn, so a leaf stays one art-pixel big and moves on the art grid
+# no matter what zoom the board is drawn at.
+const LEAF_FALL_MIN := 2.5   # downward speed, px/sec (kept slow on purpose)
+const LEAF_FALL_MAX := 4.0
+const LEAF_DIST_MIN := 6.0   # how far it drops before it's gone
+const LEAF_DIST_MAX := 11.0
+const LEAF_SWAY_MIN := 0.6   # horizontal rock amplitude
+const LEAF_SWAY_MAX := 1.6
+const LEAF_FREQ_MIN := 2.0   # rock speed, rad/sec
+const LEAF_FREQ_MAX := 3.5
+const LEAF_FADE_IN := 0.25
+const LEAF_FADE_OUT := 0.6
+# Once a leaf touches ground it rests, fully opaque, for this long (seconds)
+# before the fade-out begins.
+const LEAF_LINGER_MIN := 1.6
+const LEAF_LINGER_MAX := 2.8
+const LEAF_COLOR := Color(0.42, 0.62, 0.28)  # fallback tint when no prefix
+
 # A trailing layer: a TextureRect that replays icon1's motion `delay` frames
 # late, draws whatever textures[key] resolves to, and optionally runs a
 # per-show setup hook. Adding an effect = adding one of these in _ready().
@@ -38,6 +75,43 @@ class TrailLayer:
 		textures = layer_textures
 		on_show = setup
 		delay = trail_delay
+
+# One falling pixel. Stores screen-space motion (sprite px x tile scale baked in
+# at spawn) and rocks side to side on a sine while it descends, like a leaf.
+class Leaf:
+	var node: ColorRect
+	var base_x: float
+	var start_y: float
+	var fall_speed: float
+	var fall_time: float   # seconds of descent before it lands and rests
+	var sway_amp: float
+	var sway_freq: float
+	var sway_phase: float
+	var life: float
+	var fade_in: float
+	var fade_out: float
+	var age := 0.0
+
+	func is_falling() -> bool:
+		return age < fall_time
+
+	func advance(delta: float) -> bool:
+		age += delta
+		if age >= life:
+			return false
+		# Freeze descent and sway at the landing point, then it just sits there
+		# (lingering, then fading) for the rest of its life.
+		var t := minf(age, fall_time)
+		var x := base_x + sin(t * sway_freq + sway_phase) * sway_amp
+		var y := start_y + fall_speed * t
+		var a := 1.0
+		if age < fade_in:
+			a = age / fade_in
+		elif age > life - fade_out:
+			a = (life - age) / fade_out
+		node.position = Vector2(round(x), round(y))
+		node.modulate.a = clampf(a, 0.0, 1.0)
+		return true
 
 @onready var icon: TextureRect = %TextureRect
 @onready var icon2: TextureRect = %TextureRect2
@@ -60,6 +134,13 @@ var _max_delay := 0                   # longest layer delay; bounds trail histor
 var _trail: Array[Vector2] = []       # recent offsets of icon1
 var _shimmer_seed := randf() * 100.0  # per-tile noise offset so rivers don't sync
 
+static var _active_droppers := 0      # shared across every WorldSlot
+var _leaves: Array[Leaf] = []
+var _leaves_active := false           # this piece is a forest tile, drop leaves
+var _holding_token := false           # this tile currently owns a dropper token
+var _leaf_timer := 0.0
+var _leaf_host: Control               # plain Control so leaf churn never re-sorts
+
 signal update_display(piece)
 signal clicked
 
@@ -76,6 +157,15 @@ func _ready() -> void:
 		# Defensive: ensure no material/visibility leaks from the scene.
 		layer.node.material = null
 		layer.node.visible = false
+
+	# Host for falling-leaf pixels. A plain Control (not a container) so adding
+	# and removing leaf nodes never triggers a layout re-sort on the slot, and
+	# nothing repositions them behind our back. Added last => drawn on top of
+	# the icons, so leaves drift in front of the tree.
+	_leaf_host = Control.new()
+	_leaf_host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_leaf_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon.get_parent().add_child(_leaf_host)
 
 func _process(delta: float) -> void:
 	if floating:
@@ -105,6 +195,33 @@ func _process(delta: float) -> void:
 			var idx := newest - layer.delay
 			if idx >= 0:
 				layer.node.position = layer.base_pos + _trail[idx]
+
+	# Falling leaves (forest tiles). Independent of the tree's float, so a
+	# dropped leaf drifts on its own rather than swaying with the trunk.
+	if _leaves_active:
+		_leaf_timer -= delta
+		if _leaf_timer <= 0.0:
+			# Already-dropping tiles keep their token; idle ones must claim one,
+			# capping how many trees can leaf at the same moment board-wide.
+			if _holding_token or _try_claim_token():
+				_spawn_leaf()
+				if randf() < SECOND_LEAF_CHANCE:
+					_spawn_leaf()
+			_leaf_timer = randf_range(LEAF_INTERVAL_MIN, LEAF_INTERVAL_MAX)
+	var any_falling := false
+	if not _leaves.is_empty():
+		for i in range(_leaves.size() - 1, -1, -1):
+			if not _leaves[i].advance(delta):
+				if is_instance_valid(_leaves[i].node):
+					_leaves[i].node.queue_free()
+				_leaves.remove_at(i)
+			elif _leaves[i].is_falling():
+				any_falling = true
+	# The cap limits trees that are *actively dropping*. Release the slot as
+	# soon as this tile's leaves have all touched ground — they linger and fade
+	# as harmless residue while another tree gets a turn.
+	if _holding_token and not any_falling:
+		_release_token()
 
 func set_piece(data: PieceData) -> void:
 	piece = data
@@ -143,6 +260,8 @@ func _refresh_layers() -> void:
 			layer.node.material = null
 			layer.node.visible = false
 
+	_refresh_leaves(key)
+
 func _setup_shine_layer(layer: TrailLayer) -> void:
 	var mat := layer.node.material as ShaderMaterial
 	if mat == null:
@@ -154,6 +273,73 @@ func _setup_shine_layer(layer: TrailLayer) -> void:
 func _setup_front_layer(layer: TrailLayer) -> void:
 	# Plain faded layer. modulate.a only, so RGB stays untinted.
 	layer.node.modulate.a = 0.2
+
+# --- Leaves ------------------------------------------------------------------
+
+func _refresh_leaves(key: String) -> void:
+	_clear_leaves()
+	_leaves_active = _is_forest_key(key)
+	# Jitter the first spawn so a screenful of forest doesn't pulse in unison.
+	_leaf_timer = randf_range(0.0, LEAF_INTERVAL_MAX) if _leaves_active else 0.0
+
+func _is_forest_key(key: String) -> bool:
+	return key.begins_with(FOREST_PREFIX)
+
+func _try_claim_token() -> bool:
+	if _active_droppers >= MAX_CONCURRENT_DROPPERS:
+		return false
+	_active_droppers += 1
+	_holding_token = true
+	return true
+
+func _release_token() -> void:
+	if _holding_token:
+		_holding_token = false
+		_active_droppers -= 1
+
+func _spawn_leaf() -> void:
+	if _leaf_host == null:
+		return
+	var px := icon.size.x / 16.0   # screen pixels per sprite pixel
+	if px <= 0.0:
+		return                      # layout not settled yet; skip this beat
+
+	var col := randi_range(LEAF_COL_MIN, LEAF_COL_MAX)
+	var row := randi_range(LEAF_ROW_MIN, LEAF_ROW_MAX)
+
+	var leaf := Leaf.new()
+	leaf.base_x = col * px
+	leaf.start_y = row * px
+	leaf.fall_speed = randf_range(LEAF_FALL_MIN, LEAF_FALL_MAX) * px
+	leaf.fall_time = (randf_range(LEAF_DIST_MIN, LEAF_DIST_MAX) * px) / leaf.fall_speed
+	leaf.sway_amp = randf_range(LEAF_SWAY_MIN, LEAF_SWAY_MAX) * px
+	leaf.sway_freq = randf_range(LEAF_FREQ_MIN, LEAF_FREQ_MAX)
+	leaf.sway_phase = randf() * TAU
+	leaf.fade_in = LEAF_FADE_IN
+	leaf.fade_out = LEAF_FADE_OUT
+	# fall -> linger on the ground -> fade out.
+	leaf.life = leaf.fall_time + randf_range(LEAF_LINGER_MIN, LEAF_LINGER_MAX) + leaf.fade_out
+
+	var s := maxf(1.0, round(px))   # one art-pixel block
+	var rect := ColorRect.new()
+	# Leaf takes the tile's first-prefix color (falls back to the leaf green).
+	rect.color = piece.loot1.color if (piece and piece.loot1) else LEAF_COLOR
+	rect.size = Vector2(s, s)
+	rect.position = Vector2(round(leaf.base_x), round(leaf.start_y))
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect.modulate.a = 0.0          # advance() fades it in on the first frame
+	leaf.node = rect
+	_leaf_host.add_child(rect)
+	_leaves.append(leaf)
+
+func _clear_leaves() -> void:
+	for leaf in _leaves:
+		if is_instance_valid(leaf.node):
+			leaf.node.queue_free()
+	_leaves.clear()
+	_release_token()   # never strand a token when a tile is swapped/removed
+
+# --- Prefix / recolor --------------------------------------------------------
 
 func _apply_icon_colors() -> void:
 	if piece == null:
@@ -205,6 +391,8 @@ func _remove() -> void:
 		layer.node.material = null
 		layer.node.visible = false
 	_trail.clear()
+	_leaves_active = false
+	_clear_leaves()
 	floating = false
 	_kill_tween()
 	tween = create_tween()
