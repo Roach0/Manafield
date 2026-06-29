@@ -2,13 +2,15 @@ extends Node
 class_name AmbientAudio
 
 ## Proximity-driven ambient beds for the world grid. Reads each slot's
-## piece.ambient; for every distinct bed it finds the nearest emitting tile to
-## the mouse and sets that bed's volume + pan. One looping player per bed,
-## however many tiles carry it. Decoupled from WorldSlot — it only *reads*.
+## piece.ambient (or piece.river_ambience for rivers); for every distinct bed it
+## finds the nearest emitting tile to the mouse and sets that bed's volume + pan.
+## One looping player per bed. Decoupled from WorldSlot — it only *reads*.
 
 @export var world: World                 # drag your %World node here in the inspector
 @export var rescan_interval := 0.25      # how often to re-learn tile→bed mapping
 @export var smoothing := 10.0            # higher = volume/pan chase faster
+
+const GRID_COLS := 13   # mirrors World's hardcoded 13×13 board
 
 class _Bed:
 	var sound: AmbientSound
@@ -33,21 +35,53 @@ func rebuild() -> void:
 		return
 	for bed: _Bed in _beds.values():
 		bed.positions = PackedVector2Array()
-	for child in world.grid.get_children():
-		var slot := child as WorldSlot
+
+	var children := world.grid.get_children()
+
+	# Pass 1: which grid coords hold a river tile? (anything carrying river_ambience)
+	var river_coords := {}   # Vector2i -> true
+	for i in children.size():
+		var slot := children[i] as WorldSlot
 		if slot == null or slot.piece == null:
 			continue
-		var snd: AmbientSound = slot.piece.ambient
-		if snd == null:
+		if slot.piece.river_ambience != null:
+			river_coords[Vector2i(i % GRID_COLS, i / GRID_COLS)] = true
+
+	# Pass 2: route each tile into the right bed.
+	for i in children.size():
+		var slot := children[i] as WorldSlot
+		if slot == null or slot.piece == null:
 			continue
 		if _tile_px <= 0.0 and slot.size.x > 0.0:
 			_tile_px = slot.size.x
 		var centre := slot.global_position + slot.size * 0.5
+
+		var snd: AmbientSound = null
+		var riv: RiverAmbience = slot.piece.river_ambience
+		if riv != null:
+			var coord := Vector2i(i % GRID_COLS, i / GRID_COLS)
+			var n := _count_river_neighbors(coord, river_coords)
+			snd = riv.shore_sound if n >= riv.shore_neighbor_threshold else riv.stream_sound
+		else:
+			snd = slot.piece.ambient
+		if snd == null:
+			continue
+
 		var bed: _Bed = _beds.get(snd)
 		if bed == null:
 			bed = _make_bed(snd)
 			_beds[snd] = bed
 		bed.positions.push_back(centre)
+
+func _count_river_neighbors(coord: Vector2i, river_coords: Dictionary) -> int:
+	var n := 0
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			if dx == 0 and dy == 0:
+				continue
+			if river_coords.has(coord + Vector2i(dx, dy)):
+				n += 1
+	return n
 
 func _make_bed(snd: AmbientSound) -> _Bed:
 	var bed := _Bed.new()
@@ -117,7 +151,6 @@ func _process(delta: float) -> void:
 		bed.player.volume_db = bed.cur_db
 		(AudioServer.get_bus_effect(bed.bus_idx, 0) as AudioEffectPanner).pan = bed.cur_pan
 
-		# pause when effectively silent; resume when it climbs back
 		var audible := bed.cur_db > -60.0
 		if bed.player.stream_paused and audible:
 			bed.player.stream_paused = false

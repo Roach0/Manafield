@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://3gsdiru01kxl" path="res://pieces/forest/forest.gd" id="1_8qdey"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_e00b2"]
+[ext_resource type="Resource" uid="uid://cndemhtlltu4l" path="res://pieces/forest/sounds/forest_sound.tres" id="1_tspdg"]
 [ext_resource type="Texture2D" uid="uid://dppciv4t7dust" path="res://pieces/forest/icon/forest1.png" id="2_3cwt3"]
 [ext_resource type="Texture2D" uid="uid://bn3n3aans3126" path="res://pieces/forest/icon/forest2.png" id="3_tspdg"]
 [ext_resource type="Texture2D" uid="uid://dp4iiflcjinlg" path="res://pieces/forest/icon/forest3.png" id="4_ojr72"]
@@ -21,4 +22,5 @@ description = "Trees, winding into the dark."
 loot_pool = Array[ExtResource("6_hsi70")]([ExtResource("7_3cwt3"), ExtResource("8_tspdg")])
 prefix_pool = 3
 prefix_count = 2
+ambient = ExtResource("1_tspdg")
 metadata/_custom_type_script = "uid://3gsdiru01kxl"

@@ -9,14 +9,14 @@ class_name EffectsManager
 @export var prefix_pool_3: Array[Prefix]
 var _loot_overlay: CanvasLayer
 
+var _hovered_piece: PieceData   # SFX: tracks current hover for the tick sound
+
 func _ready() -> void:
 	world.update_display.connect(_on_update_display)
 	world.piece_click_requested.connect(_on_piece_click_requested)
 	left_panel.inventory.yield_flight_requested.connect(_on_yield_flight_requested)
 	left_panel.inventory.sort_flight_requested.connect(_on_sort_flight_requested)
 	left_panel.inventory.item_hovered.connect(_on_inventory_item_hovered)
-
-
 
 
 # core
@@ -48,8 +48,6 @@ func _can_afford(resource_name: String, amount: int) -> bool:
 		"hunger": return left_panel.player.hunger >= amount
 		"nerve":  return left_panel.player.nerve >= amount
 		_: return true # unrecognized resource — don't block on something we don't understand
-
-
 
 
 # Prefix assignment
@@ -84,6 +82,8 @@ func fill_prefix_pools():
 
 func _on_update_display(piece: PieceData) -> void:
 	right_panel.update_display(piece)
+	Sfx.play(piece.hover_sound)     # SFX: hover (null-safe, plays nothing if unset)
+	_hovered_piece = piece          # SFX: remember for tick
 
 func _on_piece_click_requested(slot: WorldSlot) -> void:
 	var piece := slot.piece
@@ -98,6 +98,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 			return
 		_pay_cost(resource_name, amount)
 	var result: Dictionary = piece._click()
+	Sfx.play(piece.click_sound)     # SFX: click (after affordability passed)
 	slot.health = piece.health
 	right_panel.update_display(piece)
 	if not result.is_empty():
@@ -105,6 +106,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		if result.get("loot", false):
 			_grant_loot(piece, slot)
 	if piece.health_max > 0 and piece.health <= 0:
+		Sfx.play(piece.destroy_sound)   # SFX: destroy (before the piece is swapped out)
 		piece._destroy()
 		world.replace_with(slot, piece)
 
@@ -114,12 +116,19 @@ func _on_yield_flight_requested(item: ItemData, from_slot: InventorySlot, to_slo
 func _on_click_denied(resource_name: String, amount: int) -> void:
 	push_warning("Not enough %s to interact (need %d)" % [resource_name, amount])
 	# hook for feedback later — flash the slot, play a sound, shake the UI, etc.
+	# SFX: a "denied" buzz would go here, e.g. Sfx.play(denied_sound)
 
 func _on_inventory_item_hovered(item: ItemData) -> void:
 	if item != null:
 		right_panel.update_item_display(item)
 	else:
 		right_panel.clear_display()
+
+# SFX: call this from wherever a turn advances (e.g. GameManager when
+# remaining_turns decrements). Plays only the hovered tile's tick, not all ~168.
+func _on_game_ticked() -> void:
+	if _hovered_piece:
+		Sfx.play(_hovered_piece.tick_sound)
 
 func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	var item := piece.pick_loot()

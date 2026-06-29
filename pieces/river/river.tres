@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cq8nytxjsy6lj" path="res://pieces/river/icons/river3.png" id="4_kjrkh"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_kjrkh"]
 [ext_resource type="Resource" uid="uid://doluegqixjcjc" path="res://items/fish/fish.tres" id="6_kxboq"]
+[ext_resource type="Resource" uid="uid://cis4b6ewyry7y" path="res://pieces/river/sounds/river_ambience.tres" id="7_kxboq"]
 
 [resource]
 script = ExtResource("2_qlmmg")
@@ -17,4 +18,5 @@ description = "Calmly running water."
 loot_pool = Array[ExtResource("5_kjrkh")]([ExtResource("6_kxboq")])
 prefix_pool = 1
 prefix_count = 1
+river_ambience = ExtResource("7_kxboq")
 metadata/_custom_type_script = "uid://dxjjisis664hn"

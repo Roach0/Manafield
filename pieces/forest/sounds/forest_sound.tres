@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AmbientSound" format=3 uid="uid://cndemhtlltu4l"]
+
+[ext_resource type="Script" uid="uid://cjmwb2baxu2bh" path="res://sound/ambient_sound.gd" id="1_4tvji"]
+[ext_resource type="AudioStream" uid="uid://lgf2bsr7457o" path="res://pieces/forest/sounds/forest1.mp3" id="2_8vugr"]
+
+[resource]
+script = ExtResource("1_4tvji")
+stream = ExtResource("2_8vugr")
+far_tiles = 3.0
+metadata/_custom_type_script = "uid://cjmwb2baxu2bh"
