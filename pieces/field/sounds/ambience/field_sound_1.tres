@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="AmbientSound" format=3 uid="uid://carlyelgrmhnt"]
 
-[ext_resource type="Script" uid="uid://cjmwb2baxu2bh" path="res://sound/ambient_sound.gd" id="1_3demr"]
-[ext_resource type="AudioStream" uid="uid://btkfawvurw13e" path="res://pieces/field/sounds/ambience/summer-night-crickets_136bpm_D_minor.wav" id="2_3demr"]
+[ext_resource type="Script" uid="uid://cjmwb2baxu2bh" path="res://sound/ambient_sound.gd" id="1_prp44"]
+[ext_resource type="AudioStream" uid="uid://voixb7tk88wt" path="res://pieces/field/sounds/ambience/field_ambience_loop.wav" id="2_syprp"]
 
 [resource]
-script = ExtResource("1_3demr")
-stream = ExtResource("2_3demr")
+script = ExtResource("1_prp44")
+stream = ExtResource("2_syprp")
 far_tiles = 4.0
 falloff = 6.0
 metadata/_custom_type_script = "uid://cjmwb2baxu2bh"
