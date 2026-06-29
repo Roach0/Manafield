@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b7e0fsblhhsmb" path="res://pieces/home/expansions/cabin/cabin.gd" id="1_p1wbv"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wkrv1"]
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_dht6q"]
+[ext_resource type="AudioStream" uid="uid://dv1bs0aqa2ykb" path="res://pieces/home/expansions/cabin/sound/build_place.wav" id="2_jbls4"]
 [ext_resource type="Texture2D" uid="uid://bwc4j2dm2mj6s" path="res://pieces/home/expansions/cabin/icon/cabin.png" id="4_jbls4"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_8vjdj"]
 
@@ -15,4 +16,6 @@ icons = Array[Texture2D]([ExtResource("4_jbls4")])
 description = "Home sweet home!"
 can_build_on = Array[ExtResource("1_wkrv1")]([ExtResource("2_dht6q")])
 ambient = ExtResource("1_7l7fq")
+click_sounds = Array[AudioStream]([ExtResource("2_jbls4")])
+build_sound = ExtResource("2_jbls4")
 metadata/_custom_type_script = "uid://b7e0fsblhhsmb"

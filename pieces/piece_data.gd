@@ -25,6 +25,7 @@ class_name PieceData
 @export var destroy_sound: AudioStream
 @export var complete_sound: AudioStream
 @export var tick_sounds: Array[AudioStream]
+@export var build_sound: AudioStream
 @export_group("")
 var mods: Array
 var selected_icon: Texture2D

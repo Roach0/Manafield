@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Campfire" format=3 uid="uid://deov883olrhv7"]
 
+[ext_resource type="AudioStream" uid="uid://dv1bs0aqa2ykb" path="res://pieces/home/expansions/cabin/sound/build_place.wav" id="1_ompw2"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_tppjt"]
 [ext_resource type="Script" uid="uid://cib83pbny5lnj" path="res://pieces/home/campfire/campfire.gd" id="2_ow07p"]
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_yo2cq"]
@@ -14,4 +15,6 @@ icons = Array[Texture2D]([ExtResource("3_yo2cq")])
 progress_max = 30
 description = "A warm fire.  On click, restore 1 Nerve."
 can_build_on = Array[ExtResource("1_tppjt")]([ExtResource("2_yo2cq")])
+click_sounds = Array[AudioStream]([ExtResource("1_ompw2")])
+build_sound = ExtResource("1_ompw2")
 metadata/_custom_type_script = "uid://cib83pbny5lnj"

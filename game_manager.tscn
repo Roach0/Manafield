@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="2_eakoi"]
 [ext_resource type="Resource" uid="uid://c0eaaeef267ro" path="res://pieces/home/expansions/cabin/cabin.tres" id="3_f0lch"]
 [ext_resource type="PackedScene" uid="uid://cwirhrnv8yf3p" path="res://right_panel/right_panel.tscn" id="3_o2178"]
+[ext_resource type="Resource" uid="uid://deov883olrhv7" path="res://pieces/home/campfire/campfire.tres" id="4_lx373"]
 [ext_resource type="Script" uid="uid://01pt1rp5gf0p" path="res://components/prefix/prefix.gd" id="6_le433"]
 [ext_resource type="Resource" uid="uid://cm80a3hak45x6" path="res://components/prefix/verdant/verdant.tres" id="7_2tadr"]
 [ext_resource type="Resource" uid="uid://bartx2rdwneox" path="res://components/prefix/armored/armored.tres" id="7_tmn8n"]
@@ -37,7 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_shwjl")
-start_pieces = Array[ExtResource("2_eakoi")]([ExtResource("3_f0lch")])
+start_pieces = Array[ExtResource("2_eakoi")]([ExtResource("3_f0lch"), ExtResource("4_lx373")])
 remaining_turns = 200
 
 [node name="BG" type="Panel" parent="." unique_id=952238281]

@@ -26,6 +26,7 @@ func new_game() -> void:
 
 func _on_piece_placed(piece_data: PieceData, next_piece: PieceData) -> void:
 	print("placed: ", piece_data.name)
+	Sfx.play(piece_data.build_sound)   # SFX: build placement
 	if next_piece:
 		right_panel.update_build_display(next_piece)
 
