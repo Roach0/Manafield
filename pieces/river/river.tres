@@ -1,13 +1,20 @@
 [gd_resource type="Resource" script_class="River" format=3 uid="uid://k7r102iitpfa"]
 
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_yj2pk"]
+[ext_resource type="AudioStream" uid="uid://bq7w6rqfyic5p" path="res://pieces/river/sounds/hover/river_hover_1.wav" id="2_51dun"]
 [ext_resource type="Script" uid="uid://dxjjisis664hn" path="res://pieces/river/river.gd" id="2_qlmmg"]
 [ext_resource type="Texture2D" uid="uid://di8n72gvqhpwa" path="res://pieces/river/icons/river1.png" id="2_yj2pk"]
+[ext_resource type="AudioStream" uid="uid://b4qgmhlda1tqc" path="res://pieces/river/sounds/hover/river_hover_2.wav" id="3_d2t0f"]
 [ext_resource type="Texture2D" uid="uid://dr02dqkijqor6" path="res://pieces/river/icons/river2.png" id="3_ed8kv"]
+[ext_resource type="AudioStream" uid="uid://drhvtc183ma1c" path="res://pieces/river/sounds/hover/river_hover_3.wav" id="4_05gt3"]
 [ext_resource type="Texture2D" uid="uid://cq8nytxjsy6lj" path="res://pieces/river/icons/river3.png" id="4_kjrkh"]
+[ext_resource type="AudioStream" uid="uid://d38gj4xikc8n7" path="res://pieces/river/sounds/hover/river_hover_4.wav" id="5_5g1pv"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_kjrkh"]
+[ext_resource type="AudioStream" uid="uid://c7xdk5duxtnb1" path="res://pieces/river/sounds/hover/river_hover_6.wav" id="6_c5kyw"]
 [ext_resource type="Resource" uid="uid://doluegqixjcjc" path="res://items/fish/fish.tres" id="6_kxboq"]
-[ext_resource type="Resource" uid="uid://cis4b6ewyry7y" path="res://pieces/river/sounds/river_ambience.tres" id="7_kxboq"]
+[ext_resource type="AudioStream" uid="uid://se7d4l8e6v41" path="res://pieces/river/sounds/hover/river_hover_5.wav" id="6_relyf"]
+[ext_resource type="AudioStream" uid="uid://c4i2lxgoxcb8g" path="res://pieces/river/sounds/hover/river_hover_7.wav" id="6_rn83e"]
+[ext_resource type="Resource" uid="uid://cis4b6ewyry7y" path="res://pieces/river/sounds/ambience/river_ambience.tres" id="8_d2t0f"]
 
 [resource]
 script = ExtResource("2_qlmmg")
@@ -18,5 +25,6 @@ description = "Calmly running water."
 loot_pool = Array[ExtResource("5_kjrkh")]([ExtResource("6_kxboq")])
 prefix_pool = 1
 prefix_count = 1
-river_ambience = ExtResource("7_kxboq")
+river_ambience = ExtResource("8_d2t0f")
+hover_sounds = Array[AudioStream]([ExtResource("2_51dun"), ExtResource("3_d2t0f"), ExtResource("4_05gt3"), ExtResource("5_5g1pv"), ExtResource("6_relyf"), ExtResource("6_c5kyw"), ExtResource("6_rn83e")])
 metadata/_custom_type_script = "uid://dxjjisis664hn"

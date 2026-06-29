@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RiverAmbience" format=3 uid="uid://cis4b6ewyry7y"]
+
+[ext_resource type="Script" uid="uid://csasm134hqug1" path="res://pieces/river/sounds/ambience/river_ambience.gd" id="1_cdp6n"]
+[ext_resource type="Resource" uid="uid://cvn7b3pqjjw2n" path="res://pieces/river/sounds/ambience/shore_waves.tres" id="2_07l2m"]
+[ext_resource type="Resource" uid="uid://cl62grmelo54e" path="res://pieces/river/sounds/ambience/stream_water.tres" id="3_dng5i"]
+
+[resource]
+script = ExtResource("1_cdp6n")
+stream_sound = ExtResource("3_dng5i")
+shore_sound = ExtResource("2_07l2m")
+metadata/_custom_type_script = "uid://csasm134hqug1"
