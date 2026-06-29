@@ -59,6 +59,27 @@ const LEAF_LINGER_MIN := 1.6
 const LEAF_LINGER_MAX := 2.8
 const LEAF_COLOR := Color(0.42, 0.62, 0.28)  # fallback tint when no prefix
 
+# --- Glimmer effect (boulder tiles) ------------------------------------------
+# Boulder icons detected by name prefix; rename to match your art.
+const BOULDER_PREFIX := "boulder"
+# Boulder is centred in the sprite, so glimmers stay in an inset box around the
+# middle, away from the top/bottom edges.
+const GLIMMER_COL_MIN := 4
+const GLIMMER_COL_MAX := 11
+const GLIMMER_ROW_MIN := 5
+const GLIMMER_ROW_MAX := 10
+# Very occasional: long jittered gap between attempts, and not every attempt
+# actually fires.
+const GLIMMER_INTERVAL_MIN := 6.0
+const GLIMMER_INTERVAL_MAX := 14.0
+const GLIMMER_CHANCE := 0.6
+# Sparkle shape/timing. Arm length in *sprite* pixels (x tile scale at spawn).
+const GLIMMER_ARM_MIN := 1.5   # peak half-length of each arm of the cross
+const GLIMMER_ARM_MAX := 2.5
+const GLIMMER_LIFE_MIN := 0.65
+const GLIMMER_LIFE_MAX := 0.95
+const GLIMMER_COLOR := Color(1.0, 1.0, 1.0)
+
 # A trailing layer: a TextureRect that replays icon1's motion `delay` frames
 # late, draws whatever textures[key] resolves to, and optionally runs a
 # per-show setup hook. Adding an effect = adding one of these in _ready().
@@ -113,6 +134,35 @@ class Leaf:
 		node.modulate.a = clampf(a, 0.0, 1.0)
 		return true
 
+# A gem-style sparkle: two thin crossing bars that grow from a point, peak, and
+# retract on a sin envelope, so arm-length and brightness rise and fall as one.
+# Brief and self-contained — spawned, then frees its nodes when its life ends.
+class Glimmer:
+	var vbar: ColorRect   # vertical arm
+	var hbar: ColorRect   # horizontal arm
+	var center: Vector2   # fixed screen-space centre
+	var px: float         # one sprite pixel in screen px (bar thickness)
+	var arm: float        # peak half-length of each arm, screen px
+	var life: float
+	var age := 0.0
+
+	func advance(delta: float) -> bool:
+		age += delta
+		if age >= life:
+			return false
+		var e := sin(PI * age / life)          # 0 -> 1 -> 0
+		var half := roundf(e * arm)
+		var thick := maxf(1.0, round(px))
+		var span := maxf(thick, half * 2.0 + thick)
+		var a := clampf(e, 0.0, 1.0)
+		vbar.size = Vector2(thick, span)
+		vbar.position = (center - Vector2(thick, span) * 0.5).round()
+		vbar.modulate.a = a
+		hbar.size = Vector2(span, thick)
+		hbar.position = (center - Vector2(span, thick) * 0.5).round()
+		hbar.modulate.a = a
+		return true
+
 @onready var icon: TextureRect = %TextureRect
 @onready var icon2: TextureRect = %TextureRect2
 @onready var icon3: TextureRect = %TextureRect3
@@ -140,6 +190,10 @@ var _leaves_active := false           # this piece is a forest tile, drop leaves
 var _holding_token := false           # this tile currently owns a dropper token
 var _leaf_timer := 0.0
 var _leaf_host: Control               # plain Control so leaf churn never re-sorts
+
+var _glimmers: Array[Glimmer] = []
+var _glimmers_active := false         # this piece is a boulder tile, sparkle it
+var _glimmer_timer := 0.0
 
 signal update_display(piece)
 signal clicked
@@ -223,6 +277,19 @@ func _process(delta: float) -> void:
 	if _holding_token and not any_falling:
 		_release_token()
 
+	# Boulder glimmer. No cap or pooling — rare and cheap.
+	if _glimmers_active:
+		_glimmer_timer -= delta
+		if _glimmer_timer <= 0.0:
+			if randf() < GLIMMER_CHANCE:
+				_spawn_glimmer()
+			_glimmer_timer = randf_range(GLIMMER_INTERVAL_MIN, GLIMMER_INTERVAL_MAX)
+	if not _glimmers.is_empty():
+		for i in range(_glimmers.size() - 1, -1, -1):
+			if not _glimmers[i].advance(delta):
+				_free_glimmer(_glimmers[i])
+				_glimmers.remove_at(i)
+
 func set_piece(data: PieceData) -> void:
 	piece = data
 	piece.pick_icon()
@@ -261,6 +328,7 @@ func _refresh_layers() -> void:
 			layer.node.visible = false
 
 	_refresh_leaves(key)
+	_refresh_glimmers(key)
 
 func _setup_shine_layer(layer: TrailLayer) -> void:
 	var mat := layer.node.material as ShaderMaterial
@@ -339,6 +407,56 @@ func _clear_leaves() -> void:
 	_leaves.clear()
 	_release_token()   # never strand a token when a tile is swapped/removed
 
+# --- Glimmers ----------------------------------------------------------------
+
+func _refresh_glimmers(key: String) -> void:
+	_clear_glimmers()
+	_glimmers_active = _is_boulder_key(key)
+	# Start a full interval out so a boulder doesn't sparkle the instant it spawns.
+	_glimmer_timer = randf_range(GLIMMER_INTERVAL_MIN, GLIMMER_INTERVAL_MAX) if _glimmers_active else 0.0
+
+func _is_boulder_key(key: String) -> bool:
+	return key.begins_with(BOULDER_PREFIX)
+
+func _spawn_glimmer() -> void:
+	if _leaf_host == null:
+		return
+	var px := icon.size.x / 16.0   # screen pixels per sprite pixel
+	if px <= 0.0:
+		return
+
+	var col := randi_range(GLIMMER_COL_MIN, GLIMMER_COL_MAX)
+	var row := randi_range(GLIMMER_ROW_MIN, GLIMMER_ROW_MAX)
+
+	var g := Glimmer.new()
+	g.px = px
+	g.center = Vector2(col * px + px * 0.5, row * px + px * 0.5)  # centre of that pixel
+	g.arm = randf_range(GLIMMER_ARM_MIN, GLIMMER_ARM_MAX) * px
+	g.life = randf_range(GLIMMER_LIFE_MIN, GLIMMER_LIFE_MAX)
+	g.vbar = _make_glimmer_bar()
+	g.hbar = _make_glimmer_bar()
+	_leaf_host.add_child(g.vbar)
+	_leaf_host.add_child(g.hbar)
+	_glimmers.append(g)
+
+func _make_glimmer_bar() -> ColorRect:
+	var r := ColorRect.new()
+	r.color = GLIMMER_COLOR
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	r.modulate.a = 0.0   # advance() drives the twinkle in/out
+	return r
+
+func _free_glimmer(g: Glimmer) -> void:
+	if is_instance_valid(g.vbar):
+		g.vbar.queue_free()
+	if is_instance_valid(g.hbar):
+		g.hbar.queue_free()
+
+func _clear_glimmers() -> void:
+	for g in _glimmers:
+		_free_glimmer(g)
+	_glimmers.clear()
+
 # --- Prefix / recolor --------------------------------------------------------
 
 func _apply_icon_colors() -> void:
@@ -393,6 +511,8 @@ func _remove() -> void:
 	_trail.clear()
 	_leaves_active = false
 	_clear_leaves()
+	_glimmers_active = false
+	_clear_glimmers()
 	floating = false
 	_kill_tween()
 	tween = create_tween()

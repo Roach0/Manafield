@@ -20,6 +20,9 @@ class_name PieceData
 @export var prefix_pool: int = 0   # 0 = none, 1/2/3 = which EffectsManager pool
 @export var prefix_count: int = 0  # 0, 1, or 2 colored regions
 
+# --- Ambient audio ---
+@export var ambient: AmbientSound   # optional; leave null for silent tiles
+
 var mods: Array
 var selected_icon: Texture2D
 var loot1: Prefix
