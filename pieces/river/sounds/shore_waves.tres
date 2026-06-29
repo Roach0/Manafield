@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_t4i16")
 stream = ExtResource("2_ifry0")
-far_tiles = 4.0
+far_tiles = 5.0
 metadata/_custom_type_script = "uid://cjmwb2baxu2bh"

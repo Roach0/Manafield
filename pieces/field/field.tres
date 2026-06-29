@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="Field" format=3 uid="uid://bd8ujfhrb8r11"]
 
+[ext_resource type="Resource" uid="uid://carlyelgrmhnt" path="res://pieces/field/sounds/field/field_sound_1.tres" id="1_hv03d"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_thtcl"]
 [ext_resource type="Texture2D" uid="uid://d0ccor27ijrug" path="res://pieces/field/icon/field3.png" id="3_ja4mi"]
 [ext_resource type="Script" uid="uid://bbf7035dqtram" path="res://pieces/field/field.gd" id="4_thtcl"]
@@ -21,4 +22,5 @@ description = "A lonely little field for thinking.  On complete, gain a Building
 loot_pool = Array[ExtResource("7_1y10a")]([ExtResource("8_hv03d"), ExtResource("9_1y10a")])
 prefix_pool = 2
 prefix_count = 1
+ambient = ExtResource("1_hv03d")
 metadata/_custom_type_script = "uid://bbf7035dqtram"
