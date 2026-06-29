@@ -9,6 +9,7 @@ class_name AmbientAudio
 @export var world: World                 # drag your %World node here in the inspector
 @export var rescan_interval := 0.25      # how often to re-learn tile→bed mapping
 @export var smoothing := 10.0            # higher = volume/pan chase faster
+@export var presence_fade := 14.0        # how fast everything fades when the mouse leaves/enters the world
 
 const GRID_COLS := 13   # mirrors World's hardcoded 13×13 board
 
@@ -24,6 +25,7 @@ var _beds: Dictionary = {}                # AmbientSound -> _Bed
 var _tile_px := 0.0
 var _rescan_timer := 0.0
 var _bus_counter := 0
+var _presence := 0.0                      # 0 = mouse outside world, 1 = inside (smoothed)
 
 func _ready() -> void:
 	if world == null:
@@ -127,6 +129,12 @@ func _process(delta: float) -> void:
 	var mouse := world.get_global_mouse_position()
 	var t := 1.0 - exp(-smoothing * delta)   # fps-independent smoothing
 
+	# World-presence gate: pull everything toward silence when the mouse is
+	# outside the world rect, regardless of how close an edge tile is.
+	var inside := world.get_global_rect().has_point(mouse)
+	_presence = lerpf(_presence, 1.0 if inside else 0.0, 1.0 - exp(-presence_fade * delta))
+	var presence_db := clampf(linear_to_db(maxf(_presence, 0.0001)), -80.0, 0.0)
+
 	for bed: _Bed in _beds.values():
 		var target_db := -80.0
 		var target_pan := 0.0
@@ -148,13 +156,16 @@ func _process(delta: float) -> void:
 
 		bed.cur_db = lerpf(bed.cur_db, target_db, t)
 		bed.cur_pan = lerpf(bed.cur_pan, target_pan, t)
-		bed.player.volume_db = bed.cur_db
+
+		var out_db := bed.cur_db + presence_db   # proximity volume, gated by presence
+		bed.player.volume_db = out_db
 		(AudioServer.get_bus_effect(bed.bus_idx, 0) as AudioEffectPanner).pan = bed.cur_pan
 
-		var audible := bed.cur_db > -60.0
+		# pause when effectively silent (proximity OR presence drove it down)
+		var audible := out_db > -60.0
 		if bed.player.stream_paused and audible:
 			bed.player.stream_paused = false
-		elif not bed.player.stream_paused and not audible and target_db <= -80.0:
+		elif not bed.player.stream_paused and not audible:
 			bed.player.stream_paused = true
 
 func _gain_for(snd: AmbientSound, dist_tiles: float) -> float:

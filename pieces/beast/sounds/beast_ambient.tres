@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AmbientSound" format=3 uid="uid://sugkkl4xgnxg"]
+
+[ext_resource type="Script" uid="uid://cjmwb2baxu2bh" path="res://sound/ambient_sound.gd" id="1_0lo41"]
+[ext_resource type="AudioStream" uid="uid://4dstgk0yft4b" path="res://pieces/beast/sounds/pad-drone-sacred-air-motion_D_minor.wav" id="2_emqpk"]
+
+[resource]
+script = ExtResource("1_0lo41")
+stream = ExtResource("2_emqpk")
+far_tiles = 2.5
+metadata/_custom_type_script = "uid://cjmwb2baxu2bh"

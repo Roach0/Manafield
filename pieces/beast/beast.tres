@@ -1,7 +1,8 @@
 [gd_resource type="Resource" script_class="Beast" format=3 uid="uid://ckv4rhdhye0lk"]
 
+[ext_resource type="Resource" uid="uid://sugkkl4xgnxg" path="res://pieces/beast/sounds/beast_ambient.tres" id="1_11lg4"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wbti8"]
-[ext_resource type="Texture2D" uid="uid://ceajah2kk1alc" path="res://pieces/beast/beast.png" id="2_klb2x"]
+[ext_resource type="Texture2D" uid="uid://ceajah2kk1alc" path="res://pieces/beast/icon/beast.png" id="2_klb2x"]
 [ext_resource type="Script" uid="uid://bhgqbkp45h6e8" path="res://pieces/beast/beast.gd" id="2_v6hhs"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="3_klb2x"]
 
@@ -16,4 +17,5 @@ progress_max = 200
 description = "something lives here..."
 prefix_pool = 2
 prefix_count = 1
+ambient = ExtResource("1_11lg4")
 metadata/_custom_type_script = "uid://bhgqbkp45h6e8"
