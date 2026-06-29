@@ -19,6 +19,8 @@ func _ready() -> void:
 	left_panel.inventory.item_hovered.connect(_on_inventory_item_hovered)
 
 
+
+
 # core
 
 func _apply_stat_effect(effect_name: String, amount: int) -> void:
@@ -48,6 +50,8 @@ func _can_afford(resource_name: String, amount: int) -> bool:
 		"hunger": return left_panel.player.hunger >= amount
 		"nerve":  return left_panel.player.nerve >= amount
 		_: return true # unrecognized resource — don't block on something we don't understand
+
+
 
 
 # Prefix assignment
@@ -82,8 +86,8 @@ func fill_prefix_pools():
 
 func _on_update_display(piece: PieceData) -> void:
 	right_panel.update_display(piece)
-	Sfx.play(piece.hover_sound)     # SFX: hover (null-safe, plays nothing if unset)
-	_hovered_piece = piece          # SFX: remember for tick
+	Sfx.play_cycle(piece.hover_sounds, piece.type_id + ":hover")   # SFX: hover (cycles)
+	_hovered_piece = piece                                         # SFX: remember for tick
 
 func _on_piece_click_requested(slot: WorldSlot) -> void:
 	var piece := slot.piece
@@ -98,7 +102,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 			return
 		_pay_cost(resource_name, amount)
 	var result: Dictionary = piece._click()
-	Sfx.play(piece.click_sound)     # SFX: click (after affordability passed)
+	Sfx.play_cycle(piece.click_sounds, piece.type_id + ":click")   # SFX: click (cycles, after affordability)
 	slot.health = piece.health
 	right_panel.update_display(piece)
 	if not result.is_empty():
@@ -106,7 +110,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		if result.get("loot", false):
 			_grant_loot(piece, slot)
 	if piece.health_max > 0 and piece.health <= 0:
-		Sfx.play(piece.destroy_sound)   # SFX: destroy (before the piece is swapped out)
+		Sfx.play(piece.destroy_sound)   # SFX: destroy (single, before swap)
 		piece._destroy()
 		world.replace_with(slot, piece)
 
@@ -128,7 +132,7 @@ func _on_inventory_item_hovered(item: ItemData) -> void:
 # remaining_turns decrements). Plays only the hovered tile's tick, not all ~168.
 func _on_game_ticked() -> void:
 	if _hovered_piece:
-		Sfx.play(_hovered_piece.tick_sound)
+		Sfx.play_cycle(_hovered_piece.tick_sounds, _hovered_piece.type_id + ":tick")   # SFX: tick (cycles)
 
 func _grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
 	var item := piece.pick_loot()

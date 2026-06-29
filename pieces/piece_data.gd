@@ -20,12 +20,12 @@ class_name PieceData
 @export var river_ambience: RiverAmbience   # rivers only; if set, `ambient` is ignored
 # --- One-shot SFX (all optional; leave null for silence) ---
 @export_group("Sounds")
-@export var hover_sound: AudioStream
-@export var click_sound: AudioStream
+@export var hover_sounds: Array[AudioStream]
+@export var click_sounds: Array[AudioStream]
 @export var destroy_sound: AudioStream
 @export var complete_sound: AudioStream
-@export var tick_sound: AudioStream
-@export_group("")   # close the group so following exports aren't swept into it
+@export var tick_sounds: Array[AudioStream]
+@export_group("")
 var mods: Array
 var selected_icon: Texture2D
 var loot1: Prefix
