@@ -1,21 +1,23 @@
 [gd_resource type="Resource" script_class="Cabin" format=3 uid="uid://c0eaaeef267ro"]
 
-[ext_resource type="Resource" uid="uid://wrt5ywb3l2xu" path="res://pieces/home/sound/home_ambient.tres" id="1_7l7fq"]
-[ext_resource type="Script" uid="uid://b7e0fsblhhsmb" path="res://pieces/home/home.gd" id="1_p1wbv"]
-[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_wkrv1"]
-[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_dht6q"]
-[ext_resource type="AudioStream" uid="uid://dv1bs0aqa2ykb" path="res://pieces/home/sound/build_place.wav" id="2_jbls4"]
-[ext_resource type="Texture2D" uid="uid://bwc4j2dm2mj6s" path="res://pieces/home/icon/cabin.png" id="4_jbls4"]
-[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_8vjdj"]
+[ext_resource type="Resource" uid="uid://wrt5ywb3l2xu" path="res://pieces/home/sound/home_ambient.tres" id="1_5swuj"]
+[ext_resource type="Resource" uid="uid://bdwj4ryxlkjdg" path="res://pieces/home/sound/build_sound.tres" id="2_b65wr"]
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="2_y8if1"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="3_b65wr"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="4_nnewv"]
+[ext_resource type="Texture2D" uid="uid://bwc4j2dm2mj6s" path="res://pieces/home/icon/cabin.png" id="5_lrtvc"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="6_brhmn"]
+[ext_resource type="Script" uid="uid://b7e0fsblhhsmb" path="res://pieces/home/home.gd" id="7_gtja0"]
 
 [resource]
-script = ExtResource("1_p1wbv")
+script = ExtResource("7_gtja0")
 name = "Home"
 type_id = "Home"
-icons = Array[Texture2D]([ExtResource("4_jbls4")])
-description = "Home sweet home!"
-can_build_on = Array[ExtResource("1_wkrv1")]([ExtResource("2_dht6q")])
-ambient = ExtResource("1_7l7fq")
-click_sounds = Array[AudioStream]([ExtResource("2_jbls4")])
-build_sound = ExtResource("2_jbls4")
+progress_max = 10
+description = "You must protect them."
+icons = Array[Texture2D]([ExtResource("5_lrtvc")])
+can_build_on = Array[ExtResource("2_y8if1")]([ExtResource("3_b65wr")])
+ambient = ExtResource("1_5swuj")
+click_sounds = Array[ExtResource("4_nnewv")]([ExtResource("2_b65wr")])
+build_sound = ExtResource("2_b65wr")
 metadata/_custom_type_script = "uid://b7e0fsblhhsmb"

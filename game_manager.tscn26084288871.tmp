@@ -69,7 +69,6 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="AmbienceManager" type="Node" parent="EffectsManager" unique_id=1255520869 node_paths=PackedStringArray("world")]
-unique_name_in_owner = true
 script = ExtResource("17_s6dek")
 world = NodePath("../World")
 

@@ -197,6 +197,7 @@ var _glimmer_timer := 0.0
 
 signal update_display(piece)
 signal clicked
+signal piece_changed(slot)   # NEW: TurnSystem listens to (de)register tickers + reset statuses
 
 func _ready() -> void:
 	# Register trailing layers. Order here is intent only — actual draw order
@@ -304,6 +305,7 @@ func set_piece(data: PieceData) -> void:
 		float_phase = 0.0
 		float_time = 0.0
 		float_offset = Vector2.ZERO
+	piece_changed.emit(self)   # NEW — fires for gen, build, and swap/replace alike
 
 func _refresh_layers() -> void:
 	_trail.clear()

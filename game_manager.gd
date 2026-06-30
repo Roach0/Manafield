@@ -8,6 +8,8 @@ class_name GameManager
 @onready var world: World = %World
 @onready var crt_filter: ColorRect = %CRTFilter
 
+@onready var turn_system: TurnSystem = %TurnSystem
+
 @export var remaining_turns: int
 @export var crt_enabled: bool = true
 
@@ -16,13 +18,22 @@ func _ready() -> void:
 	new_game()
 
 func new_game() -> void:
-	world.effects = effects          # give World access to the prefix pools
+	world.effects = effects
+	effects.turn_system = turn_system     # mutual link, set before any turn
+	turn_system.effects = effects
 	world.generate_world()
+	turn_system.bind()                    # connect slots + seed the ticker registry
+	turn_system.turn_advanced.connect(_on_turn_advanced)
 	world.build_queue_advanced.connect(right_panel.update_build_display)
 	world.piece_placed.connect(_on_piece_placed)
 	world.build_mode_ended.connect(_on_build_mode_ended)
 	world.begin_build_mode(start_pieces)
 	left_panel.set_new_player()
+
+func _on_turn_advanced(turn: int) -> void:
+	effects.play_hovered_tick()           # the cosmetic tick sound
+	remaining_turns -= 1
+	# game-over check on remaining_turns <= 0 goes here when you want it
 
 func _on_piece_placed(piece_data: PieceData, next_piece: PieceData) -> void:
 	print("placed: ", piece_data.name)

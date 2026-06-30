@@ -173,6 +173,13 @@ func _slot_holding(data: ItemData, count: int) -> InventorySlot:
 			return slot
 	return null
 
+# Find the slot whose stack is this exact ItemData instance (survives sorts,
+# which carry the instance along). Returns null if it's gone (consumed/lost).
+func slot_for_item(data: ItemData) -> InventorySlot:
+	for slot in slots:
+		if not slot.is_empty() and slot.item_data == data:
+			return slot
+	return null
 
 # --- Region hover tracking (auto-sort on exit) ---
 

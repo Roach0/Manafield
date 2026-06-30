@@ -8,8 +8,8 @@ func _ready() -> void:
 func _click() -> Dictionary:
 	return {}
 
-func _tick() -> void:
-	pass
+func _tick() -> Dictionary:
+	return {}
 
 func _destroy() -> void:
 	pass

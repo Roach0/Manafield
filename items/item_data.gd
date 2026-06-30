@@ -39,3 +39,8 @@ func can_stack_with(other: ItemData) -> bool:
 		return false
 	var k := stack_key()
 	return k != "" and k == other.stack_key()
+
+# (add near the bottom, with the other helpers)
+# True if any rolled prefix matches — mirrors PieceData.has_prefix for symmetry.
+func has_prefix(prefix_name: String) -> bool:
+	return prefix != null and prefix.prefix_name == prefix_name
