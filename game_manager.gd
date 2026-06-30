@@ -19,17 +19,18 @@ func _ready() -> void:
 
 func new_game() -> void:
 	world.effects = effects
-	effects.turn_system = turn_system     # mutual link, set before any turn
+	effects.turn_system = turn_system
 	turn_system.effects = effects
+	turn_system.inventory = left_panel.inventory     # NEW — for item-status ticking
 	world.generate_world()
-	turn_system.bind()                    # connect slots + seed the ticker registry
+	turn_system.bind()
 	turn_system.turn_advanced.connect(_on_turn_advanced)
 	world.build_queue_advanced.connect(right_panel.update_build_display)
 	world.piece_placed.connect(_on_piece_placed)
 	world.build_mode_ended.connect(_on_build_mode_ended)
 	world.begin_build_mode(start_pieces)
 	left_panel.set_new_player()
-
+	
 func _on_turn_advanced(turn: int) -> void:
 	effects.play_hovered_tick()           # the cosmetic tick sound
 	remaining_turns -= 1

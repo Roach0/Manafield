@@ -19,6 +19,7 @@ func _ready() -> void:
 	left_panel.inventory.yield_flight_requested.connect(_on_yield_flight_requested)
 	left_panel.inventory.sort_flight_requested.connect(_on_sort_flight_requested)
 	left_panel.inventory.item_hovered.connect(_on_inventory_item_hovered)
+	left_panel.inventory.sacrifice_requested.connect(_on_sacrifice_requested)
 
 
 # === Effect application ======================================================
@@ -118,12 +119,16 @@ func _apply_item_stat(slot: InventorySlot, stat: String, amount: int) -> void:
 				slot.add_to_stack(amount)
 			else:
 				slot.remove_from_stack(-amount)
+		"value":
+			if slot.item_data != null:
+				slot.item_data.value += amount
 		_: push_warning("Unhandled item stat: %s" % stat)
 
 func _apply_status_to(recipient: Dictionary, status: StatusData, stacks: int) -> void:
 	match recipient.kind:
 		"piece": turn_system.apply_status(recipient.obj, status, stacks)
-		_: push_warning("Statuses only apply to pieces (got %s)" % recipient.kind)
+		"item":  turn_system.apply_item_status(recipient.obj.item_data, status, stacks)
+		_: push_warning("Statuses can't apply to %s" % recipient.kind)
 
 
 # === Costs ===================================================================
@@ -324,3 +329,8 @@ func _on_sort_flight_requested(item: ItemData, count: int, from_slot: InventoryS
 		inv.place_sorted(to_slot, item, count)
 		Sfx.play(item.sort_sound, randf_range(0.94, 1.06))
 	_fly_item(item, from_slot.icon, to_slot, land)
+
+func _on_sacrifice_requested(item: ItemData, count: int, slot: InventorySlot) -> void:
+	var bundle: Dictionary = item._sacrifice(count)
+	if not bundle.is_empty():
+		apply_effects(bundle.get("effects", []), null)

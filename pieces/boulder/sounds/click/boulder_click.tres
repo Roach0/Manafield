@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bjukrawymo8ro"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_3cuvf"]
+[ext_resource type="AudioStream" uid="uid://dr3o8st7jsv2q" path="res://pieces/boulder/sounds/click/boulder_click.wav" id="2_gqj4w"]
+
+[resource]
+script = ExtResource("1_3cuvf")
+stream = ExtResource("2_gqj4w")
+volume_db = -4.0
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

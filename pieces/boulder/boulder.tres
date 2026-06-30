@@ -1,11 +1,14 @@
 [gd_resource type="Resource" script_class="Boulder" format=3 uid="uid://btay04weubreh"]
 
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_xk7tl"]
-[ext_resource type="AudioStream" uid="uid://dr3o8st7jsv2q" path="res://pieces/boulder/sounds/click/boulder_click.wav" id="2_nqyhs"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="2_20ksk"]
 [ext_resource type="Texture2D" uid="uid://c4o4yxowftl04" path="res://pieces/boulder/icon/boulder1.png" id="2_s50rj"]
 [ext_resource type="Script" uid="uid://b0cxjfocxuuj6" path="res://pieces/boulder/boulder.gd" id="2_yqdge"]
+[ext_resource type="Resource" uid="uid://bjukrawymo8ro" path="res://pieces/boulder/sounds/click/boulder_click.tres" id="3_o2c0p"]
 [ext_resource type="Texture2D" uid="uid://ctwpfn5khjhh8" path="res://pieces/boulder/icon/boulder3.png" id="4_cx4do"]
+[ext_resource type="Resource" uid="uid://b5ifb2vojsw7j" path="res://pieces/boulder/sounds/destroy/boulder_destroy.tres" id="4_fe4vk"]
 [ext_resource type="Texture2D" uid="uid://c6esqgk8uo2v2" path="res://pieces/boulder/icon/boulder4.png" id="4_loopk"]
+[ext_resource type="Resource" uid="uid://b3wbvoekpgka7" path="res://pieces/boulder/sounds/hover/boulder_hover.tres" id="4_o2c0p"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_nnlie"]
 [ext_resource type="Resource" uid="uid://cc1i3kq6rgp1q" path="res://items/stone/stone.tres" id="6_nqyhs"]
 
@@ -14,8 +17,14 @@ script = ExtResource("2_yqdge")
 name = "Boulder"
 type_id = "Boulder"
 icons = Array[Texture2D]([ExtResource("2_s50rj"), ExtResource("4_loopk"), ExtResource("4_cx4do")])
+health = 5
+health_max = 5
+description = "Glimmering with the past..."
 loot_pool = Array[ExtResource("5_nnlie")]([ExtResource("6_nqyhs")])
 prefix_pool = 2
 prefix_count = 1
-click_sounds = Array[AudioStream]([ExtResource("2_nqyhs")])
+hover_sounds = Array[ExtResource("2_20ksk")]([ExtResource("4_o2c0p")])
+click_sounds = Array[ExtResource("2_20ksk")]([ExtResource("3_o2c0p")])
+destroy_sound = ExtResource("4_fe4vk")
+spawn_sound = ExtResource("4_fe4vk")
 metadata/_custom_type_script = "uid://b0cxjfocxuuj6"

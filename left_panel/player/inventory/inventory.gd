@@ -4,6 +4,8 @@ class_name Inventory
 signal yield_flight_requested(item: ItemData, from_slot: InventorySlot, to_slot: InventorySlot)
 signal sort_flight_requested(item: ItemData, count: int, from_slot: InventorySlot, to_slot: InventorySlot)
 signal item_hovered(item: ItemData)
+signal sacrifice_requested(item: ItemData, count: int, slot: InventorySlot)
+
 
 const INVENTORY_SIZE: int = 28
 @onready var inventory_grid: GridContainer = %InventoryGrid
@@ -43,6 +45,7 @@ func _build_slots() -> void:
 		slot.use_requested.connect(_on_slot_use_requested)
 		slot.hover_changed.connect(_on_region_hover_changed)
 		slot.item_hovered.connect(_on_slot_item_hovered)
+		slot.sacrifice_requested.connect(_on_slot_sacrifice_requested)
 		slots.append(slot)
 
 
@@ -142,6 +145,19 @@ func _on_slot_use_requested(slot: InventorySlot) -> void:
 			push_warning("Inventory full — yield lost: %s" % produced.name)
 			continue
 		yield_flight_requested.emit(produced, slot, target)
+
+func _on_slot_sacrifice_requested(slot: InventorySlot) -> void:
+	if _sorting:
+		return
+	var data := slot.item_data
+	if data == null:
+		return
+	var count := slot.count
+	Sfx.play(data.sacrifice_sound)
+	# Hand the bundle off; EffectsManager applies it. Then the stack is gone.
+	sacrifice_requested.emit(data, count, slot)
+	slot._clear()
+
 
 # A yield authored to inherit (prefix_region > 0) takes the source item's
 # prefix. Duplicate so the authored .tres stays untouched.
