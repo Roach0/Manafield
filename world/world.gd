@@ -55,6 +55,7 @@ func replace_with(slot: WorldSlot, destroyed_piece: PieceData) -> void:
 	var data := source.duplicate() as PieceData
 	if effects:
 		effects.roll_prefixes(data)
+	Sfx.play(data.spawn_sound)   # SFX: dynamic spawn (replacement or event-driven)
 	slot._swap_piece(data)
 
 func _in_bounds(coord: Vector2i) -> bool:
@@ -185,3 +186,11 @@ func _random_edge_point(edge: int) -> Vector2i:
 		2: return Vector2i(0, pos)
 		3: return Vector2i(12, pos)
 	return Vector2i(0, 0)
+
+# Call this for any runtime spawn so spawn_sound + prefixes are handled once.
+func spawn_piece(slot: WorldSlot, source: PieceData) -> void:
+	var data := source.duplicate() as PieceData
+	if effects:
+		effects.roll_prefixes(data)
+	Sfx.play(data.spawn_sound)
+	slot._swap_piece(data)

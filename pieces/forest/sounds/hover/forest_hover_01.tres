@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bd663vjkl687y"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_s3hwr"]
+[ext_resource type="AudioStream" uid="uid://c5rh1ensia0f" path="res://pieces/forest/sounds/hover/raw/forest_walk_1.wav" id="2_pmtwx"]
+
+[resource]
+script = ExtResource("1_s3hwr")
+stream = ExtResource("2_pmtwx")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

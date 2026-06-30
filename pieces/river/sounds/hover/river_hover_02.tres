@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bvg8vuhcnyis7"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_i7a62"]
+[ext_resource type="AudioStream" uid="uid://b4qgmhlda1tqc" path="res://pieces/river/sounds/hover/raw/river_hover_2.wav" id="2_i7a62"]
+
+[resource]
+script = ExtResource("1_i7a62")
+stream = ExtResource("2_i7a62")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

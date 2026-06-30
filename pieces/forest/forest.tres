@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://dppciv4t7dust" path="res://pieces/forest/icon/forest1.png" id="2_3cwt3"]
 [ext_resource type="AudioStream" uid="uid://d3w403fi8vdns" path="res://pieces/forest/sounds/click/chop1.wav" id="3_lkvtw"]
 [ext_resource type="Texture2D" uid="uid://bn3n3aans3126" path="res://pieces/forest/icon/forest2.png" id="3_tspdg"]
-[ext_resource type="AudioStream" uid="uid://bdlanhes4x4mi" path="res://pieces/forest/sounds/hover/forest_walk_2.wav" id="4_54brl"]
-[ext_resource type="AudioStream" uid="uid://c5rh1ensia0f" path="res://pieces/forest/sounds/hover/forest_walk_1.wav" id="4_lkvtw"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="4_hb3c7"]
 [ext_resource type="Texture2D" uid="uid://dp4iiflcjinlg" path="res://pieces/forest/icon/forest3.png" id="4_ojr72"]
+[ext_resource type="Resource" uid="uid://bd663vjkl687y" path="res://pieces/forest/sounds/hover/forest_hover_01.tres" id="5_4py17"]
 [ext_resource type="Texture2D" uid="uid://dul8fp86sc7jq" path="res://pieces/forest/icon/forest4.png" id="5_lkvtw"]
+[ext_resource type="Resource" uid="uid://bhcj01vlsyn30" path="res://pieces/forest/sounds/hover/forest_hover_02.tres" id="6_8hgyh"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="6_hsi70"]
 [ext_resource type="Resource" uid="uid://boysq2qoqyykl" path="res://items/wood/wood.tres" id="7_3cwt3"]
 [ext_resource type="Resource" uid="uid://dih2ifg3dw0gf" path="res://items/leaves/leaves.tres" id="8_tspdg"]
@@ -18,14 +19,14 @@
 script = ExtResource("1_8qdey")
 name = "Forest"
 type_id = "Forest"
-icons = Array[Texture2D]([ExtResource("2_3cwt3"), ExtResource("3_tspdg"), ExtResource("4_ojr72"), ExtResource("5_lkvtw")])
 health = 10
 health_max = 10
 description = "Trees, winding into the dark."
+icons = Array[Texture2D]([ExtResource("2_3cwt3"), ExtResource("3_tspdg"), ExtResource("4_ojr72"), ExtResource("5_lkvtw")])
 loot_pool = Array[ExtResource("6_hsi70")]([ExtResource("7_3cwt3"), ExtResource("8_tspdg")])
 prefix_pool = 3
 prefix_count = 2
 ambient = ExtResource("1_ojr72")
-hover_sounds = Array[AudioStream]([ExtResource("4_54brl"), ExtResource("4_lkvtw")])
+hover_sounds = Array[ExtResource("4_hb3c7")]([ExtResource("5_4py17"), ExtResource("6_8hgyh")])
 click_sounds = Array[AudioStream]([ExtResource("3_lkvtw")])
 metadata/_custom_type_script = "uid://3gsdiru01kxl"

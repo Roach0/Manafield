@@ -1,6 +1,5 @@
 extends Node
-# Autoload as "Sfx". Fire-and-forget one-shots via a round-robin pool —
-# no per-sound allocation, up to pool_size overlapping at once.
+# Autoload as "Sfx". Fire-and-forget one-shots via a round-robin pool.
 
 @export var pool_size := 12
 @export var bus: StringName = &"Master"
@@ -16,21 +15,22 @@ func _ready() -> void:
 		add_child(p)
 		_players.append(p)
 
-func play(stream: AudioStream, volume_db := 0.0, pitch := 1.0) -> void:
-	if stream == null:
+func play(sfx: SoundEffect, pitch := 1.0) -> void:
+	if sfx == null or sfx.stream == null:
 		return
 	var p := _players[_next]
 	_next = (_next + 1) % _players.size()
-	p.stream = stream
-	p.volume_db = volume_db
+	p.stream = sfx.stream
+	p.volume_db = sfx.volume_db
 	p.pitch_scale = pitch
 	p.play()
 
-# Cycles through `streams` round-robin, keyed by `key` so all tiles of a type
-# share one cursor (the index can't live on PieceData — it's duplicated per tile).
-func play_cycle(streams: Array, key: String, volume_db := 0.0, pitch := 1.0) -> void:
-	if streams.is_empty():
+# Cycles through `sounds` round-robin, keyed by `key` (index can't live on the
+# piece — it's duplicated per tile). Each element is a SoundEffect, so they can
+# carry different volumes.
+func play_cycle(sounds: Array, key: String, pitch := 1.0) -> void:
+	if sounds.is_empty():
 		return
-	var i: int = _cycle.get(key, 0) % streams.size()
+	var i: int = _cycle.get(key, 0) % sounds.size()
 	_cycle[key] = i + 1
-	play(streams[i], volume_db, pitch)   # play() null-guards the element
+	play(sounds[i], pitch)

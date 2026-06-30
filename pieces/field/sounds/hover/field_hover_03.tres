@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dqp7pc7etpdkf"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_b1t8e"]
+[ext_resource type="AudioStream" uid="uid://bi0e8ceqdxkjc" path="res://pieces/field/sounds/hover/raw/field_walk_3.wav" id="2_sq36g"]
+
+[resource]
+script = ExtResource("1_b1t8e")
+stream = ExtResource("2_sq36g")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

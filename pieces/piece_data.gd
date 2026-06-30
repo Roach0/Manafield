@@ -2,12 +2,12 @@ extends Resource
 class_name PieceData
 @export var name: String
 @export var type_id: String # do not change like ever
-@export var icons: Array[Texture2D]
 @export var health: int
 @export var health_max: int
 @export var progress: int
 @export var progress_max: int
 @export var description: String
+@export var icons: Array[Texture2D]
 @export var can_build_on: Array[PieceData]
 @export var loot_pool: Array[ItemData]
 @export var damage_received:int = 1
@@ -20,12 +20,13 @@ class_name PieceData
 @export var river_ambience: RiverAmbience   # rivers only; if set, `ambient` is ignored
 # --- One-shot SFX (all optional; leave null for silence) ---
 @export_group("Sounds")
-@export var hover_sounds: Array[AudioStream]
-@export var click_sounds: Array[AudioStream]
-@export var destroy_sound: AudioStream
-@export var complete_sound: AudioStream
-@export var tick_sounds: Array[AudioStream]
-@export var build_sound: AudioStream
+@export var hover_sounds: Array[SoundEffect]
+@export var click_sounds: Array[SoundEffect]
+@export var destroy_sound: SoundEffect
+@export var complete_sound: SoundEffect
+@export var tick_sounds: Array[SoundEffect]
+@export var build_sound: SoundEffect
+@export var spawn_sound: SoundEffect
 @export_group("")
 var mods: Array
 var selected_icon: Texture2D

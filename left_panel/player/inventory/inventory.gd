@@ -122,10 +122,6 @@ func commit_item(slot: InventorySlot, data: ItemData) -> void:
 	_try_queued_sort()
 
 
-# --- Click to use ---
-
-# A slot was clicked with a usable item: pay the cost, then fly each yield
-# out of the clicked slot into its destination stack (same arc as world loot).
 func _on_slot_use_requested(slot: InventorySlot) -> void:
 	if _sorting:
 		return   # grid is being rebuilt by sort fliers; ignore the click
@@ -134,6 +130,7 @@ func _on_slot_use_requested(slot: InventorySlot) -> void:
 		return
 	if slot.count < data.consume_count:
 		return
+	Sfx.play(data.click_sound)   # SFX: click (accepted use only)
 	# Pay first, so a same-type yield can re-target the slot we just emptied.
 	slot.remove_from_stack(data.consume_count)
 	for yield_item in data.click_yields:

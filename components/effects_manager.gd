@@ -10,6 +10,7 @@ class_name EffectsManager
 var _loot_overlay: CanvasLayer
 
 var _hovered_piece: PieceData   # SFX: tracks current hover for the tick sound
+var _last_inv_item: ItemData    # SFX: last hovered inventory item, for its exit sound
 
 func _ready() -> void:
 	world.update_display.connect(_on_update_display)
@@ -125,8 +126,14 @@ func _on_click_denied(resource_name: String, amount: int) -> void:
 func _on_inventory_item_hovered(item: ItemData) -> void:
 	if item != null:
 		right_panel.update_item_display(item)
+		if item != _last_inv_item:
+			Sfx.play(item.hover_sound)            # SFX: item hover enter
+		_last_inv_item = item
 	else:
 		right_panel.clear_display()
+		if _last_inv_item != null:
+			Sfx.play(_last_inv_item.sort_sound)   # SFX: item hover exit (shares the sort sound)
+		_last_inv_item = null
 
 # SFX: call this from wherever a turn advances (e.g. GameManager when
 # remaining_turns decrements). Plays only the hovered tile's tick, not all ~168.
@@ -227,5 +234,6 @@ func _on_sort_flight_requested(item: ItemData, count: int, from_slot: InventoryS
 	var inv := left_panel.inventory
 	var land := func() -> void:
 		inv.place_sorted(to_slot, item, count)
+		Sfx.play(item.sort_sound, randf_range(0.94, 1.06))   # SFX: sort — random pitch so the cluster shuffles
 	# from_slot may equal to_slot for an unmoved-but-resorted item; still flies.
 	_fly_item(item, from_slot.icon, to_slot, land)
