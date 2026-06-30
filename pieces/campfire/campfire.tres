@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Campfire" format=3 uid="uid://deov883olrhv7"]
 
-[ext_resource type="AudioStream" uid="uid://dv1bs0aqa2ykb" path="res://pieces/home/sound/build_place.wav" id="1_ompw2"]
+[ext_resource type="AudioStream" uid="uid://dv1bs0aqa2ykb" path="res://pieces/home/sound/raw/build_place.wav" id="1_ompw2"]
 [ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_tppjt"]
 [ext_resource type="Script" uid="uid://cib83pbny5lnj" path="res://pieces/campfire/campfire.gd" id="2_ow07p"]
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_yo2cq"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://b1fff0nacog4n"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_57jsb"]
+[ext_resource type="AudioStream" uid="uid://cfdvoy12viw6r" path="res://pieces/forest/sounds/destroy/raw/forest_destroy.wav" id="2_yhe5s"]
+
+[resource]
+script = ExtResource("1_57jsb")
+stream = ExtResource("2_yhe5s")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

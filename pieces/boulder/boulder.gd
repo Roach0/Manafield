@@ -15,7 +15,8 @@ func get_destroy_replacements() -> Array[PieceData]:
 func _tick() -> Dictionary:
 	return {}
 
-func _destroy() -> void:
-	pass
-func _complete() -> void:
-	pass
+func _destroy() -> Dictionary:
+	return {}
+	
+func _complete() -> Dictionary:
+	return {}

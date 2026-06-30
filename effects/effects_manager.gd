@@ -104,13 +104,14 @@ func _apply_piece_stat(slot: WorldSlot, stat: String, amount: int) -> void:
 			push_warning("Unhandled piece stat: %s" % stat)
 			return
 	slot.health = p.health
-	if p.progress_max > 0 and p.progress >= p.progress_max:
-		Sfx.play(p.complete_sound)
-		p._complete()
+	if p.progress_max > 0:                          # <-- the guard block
+		var safety := 0
+		while p.progress >= p.progress_max and slot.piece == p and safety < 100:
+			p.progress -= p.progress_max
+			complete_piece(slot, p)
+			safety += 1
 	if p.health_max > 0 and p.health <= 0:
-		Sfx.play(p.destroy_sound)
-		p._destroy()
-		world.replace_with(slot, p)
+		kill_piece(slot, p)
 
 func _apply_item_stat(slot: InventorySlot, stat: String, amount: int) -> void:
 	match stat:
@@ -214,6 +215,7 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 	# Guard: an effect with target "self" may have already destroyed+replaced the
 	# piece. Only run the direct-mutation destroy path if this is still that piece.
 	if slot.piece == piece and piece.health_max > 0 and piece.health <= 0:
+		kill_piece(slot,piece)
 		Sfx.play(piece.destroy_sound)
 		piece._destroy()
 		world.replace_with(slot, piece)
@@ -334,3 +336,28 @@ func _on_sacrifice_requested(item: ItemData, count: int, slot: InventorySlot) ->
 	var bundle: Dictionary = item._sacrifice(count)
 	if not bundle.is_empty():
 		apply_effects(bundle.get("effects", []), null)
+
+# The single death path — both the click-damage and effect-damage sites call this.
+func kill_piece(slot: WorldSlot, piece: PieceData) -> void:
+	if slot.get_meta("dying", false):
+		return                          # already mid-death; don't re-enter
+	slot.set_meta("dying", true)
+	Sfx.play(piece.destroy_sound)
+	var bundle: Dictionary = piece._destroy()
+	if not bundle.is_empty():
+		apply_effects(bundle.get("effects", []), slot)
+		if bundle.get("loot", false):
+			grant_loot(piece, slot)
+	world.replace_with(slot, piece)
+	slot.set_meta("dying", false)
+
+# The single completion path. Progress has already been decremented by one bar
+# before this is called, so completion effects resolve against a piece that's no
+# longer "full" — meaning a self-progress effect here won't infinitely re-trigger.
+func complete_piece(slot: WorldSlot, piece: PieceData) -> void:
+	Sfx.play(piece.complete_sound)
+	var bundle: Dictionary = piece._complete()
+	if not bundle.is_empty():
+		apply_effects(bundle.get("effects", []), slot)
+		if bundle.get("loot", false):
+			grant_loot(piece, slot)

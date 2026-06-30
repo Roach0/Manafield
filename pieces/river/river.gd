@@ -11,11 +11,11 @@ func _click() -> Dictionary:
 func _tick() -> Dictionary:
 	return {}
 
-func _destroy() -> void:
-	pass
+func _destroy() -> Dictionary:
+	return {}
 
-func _complete() -> void:
-	pass
+func _complete() -> Dictionary:
+	return {}
 
 func should_float() -> bool:
 	return true

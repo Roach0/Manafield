@@ -10,5 +10,5 @@ prefix_region = 1
 name = "Fish"
 type_id = "Fish"
 icons = Array[Texture2D]([ExtResource("2_wxjr5")])
-description = "Was minding his business before you came about."
+description = "was, before, mind it'd own business."
 metadata/_custom_type_script = "uid://c0tvjjg75laju"

@@ -49,12 +49,14 @@ func get_click_cost() -> Array:
 # player-facing payout: {"effects":[{"stat","amount","target"}...], "loot":bool}
 func _click() -> Dictionary:
 	return {}
-func _complete() -> void:
-	# Called when progress >= progress_max (see EffectsManager._apply_piece_stat).
-	pass
-func _destroy() -> void:
-	# Called when health is emptied.
-	pass
+func _complete() -> Dictionary:
+	# Fires when progress fills; progress then resets (carrying overflow), so this
+	# is a repeatable cycle. "self" targets this piece (it stays after completing).
+	return {}
+func _destroy() -> Dictionary:
+	# Effects to fire on death. Same bundle shape as _click/_tick.
+	# "self" targets the DYING piece (resolved before replacement).
+	return {}
 # looting
 func pick_loot() -> ItemData:
 	if loot_pool.is_empty():
