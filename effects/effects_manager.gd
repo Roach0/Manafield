@@ -13,6 +13,10 @@ var turn_system: TurnSystem     # set by GameManager (mutual link)
 var _hovered_piece: PieceData
 var _last_inv_item: ItemData
 
+# Match kinds that need the firing slot's coordinate to resolve. Everything else
+# is a per-piece predicate that doesn't care where the source is.
+const SPATIAL_MATCHES := ["adjacent", "within", "row", "column", "nearest", "random"]
+
 func _ready() -> void:
 	world.update_display.connect(_on_update_display)
 	world.piece_click_requested.connect(_on_piece_click_requested)
@@ -24,7 +28,8 @@ func _ready() -> void:
 
 # === Effect application ======================================================
 # An effect entry is either a stat change or a status application; both carry an
-# optional `target` (default = player). `self_slot` resolves target "self".
+# optional `target` (default = player). `self_slot` resolves target "self" and
+# anchors any spatial match.
 func apply_effects(effects_list: Array, self_slot: WorldSlot = null) -> void:
 	for e in effects_list:
 		var recipients := resolve_targets(e.get("target", "player"), self_slot)
@@ -38,31 +43,165 @@ func apply_effects(effects_list: Array, self_slot: WorldSlot = null) -> void:
 				_apply_stat_to(r, stat, amount)
 
 # Resolve a target spec into recipients: {"kind":"player"/"piece"/"item","obj":...}.
-# Specs: "player" | "self" | {"target":"pieces"/"items","match":"all"/"type_id"/"prefix","value":X}
+# Specs: "player" | "self"
+#      | {"target":"pieces", ...}  (see _resolve_piece_targets — incl. spatial)
+#      | {"target":"items",  "match":"all"/"type_id"/"prefix","value":X}
+#      | {"target":"player"}
 func resolve_targets(spec, self_slot: WorldSlot) -> Array:
 	if spec == null or spec is String:
 		if spec == "self":
 			return [] if self_slot == null else [{"kind": "piece", "obj": self_slot}]
 		return [{"kind": "player", "obj": null}]
 	var domain: String = spec.get("target", "pieces")
-	var match_kind: String = spec.get("match", "all")
-	var value = spec.get("value", null)
-	var out: Array = []
 	if domain == "pieces":
-		for child in world.grid.get_children():
-			var slot := child as WorldSlot
-			if slot == null or slot.piece == null:
-				continue
-			if _piece_matches(slot.piece, match_kind, value):
-				out.append({"kind": "piece", "obj": slot})
+		return _resolve_piece_targets(spec, self_slot)
 	elif domain == "items":
+		var match_kind: String = spec.get("match", "all")
+		var value = spec.get("value", null)
+		var out: Array = []
 		for slot in left_panel.inventory.slots:
 			if slot.is_empty():
 				continue
 			if _item_matches(slot.item_data, match_kind, value):
 				out.append({"kind": "item", "obj": slot})
+		return out
 	elif domain == "player":
-		out.append({"kind": "player", "obj": null})
+		return [{"kind": "player", "obj": null}]
+	return []
+
+# All occupied board slots, in grid child order.
+func _occupied_piece_slots() -> Array[WorldSlot]:
+	var out: Array[WorldSlot] = []
+	for child in world.grid.get_children():
+		var slot := child as WorldSlot
+		if slot != null and slot.piece != null:
+			out.append(slot)
+	return out
+
+# Resolve a {"target":"pieces", ...} spec.
+#
+# Non-spatial (unchanged): "all" / "type_id" / "prefix" — a per-piece predicate.
+#
+# Spatial (NEW): anchored on `self_slot.grid_pos`, so valid only where a source
+# slot exists (_click/_tick/_complete/_destroy). With no source (e.g. an item
+# sacrifice) a spatial match warns and resolves to nothing rather than guessing.
+#   "adjacent"  [+ "diagonals":true]        4 (or 8) neighbors
+#   "within"    "value":N [+ "metric":"manhattan"]   box (or diamond) radius N
+#   "row" / "column"                        source's row / column
+#   "nearest"                               closest other tile(s); all ties
+#   "random"    [+ "value":K]               1 (or up to K) random other tiles
+# Modifiers on any spatial match:
+#   "include_self":true   row/column/within may also hit the source
+#   "type_id":<id> / "prefix":<name>   narrow the pool first (e.g. adjacent TREES)
+func _resolve_piece_targets(spec: Dictionary, self_slot: WorldSlot) -> Array:
+	var match_kind: String = spec.get("match", "all")
+	var candidates := _occupied_piece_slots()
+
+	if not SPATIAL_MATCHES.has(match_kind):
+		var value = spec.get("value", null)
+		var out: Array = []
+		for slot in candidates:
+			if _piece_matches(slot.piece, match_kind, value):
+				out.append({"kind": "piece", "obj": slot})
+		return out
+
+	if self_slot == null:
+		push_warning("Spatial match '%s' has no source slot; no effect." % match_kind)
+		return []
+
+	# Narrow by optional type_id/prefix BEFORE geometry, so "nearest tree" picks
+	# among trees rather than picking the nearest tile then discarding it.
+	var pool: Array[WorldSlot] = []
+	for slot in candidates:
+		if _piece_passes_filter(slot.piece, spec):
+			pool.append(slot)
+
+	var origin: Vector2i = self_slot.grid_pos
+	var include_self: bool = bool(spec.get("include_self", false))
+	var hits: Array[WorldSlot] = []
+
+	match match_kind:
+		"adjacent":
+			var diag := bool(spec.get("diagonals", false))
+			for slot in pool:
+				if slot == self_slot:
+					continue
+				var d := slot.grid_pos - origin
+				var ok := (maxi(absi(d.x), absi(d.y)) == 1) if diag else (absi(d.x) + absi(d.y) == 1)
+				if ok:
+					hits.append(slot)
+		"within":
+			var n := int(spec.get("value", 1))
+			var manhattan := String(spec.get("metric", "chebyshev")) == "manhattan"
+			for slot in pool:
+				if slot == self_slot and not include_self:
+					continue
+				var d := slot.grid_pos - origin
+				var dist := (absi(d.x) + absi(d.y)) if manhattan else maxi(absi(d.x), absi(d.y))
+				if dist <= n:
+					hits.append(slot)
+		"row":
+			for slot in pool:
+				if slot == self_slot and not include_self:
+					continue
+				if slot.grid_pos.y == origin.y:
+					hits.append(slot)
+		"column":
+			for slot in pool:
+				if slot == self_slot and not include_self:
+					continue
+				if slot.grid_pos.x == origin.x:
+					hits.append(slot)
+		"nearest":
+			hits = _nearest_in(pool, self_slot)
+		"random":
+			hits = _random_in(pool, self_slot, int(spec.get("value", 1)), include_self)
+
+	var out: Array = []
+	for slot in hits:
+		out.append({"kind": "piece", "obj": slot})
+	return out
+
+# Optional secondary filter on a spatial query. Absent keys = no constraint, so a
+# bare spatial spec still matches every occupied tile in range.
+func _piece_passes_filter(p: PieceData, spec: Dictionary) -> bool:
+	if spec.has("type_id") and p.type_id != spec.get("type_id"):
+		return false
+	if spec.has("prefix") and not p.has_prefix(spec.get("prefix")):
+		return false
+	return true
+
+# Closest tile(s) to the source by Chebyshev distance. ALL ties are returned, so
+# a "nearest" query carries no hidden RNG. Source is excluded.
+func _nearest_in(pool: Array[WorldSlot], self_slot: WorldSlot) -> Array[WorldSlot]:
+	var origin: Vector2i = self_slot.grid_pos
+	var best := -1
+	var winners: Array[WorldSlot] = []
+	for slot in pool:
+		if slot == self_slot:
+			continue
+		var d := slot.grid_pos - origin
+		var dist := maxi(absi(d.x), absi(d.y))
+		if best == -1 or dist < best:
+			best = dist
+			winners = [slot]
+		elif dist == best:
+			winners.append(slot)
+	return winners
+
+# Up to `count` distinct random tiles. Source excluded unless include_self. The
+# one spatial mode with intentional randomness.
+func _random_in(pool: Array[WorldSlot], self_slot: WorldSlot, count: int, include_self: bool) -> Array[WorldSlot]:
+	var bag: Array[WorldSlot] = []
+	for slot in pool:
+		if slot == self_slot and not include_self:
+			continue
+		bag.append(slot)
+	bag.shuffle()
+	var k := clampi(count, 0, bag.size())
+	var out: Array[WorldSlot] = []
+	for i in k:
+		out.append(bag[i])
 	return out
 
 func _piece_matches(p: PieceData, kind: String, value) -> bool:
@@ -124,6 +263,15 @@ func _apply_item_stat(slot: InventorySlot, stat: String, amount: int) -> void:
 			if slot.item_data != null:
 				slot.item_data.value += amount
 		_: push_warning("Unhandled item stat: %s" % stat)
+
+# Apply a stat to ONE specific item slot. Item statuses are per-instance, and the
+# all/type_id/prefix target vocabulary can't address a single stack, so the item
+# status tick path calls this directly instead of routing through resolve_targets.
+# Reuses the same applier — no parallel logic.
+func apply_item_stat_to(slot: InventorySlot, stat: String, amount: int) -> void:
+	if slot == null or slot.is_empty():
+		return
+	_apply_item_stat(slot, stat, amount)
 
 func _apply_status_to(recipient: Dictionary, status: StatusData, stacks: int) -> void:
 	match recipient.kind:
@@ -212,13 +360,13 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		apply_effects(result.get("effects", []), slot)
 		if result.get("loot", false):
 			grant_loot(piece, slot)
-	# Guard: an effect with target "self" may have already destroyed+replaced the
-	# piece. Only run the direct-mutation destroy path if this is still that piece.
+	# Direct-mutation death: the click (or an effect it fired) may have dropped
+	# this piece's health to 0. kill_piece is the single death path — it owns the
+	# sound, the _destroy() bundle, and the replacement. The slot.piece == piece
+	# guard skips this when a "self"-targeting effect already destroyed+replaced
+	# the piece earlier in this same click.
 	if slot.piece == piece and piece.health_max > 0 and piece.health <= 0:
-		kill_piece(slot,piece)
-		Sfx.play(piece.destroy_sound)
-		piece._destroy()
-		world.replace_with(slot, piece)
+		kill_piece(slot, piece)
 	# One click = one turn. Click fully resolved above; now the world ticks.
 	turn_system.advance_turn()
 
@@ -232,13 +380,9 @@ func _on_click_denied(costs: Array) -> void:
 func _on_inventory_item_hovered(item: ItemData) -> void:
 	if item != null:
 		right_panel.update_item_display(item)
-		if item != _last_inv_item:
-			Sfx.play(item.hover_sound)
 		_last_inv_item = item
 	else:
 		right_panel.clear_display()
-		if _last_inv_item != null:
-			Sfx.play(_last_inv_item.sort_sound)
 		_last_inv_item = null
 
 # Plays the hovered tile's tick sound. GameManager calls this on turn_advanced.
@@ -247,20 +391,24 @@ func play_hovered_tick() -> void:
 		Sfx.play_cycle(_hovered_piece.tick_sounds, _hovered_piece.type_id + ":tick")
 
 func grant_loot(piece: PieceData, world_slot: WorldSlot) -> void:
-	var item := piece.pick_loot()
-	if item == null:
-		return
-	if item.prefix_region > 0:
-		item = item.duplicate()
-		item.prefix = piece.get_prefix_for_region(item.prefix_region)
-	var target := left_panel.claim_loot_slot(item)
-	if target == null:
-		if left_panel.inventory.is_sorting():
-			left_panel.inventory.defer_add(item)
-		else:
-			push_warning("Inventory full — loot lost")
-		return
-	_fly_loot(item, world_slot, target)
+	# One drop event now rolls a tiered table: guaranteed common (if non-empty)
+	# plus independent uncommon/rare chance rolls — so 0–3 items can land. Each
+	# is claimed and flown separately; same-kind items fold into one stack.
+	for template in piece.roll_loot():
+		if template == null:
+			continue
+		var item := template
+		if item.prefix_region > 0:
+			item = item.duplicate()
+			item.prefix = piece.get_prefix_for_region(item.prefix_region)
+		var target := left_panel.claim_loot_slot(item)
+		if target == null:
+			if left_panel.inventory.is_sorting():
+				left_panel.inventory.defer_add(item)
+			else:
+				push_warning("Inventory full — loot lost")
+			continue
+		_fly_loot(item, world_slot, target)
 
 func _fly_loot(item: ItemData, from_slot: WorldSlot, to_slot: InventorySlot) -> void:
 	_fly_item(item, from_slot.icon, to_slot)
@@ -339,6 +487,8 @@ func _on_sacrifice_requested(item: ItemData, count: int, slot: InventorySlot) ->
 
 # The single death path — both the click-damage and effect-damage sites call this.
 func kill_piece(slot: WorldSlot, piece: PieceData) -> void:
+	if slot.piece != piece:
+		return                          # stale reference; this slot already moved on
 	if slot.get_meta("dying", false):
 		return                          # already mid-death; don't re-enter
 	slot.set_meta("dying", true)

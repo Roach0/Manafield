@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Cabin" format=3 uid="uid://c0eaaeef267ro"]
+[gd_resource type="Resource" script_class="Home" format=3 uid="uid://c0eaaeef267ro"]
 
 [ext_resource type="Resource" uid="uid://wrt5ywb3l2xu" path="res://pieces/home/sound/home_ambient.tres" id="1_5swuj"]
 [ext_resource type="Resource" uid="uid://bdwj4ryxlkjdg" path="res://pieces/home/sound/build_sound.tres" id="2_b65wr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="3_b65wr"]
 [ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="4_nnewv"]
 [ext_resource type="Texture2D" uid="uid://bwc4j2dm2mj6s" path="res://pieces/home/icon/cabin.png" id="5_lrtvc"]
+[ext_resource type="Resource" uid="uid://cb83fjabc15dh" path="res://pieces/home/sound/building_hover.tres" id="6_b65wr"]
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="6_brhmn"]
 [ext_resource type="Script" uid="uid://b7e0fsblhhsmb" path="res://pieces/home/home.gd" id="7_gtja0"]
 
@@ -13,11 +14,12 @@
 script = ExtResource("7_gtja0")
 name = "Home"
 type_id = "Home"
+icons = Array[Texture2D]([ExtResource("5_lrtvc")])
 progress_max = 10
 description = "You must protect them."
-icons = Array[Texture2D]([ExtResource("5_lrtvc")])
 can_build_on = Array[ExtResource("2_y8if1")]([ExtResource("3_b65wr")])
 ambient = ExtResource("1_5swuj")
+hover_sounds = Array[ExtResource("4_nnewv")]([ExtResource("6_b65wr")])
 click_sounds = Array[ExtResource("4_nnewv")]([ExtResource("2_b65wr")])
 build_sound = ExtResource("2_b65wr")
 metadata/_custom_type_script = "uid://b7e0fsblhhsmb"

@@ -1,12 +1,12 @@
 extends PieceData
-class_name Campfire
+class_name Bonfire
 
 
 func _ready() -> void:
 	pass
 
 func _click() -> Dictionary:
-	return {"effect": "update_nerve", "amount": 1}
+	return {}
 
 func _tick() -> Dictionary:
 	return{}

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Bonfire" format=3 uid="uid://deov883olrhv7"]
+
+[ext_resource type="Resource" uid="uid://c2odv66ao34ab" path="res://pieces/bonfire/sounds/bonfire_ambience.tres" id="1_sgg7k"]
+[ext_resource type="Resource" uid="uid://bdwj4ryxlkjdg" path="res://pieces/home/sound/build_sound.tres" id="2_wptil"]
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="3_0rnh3"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="4_lw4a3"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="5_vkodf"]
+[ext_resource type="Resource" uid="uid://cb83fjabc15dh" path="res://pieces/home/sound/building_hover.tres" id="6_a7naw"]
+[ext_resource type="Texture2D" uid="uid://di6o0v8kg04oy" path="res://pieces/bonfire/icons/bonfire.png" id="7_h3bw0"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="8_vhpm4"]
+[ext_resource type="Script" uid="uid://cib83pbny5lnj" path="res://pieces/bonfire/bonfire.gd" id="9_l6ypp"]
+
+[resource]
+script = ExtResource("9_l6ypp")
+name = "Bonfire"
+type_id = "Bonfire"
+icons = Array[Texture2D]([ExtResource("7_h3bw0")])
+progress_max = 30
+description = "A warm fire.  On click, restore 1 Nerve."
+can_build_on = Array[ExtResource("3_0rnh3")]([ExtResource("4_lw4a3")])
+ambient = ExtResource("1_sgg7k")
+hover_sounds = Array[ExtResource("5_vkodf")]([ExtResource("6_a7naw")])
+click_sounds = Array[ExtResource("5_vkodf")]([ExtResource("2_wptil")])
+build_sound = ExtResource("2_wptil")
+metadata/_custom_type_script = "uid://cib83pbny5lnj"

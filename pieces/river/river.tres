@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="2_nymbl"]
 [ext_resource type="Script" uid="uid://dxjjisis664hn" path="res://pieces/river/river.gd" id="2_qlmmg"]
 [ext_resource type="Texture2D" uid="uid://di8n72gvqhpwa" path="res://pieces/river/icons/river1.png" id="2_yj2pk"]
+[ext_resource type="Resource" uid="uid://cp4lbpm4i81ng" path="res://pieces/river/sounds/click/river_click.tres" id="3_27cf6"]
 [ext_resource type="Texture2D" uid="uid://dr02dqkijqor6" path="res://pieces/river/icons/river2.png" id="3_ed8kv"]
 [ext_resource type="Resource" uid="uid://b3l3uynn62vok" path="res://pieces/river/sounds/hover/river_hover_01.tres" id="3_relyf"]
 [ext_resource type="Resource" uid="uid://bvg8vuhcnyis7" path="res://pieces/river/sounds/hover/river_hover_02.tres" id="4_27cf6"]
@@ -21,11 +22,12 @@
 script = ExtResource("2_qlmmg")
 name = "River"
 type_id = "River"
-description = "Calmly running water."
 icons = Array[Texture2D]([ExtResource("2_yj2pk"), ExtResource("3_ed8kv"), ExtResource("4_kjrkh")])
+description = "Calmly running water."
 loot_pool = Array[ExtResource("5_kjrkh")]([ExtResource("6_kxboq")])
 prefix_pool = 1
 prefix_count = 1
 river_ambience = ExtResource("8_d2t0f")
 hover_sounds = Array[ExtResource("2_nymbl")]([ExtResource("3_relyf"), ExtResource("4_27cf6"), ExtResource("5_cwjs6"), ExtResource("6_8itcx"), ExtResource("7_v83o0"), ExtResource("8_yk1pa"), ExtResource("9_xwtdn")])
+click_sounds = Array[ExtResource("2_nymbl")]([ExtResource("3_27cf6")])
 metadata/_custom_type_script = "uid://dxjjisis664hn"

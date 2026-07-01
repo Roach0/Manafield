@@ -170,7 +170,9 @@ func _blip() -> void:
 
 func _on_hover_start() -> void:
 	hover_changed.emit(true)
-	item_hovered.emit(item_data)   # null if slot is empty -> display hides
+	item_hovered.emit(item_data)
+	if item_data != null:
+		Sfx.play(item_data.hover_sound)   # instant — responds to YOUR hover
 	if _tween and _tween.is_running():
 		_tween.kill()
 	_tween = create_tween()
@@ -187,6 +189,9 @@ func _on_hover_end() -> void:
 	_tween = create_tween()
 	_tween.tween_property(icon, "position:y", _base_y, 0.15) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	if item_data != null:
+		var snd := item_data.sort_sound          # capture now, while it's valid
+		_tween.tween_callback(func(): Sfx.play(snd))
 
 func _on_pressed() -> void:
 	if _sac_fired:

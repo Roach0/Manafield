@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bxdwnnciljwml"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_5dbto"]
+[ext_resource type="AudioStream" uid="uid://80sic2kaarup" path="res://items/fungi/sounds/raw/fungi_click.wav" id="2_mmbs5"]
+
+[resource]
+script = ExtResource("1_5dbto")
+stream = ExtResource("2_mmbs5")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

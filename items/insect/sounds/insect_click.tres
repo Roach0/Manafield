@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://6d17jlf5lmb5"]
+
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="1_lbl5e"]
+[ext_resource type="AudioStream" uid="uid://ctm34jqd8fhk8" path="res://items/insect/sounds/raw/insect_click.wav" id="2_h4ux3"]
+
+[resource]
+script = ExtResource("1_lbl5e")
+stream = ExtResource("2_h4ux3")
+metadata/_custom_type_script = "uid://bdqqqa7bqirad"

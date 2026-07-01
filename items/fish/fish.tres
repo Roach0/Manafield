@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="1_jstpo"]
 [ext_resource type="Script" uid="uid://c0tvjjg75laju" path="res://items/fish/fish.gd" id="2_nev1f"]
 [ext_resource type="Texture2D" uid="uid://bntx2xvti1l6q" path="res://items/fish/icon/fish.png" id="2_wxjr5"]
+[ext_resource type="Resource" uid="uid://cuisj2hdnprjl" path="res://items/fish/sounds/drop/fish_drop.tres" id="4_wxjr5"]
 
 [resource]
 script = ExtResource("2_nev1f")
@@ -11,4 +12,5 @@ name = "Fish"
 type_id = "Fish"
 icons = Array[Texture2D]([ExtResource("2_wxjr5")])
 description = "was, before, mind it'd own business."
+sort_sound = ExtResource("4_wxjr5")
 metadata/_custom_type_script = "uid://c0tvjjg75laju"

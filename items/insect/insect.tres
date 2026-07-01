@@ -1,7 +1,12 @@
 [gd_resource type="Resource" script_class="Insect" format=3 uid="uid://bchc5cu78ab0e"]
 
 [ext_resource type="Script" uid="uid://dlvqklij2lrik" path="res://items/insect/insect.gd" id="1_01uf4"]
+[ext_resource type="Resource" uid="uid://6d17jlf5lmb5" path="res://items/insect/sounds/insect_click.tres" id="1_47ime"]
 [ext_resource type="Texture2D" uid="uid://dyrxhye0f7cl4" path="res://items/insect/icon/insect.png" id="1_mbj5k"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="1_muylv"]
+[ext_resource type="Resource" uid="uid://42gtbpcfhuj4" path="res://items/insect/sounds/insect_hover.tres" id="2_dhgh8"]
+[ext_resource type="Resource" uid="uid://bcdllqo80vdpf" path="res://items/oil/oil.tres" id="2_xl3s2"]
+[ext_resource type="Resource" uid="uid://bn7kyr7m4o1h" path="res://items/insect/sounds/insect_drop.tres" id="4_dhgh8"]
 
 [resource]
 script = ExtResource("1_01uf4")
@@ -10,4 +15,8 @@ name = "Insect"
 type_id = "Insect"
 icons = Array[Texture2D]([ExtResource("1_mbj5k")])
 description = "an edible little friend"
+click_yields = Array[ExtResource("1_muylv")]([ExtResource("2_xl3s2")])
+hover_sound = ExtResource("2_dhgh8")
+click_sound = ExtResource("1_47ime")
+sort_sound = ExtResource("4_dhgh8")
 metadata/_custom_type_script = "uid://dlvqklij2lrik"

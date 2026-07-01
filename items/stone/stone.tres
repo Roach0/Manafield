@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="Stone" format=3 uid="uid://cc1i3kq6rgp1q"]
 
 [ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="1_3ynh8"]
+[ext_resource type="Resource" uid="uid://bk6f8tcvffsr6" path="res://items/stone/sounds/stone_click.tres" id="1_nvwej"]
 [ext_resource type="Script" uid="uid://cappccw8eibmd" path="res://items/stone/stone.gd" id="1_tntdu"]
 [ext_resource type="Resource" uid="uid://bn6sx0kopcq2h" path="res://items/metal/metal.tres" id="2_nvwej"]
 [ext_resource type="Texture2D" uid="uid://heo727i4ycn5" path="res://items/stone/icon/stone2.png" id="2_qi7m3"]
@@ -13,4 +14,5 @@ type_id = "Stone"
 icons = Array[Texture2D]([ExtResource("2_qi7m3")])
 description = "very useful"
 click_yields = Array[ExtResource("1_3ynh8")]([ExtResource("2_nvwej")])
+click_sound = ExtResource("1_nvwej")
 metadata/_custom_type_script = "uid://cappccw8eibmd"

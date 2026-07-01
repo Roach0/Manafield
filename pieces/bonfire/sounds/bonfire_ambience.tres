@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AmbientSound" format=3 uid="uid://c2odv66ao34ab"]
+
+[ext_resource type="Script" uid="uid://cjmwb2baxu2bh" path="res://sound/ambient_sound.gd" id="1_so1ki"]
+[ext_resource type="AudioStream" uid="uid://bdioxyahbwgxo" path="res://pieces/bonfire/sounds/raw/bonfire_ambience.wav" id="2_3vybw"]
+
+[resource]
+script = ExtResource("1_so1ki")
+stream = ExtResource("2_3vybw")
+far_tiles = 3.0
+metadata/_custom_type_script = "uid://cjmwb2baxu2bh"

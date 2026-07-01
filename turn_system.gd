@@ -127,6 +127,15 @@ func _tick_item_statuses() -> void:
 		for entry in list.duplicate():
 			var data: StatusData = entry.data
 			Sfx.play(data.tick_sound)
+			# Per-stack stat effects on THIS specific stack (e.g. drain `value`).
+			# Applied straight to the host slot — item statuses are per-instance,
+			# which the all/type_id/prefix target vocabulary can't express.
+			for e in data.per_stack_effects:
+				effects.apply_item_stat_to(slot, e.get("stat", ""), int(e.get("amount", 0)) * entry.stacks)
+				if slot.is_empty():
+					break
+			if slot.is_empty():
+				break
 			if data.affects_item_count:
 				var drain = data.item_count_per_tick * entry.stacks
 				slot.remove_from_stack(drain)
