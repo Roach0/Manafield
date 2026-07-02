@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c0lt2qdaajnnx" path="res://right_panel/right_panel.gd" id="1_07peb"]
 [ext_resource type="Script" uid="uid://bqdqkmja40rva" path="res://right_panel/info_display.gd" id="2_x6jq5"]
 [ext_resource type="Script" uid="uid://d82w4wjvl2ob" path="res://right_panel/interaction_display.gd" id="3_7tri6"]
-[ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://left_panel/smooth_progress_bar.gd" id="3_au8jh"]
+[ext_resource type="Script" uid="uid://bi17fq05nayno" path="res://components/smooth_progress_bar.gd" id="3_au8jh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_27f45"]
 

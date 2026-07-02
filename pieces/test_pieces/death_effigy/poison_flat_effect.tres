@@ -4,6 +4,11 @@
 
 [resource]
 script = ExtResource("1_x3egl")
+id = "posion"
+display_name = "Poison"
 stat = "health"
-extra_effects = [{}]
+extra_effects = [{
+"amount": -1,
+"stat": "health"
+}]
 metadata/_custom_type_script = "uid://d3tav0idnuv3r"

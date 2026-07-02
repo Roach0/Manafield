@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DeathEffigy" format=3 uid="uid://bffv14px0ymr4"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_caywo"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="2_uv6ao"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="3_hod85"]
+[ext_resource type="Resource" uid="uid://c3b2mpfm3ft7i" path="res://pieces/test_pieces/death_effigy/poison_flat_effect.tres" id="4_uv6ao"]
+[ext_resource type="Script" uid="uid://6mq6kukl3ii8" path="res://pieces/test_pieces/death_effigy/death_effigy.gd" id="5_hod85"]
+
+[resource]
+script = ExtResource("5_hod85")
+poison_status = ExtResource("4_uv6ao")
+metadata/_custom_type_script = "uid://6mq6kukl3ii8"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Ember" format=3 uid="uid://c8e1yva16qlgt"]
 
-[ext_resource type="Script" uid="uid://hpp2nbstov7r" path="res://components/prefix/ember/ember.gd" id="1_765nk"]
+[ext_resource type="Script" uid="uid://hpp2nbstov7r" path="res://prefix/ember/ember.gd" id="1_765nk"]
 
 [resource]
 script = ExtResource("1_765nk")
