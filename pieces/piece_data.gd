@@ -10,6 +10,7 @@ class_name PieceData
 @export var progress_max: int
 @export var description: String
 @export var can_build_on: Array[PieceData]
+@export var damage_receive: int = 1
 
 # --- Loot -------------------------------------------------------------------
 # Tiered drop table. On each loot event: common always yields one pick (unless
@@ -29,7 +30,8 @@ class_name PieceData
 @export var prefix_pool: int = 0   # 0 = none, 1/2/3 = which EffectsManager pool
 @export var prefix_count: int = 0  # 0, 1, or 2 colored regions
 # --- Turn behavior ---
-@export var ticks: bool = false    # true => _tick() runs every turn (registers as a ticker)
+@export var ticks: bool = false
+@export var reacts_to_clicks: bool = false
 # --- Ambient audio ---
 @export var ambient: AmbientSound          # optional; leave null for silent tiles
 @export var river_ambience: RiverAmbience  # rivers only; if set, `ambient` is ignored
@@ -75,6 +77,9 @@ func _complete() -> Dictionary:
 func _destroy() -> Dictionary:
 	# Effects to fire on death. Same bundle shape as _click/_tick.
 	# "self" targets the DYING piece (resolved before replacement).
+	return {}
+
+func _react_click(clicked: PieceData) -> Dictionary:
 	return {}
 
 # looting

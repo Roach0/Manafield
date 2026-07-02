@@ -34,8 +34,14 @@ func _on_slot_clicked(slot: WorldSlot) -> void:
 		return
 
 	var data := next_piece.duplicate() as PieceData
-	if effects:
+	if data is Harvester and slot.piece != null and not slot.piece.mods.is_empty():
+		# Harvesters absorb the replaced piece's prefixes into storage — they
+		# reference them for yields but never wear them (no mods/loot1/loot2).
+		(data as Harvester).stored_prefixes = slot.piece.mods.duplicate()
+	elif effects:
 		effects.roll_prefixes(data)
+	slot.set_piece(data)
+	piece_placed.emit(data, null)
 	slot.set_piece(data)
 	piece_placed.emit(data, null)
 
@@ -90,6 +96,7 @@ func generate_world() -> void:
 		var coord := Vector2i(col, row)
 		
 		var slot := slot_scene.instantiate() as WorldSlot
+		slot.grid_pos = coord
 		grid.add_child(slot)
 		
 		if river_path.has(coord):

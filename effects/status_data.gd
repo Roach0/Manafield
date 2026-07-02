@@ -6,7 +6,7 @@ class_name StatusData
 
 enum Kind {
 	MODIFIER,  ## stat delta applied once on gain, INVERTED when its source is removed
-	STATUS,    ## re-applies its effect every turn (poison, regen, ...)
+	STATUS,    ## re-applies per_stack_effects every turn (poison, regen, ...)
 	STATE,     ## pure presence flag (invincible); no stat math, only queried
 }
 
@@ -14,20 +14,11 @@ enum Kind {
 @export var id: String                  # "poison" — identity for stacking/removal/queries
 @export var display_name: String
 
-## --- Effect (the 90% case: one stat) -----------------------------------------
-## If `stat` is non-empty, this pair IS the effect and `extra_effects` below is
-## ignored... just fill in these two fields and you're done.
-## MODIFIER: applied once per stack on gain, inverted on removal.
+## MODIFIER: applied once per stack when gained, inverted on removal.
 ## STATUS:   applied to the HOST each tick, multiplied by current stacks.
 ## STATE:    ignored entirely.
-@export var stat: String = ""           # "health", "progress", "energy", "count", "value", ...
-@export var amount: int = 0
-
-## --- Effect (multi-stat escape hatch) ----------------------------------------
-## Only consulted when `stat` above is empty. Array of {"stat": String,
-## "amount": int} dictionaries, same shape as every other effect list.
-@export var extra_effects: Array = []
-
+## Array of {"stat": String, "amount": int} dictionaries.
+@export var per_stack_effects: Array = []
 @export var max_stacks: int = 99
 
 ## MODIFIER only. true  = re-application from the SAME source grows this entry's
@@ -47,8 +38,7 @@ enum Kind {
 @export var apply_sound: SoundEffect
 @export var tick_sound: SoundEffect
 
-## The one place effect shape is resolved — everything in TurnSystem calls this.
+## The one place effect shape is resolved — TurnSystem reads through this, never
+## the field directly, so the authoring format can change without touching it.
 func get_per_stack_effects() -> Array:
-	if stat != "":
-		return [{"stat": stat, "amount": amount}]
-	return extra_effects
+	return per_stack_effects

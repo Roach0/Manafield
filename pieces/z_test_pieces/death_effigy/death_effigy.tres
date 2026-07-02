@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DeathEffigy" format=3 uid="uid://bffv14px0ymr4"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_n6ft0"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_22l5m"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="2_c3lv6"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="3_22l5m"]
+[ext_resource type="Texture2D" uid="uid://csitokvkpgisa" path="res://pieces/z_test_pieces/test_icons/Alchemy_Gold_Sol_Sun.png" id="4_dns5u"]
+[ext_resource type="Resource" uid="uid://c3b2mpfm3ft7i" path="res://effects/status_effects/poison_flat_effect.tres" id="4_nnrfb"]
+[ext_resource type="Script" uid="uid://6mq6kukl3ii8" path="res://pieces/z_test_pieces/death_effigy/death_effigy.gd" id="5_dns5u"]
+
+[resource]
+script = ExtResource("5_dns5u")
+poison_status = ExtResource("4_nnrfb")
+name = "Death Effigy"
+type_id = "death effigy"
+icons = Array[Texture2D]([ExtResource("4_dns5u")])
+health = 5
+health_max = 5
+description = "Poisons everything neat it."
+can_build_on = Array[ExtResource("1_n6ft0")]([ExtResource("2_22l5m")])
+ticks = true
+metadata/_custom_type_script = "uid://6mq6kukl3ii8"

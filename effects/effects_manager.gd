@@ -360,14 +360,9 @@ func _on_piece_click_requested(slot: WorldSlot) -> void:
 		apply_effects(result.get("effects", []), slot)
 		if result.get("loot", false):
 			grant_loot(piece, slot)
-	# Direct-mutation death: the click (or an effect it fired) may have dropped
-	# this piece's health to 0. kill_piece is the single death path — it owns the
-	# sound, the _destroy() bundle, and the replacement. The slot.piece == piece
-	# guard skips this when a "self"-targeting effect already destroyed+replaced
-	# the piece earlier in this same click.
 	if slot.piece == piece and piece.health_max > 0 and piece.health <= 0:
 		kill_piece(slot, piece)
-	# One click = one turn. Click fully resolved above; now the world ticks.
+	_broadcast_click(slot, piece)          # reactions resolve before the world ticks
 	turn_system.advance_turn()
 
 func _on_yield_flight_requested(item: ItemData, from_slot: InventorySlot, to_slot: InventorySlot) -> void:
@@ -511,3 +506,23 @@ func complete_piece(slot: WorldSlot, piece: PieceData) -> void:
 		apply_effects(bundle.get("effects", []), slot)
 		if bundle.get("loot", false):
 			grant_loot(piece, slot)
+
+# Let every reactor respond to this click. Snapshot first: a reaction can kill
+# or replace pieces mid-broadcast, and newly-spawned pieces shouldn't react to
+# the click that created them. The clicked slot is excluded — a piece reacting
+# to its own click is just _click().
+func _broadcast_click(clicked_slot: WorldSlot, clicked_piece: PieceData) -> void:
+	for slot in _occupied_piece_slots():
+		if slot == clicked_slot:
+			continue
+		var reactor := slot.piece
+		if reactor == null or not reactor.reacts_to_clicks:
+			continue
+		var bundle: Dictionary = reactor._react_click(clicked_piece)
+		if bundle.is_empty():
+			continue
+		if slot.piece != reactor:
+			continue   # an earlier reaction replaced this piece mid-broadcast
+		apply_effects(bundle.get("effects", []), slot)
+		if bundle.get("loot", false):
+			grant_loot(reactor, slot)

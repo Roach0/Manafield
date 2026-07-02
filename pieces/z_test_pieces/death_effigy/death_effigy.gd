@@ -13,6 +13,7 @@ func _init() -> void:
 
 func _tick() -> Dictionary:
 	if poison_status == null:
+		push_warning("%s has no poison_status assigned" % type_id)
 		return {}
 	return {"effects": [
 		{

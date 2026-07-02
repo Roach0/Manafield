@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Harvester" format=3 uid="uid://oqnts7u88smr"]
+
+[ext_resource type="Script" uid="uid://d1jvv5nljgayt" path="res://pieces/piece_data.gd" id="1_71aeu"]
+[ext_resource type="Resource" uid="uid://bd8ujfhrb8r11" path="res://pieces/field/field.tres" id="2_ov7br"]
+[ext_resource type="Script" uid="uid://bdqqqa7bqirad" path="res://sound/sound_effect.gd" id="3_wwuvb"]
+[ext_resource type="Texture2D" uid="uid://b6drgttpwq5nv" path="res://pieces/z_test_pieces/test_icons/Alchemy_Element_Fire.png" id="4_23fi4"]
+[ext_resource type="Script" uid="uid://dw6erjgxvxjfe" path="res://items/item_data.gd" id="5_p6o2c"]
+[ext_resource type="Resource" uid="uid://bchc5cu78ab0e" path="res://items/insect/insect.tres" id="6_xkcnn"]
+[ext_resource type="Script" uid="uid://x70l7tt5u6oq" path="res://pieces/z_test_pieces/harvester/harvester.gd" id="7_udb2u"]
+
+[resource]
+script = ExtResource("7_udb2u")
+harvest_trigger_type = "field"
+name = "Bug Trap"
+type_id = "bug_trap"
+icons = Array[Texture2D]([ExtResource("4_23fi4")])
+can_build_on = Array[ExtResource("1_71aeu")]([ExtResource("2_ov7br")])
+loot_common = Array[ExtResource("5_p6o2c")]([ExtResource("6_xkcnn")])
+prefix_count = 1
+reacts_to_clicks = true
+metadata/_custom_type_script = "uid://x70l7tt5u6oq"

@@ -1,13 +1,12 @@
 [gd_resource type="Resource" script_class="StatusData" format=3 uid="uid://c3b2mpfm3ft7i"]
 
-[ext_resource type="Script" uid="uid://d3tav0idnuv3r" path="res://effects/status_data.gd" id="1_x3egl"]
+[ext_resource type="Script" uid="uid://d3tav0idnuv3r" path="res://effects/status_data.gd" id="1_bqe7l"]
 
 [resource]
-script = ExtResource("1_x3egl")
+script = ExtResource("1_bqe7l")
 id = "posion"
 display_name = "Poison"
-stat = "health"
-extra_effects = [{
+per_stack_effects = [{
 "amount": -1,
 "stat": "health"
 }]

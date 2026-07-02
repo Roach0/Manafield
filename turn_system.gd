@@ -50,6 +50,13 @@ func advance_turn() -> void:
 	turn_advanced.emit(turn)
 
 func _tick_slot(slot: WorldSlot) -> void:
+	if slot.piece != null and slot.piece.ticks:
+		var neighbors := []
+		for child in world.grid.get_children():
+			var s := child as WorldSlot
+			if s != null and s.piece != null and s != slot:
+				neighbors.append("%s@%s" % [s.piece.type_id, s.grid_pos])
+		print("[tick] ", slot.piece.type_id, "@", slot.grid_pos, " sees: ", neighbors)
 	var piece := slot.piece
 	_tick_piece_statuses(slot)                 # statuses fire BEFORE the piece's tick
 	if not is_instance_valid(slot) or slot.piece != piece:
@@ -89,7 +96,7 @@ func _upsert(list: Array, data: StatusData, stacks: int, source) -> Dictionary:
 func _apply_modifier_delta(data: StatusData, stack_delta: int, host_kind: String, host) -> void:
 	if stack_delta == 0:
 		return
-	for e in data.per_stack_effects:
+	for e in data.get_per_stack_effects():
 		var stat: String = e.get("stat", "")
 		var amt: int = int(e.get("amount", 0)) * stack_delta
 		match host_kind:
@@ -167,6 +174,7 @@ func apply_status(slot: WorldSlot, data: StatusData, stacks: int = 1, source: Ob
 	var list: Array = _statuses.get(slot, [])
 	var res := _upsert(list, data, stacks, source)
 	_statuses[slot] = list
+	print("[poison?] applied ", data.id, " x", stacks, " to ", slot.piece.type_id, " at ", slot.grid_pos)
 	_register(slot)
 	if res.added == 0:
 		return
@@ -184,6 +192,12 @@ func _tick_piece_statuses(slot: WorldSlot) -> void:
 	var list: Array = _statuses.get(slot, [])
 	if list.is_empty():
 		return
+	for entry in list:
+		print("[status] ", slot.piece.type_id, "@", slot.grid_pos,
+			" id=", entry.data.id, " kind=", entry.data.kind,
+			" stacks=", entry.stacks, " fx=", entry.data.get_per_stack_effects())
+	if list.is_empty():
+		return
 	var host := slot.piece
 	for entry in list.duplicate():
 		var data: StatusData = entry.data
@@ -191,7 +205,7 @@ func _tick_piece_statuses(slot: WorldSlot) -> void:
 			continue                       # modifiers/states just sit there
 		Sfx.play(data.tick_sound)
 		var scaled: Array = []
-		for e in data.per_stack_effects:
+		for e in data.get_per_stack_effects():
 			scaled.append({
 				"stat": e.get("stat", ""),
 				"amount": int(e.get("amount", 0)) * entry.stacks,
@@ -242,7 +256,7 @@ func _tick_player_statuses() -> void:
 			continue
 		Sfx.play(data.tick_sound)
 		var scaled: Array = []
-		for e in data.per_stack_effects:
+		for e in data.get_per_stack_effects():
 			scaled.append({
 				"stat": e.get("stat", ""),
 				"amount": int(e.get("amount", 0)) * entry.stacks,
@@ -291,7 +305,7 @@ func _tick_item_statuses() -> void:
 			if data.kind != StatusData.Kind.STATUS:
 				continue
 			Sfx.play(data.tick_sound)
-			for e in data.per_stack_effects:
+			for e in data.get_per_stack_effects():
 				effects.apply_item_stat_to(slot, e.get("stat", ""), int(e.get("amount", 0)) * entry.stacks)
 				if slot.is_empty():
 					break

@@ -20,7 +20,7 @@
 [resource]
 script = ExtResource("4_thtcl")
 name = "Field"
-type_id = "Field"
+type_id = "field"
 icons = Array[Texture2D]([ExtResource("3_ja4mi"), ExtResource("7_s105l"), ExtResource("7_rcx5a"), ExtResource("8_1y10a"), ExtResource("6_s105l")])
 progress_max = 15
 description = "A lonely little field for thinking.  On complete, gain a Building."
