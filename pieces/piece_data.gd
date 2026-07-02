@@ -19,12 +19,11 @@ class_name PieceData
 @export_group("Loot")
 @export var loot_common: Array[ItemData]
 @export var loot_uncommon: Array[ItemData]
-@export_range(0.0, 100.0) var loot_uncommon_chance: float = 0.0   # % to roll the uncommon array
+@export_range(0.0, 100.0) var loot_uncommon_chance: float = 25.0   # % to roll the uncommon array
 @export var loot_rare: Array[ItemData]
-@export_range(0.0, 100.0) var loot_rare_chance: float = 0.0       # % to roll the rare array
+@export_range(0.0, 100.0) var loot_rare_chance: float = 5.0       # % to roll the rare array
 @export_group("")
 
-@export var damage_received:int = 1
 @export var destroy_replacements: Array[PieceData] # assign Field, Deer, etc. in the inspector
 # --- Prefix / coloring ---
 @export var prefix_pool: int = 0   # 0 = none, 1/2/3 = which EffectsManager pool

@@ -1,20 +1,5 @@
 extends RefCounted
 class_name LootRoll
-## Shared tiered-drop roller for piece loot (PieceData.roll_loot) and item yields
-## (ItemData.roll_yields). One central place so both stay identical.
-##
-## Common always contributes one random pick WHEN NON-EMPTY. Uncommon and rare
-## each roll their own percent chance (0–100); on success, each contributes one
-## random pick from its OWN array. So a single event returns 0–3 item templates,
-## depending on contents and rolls.
-##
-## An empty common array is the idiom for "percent chance to drop anything at
-## all": with no guaranteed common, the event only produces something when an
-## uncommon or rare roll succeeds.
-##
-## Returns raw templates (shared .tres references). Callers do their own
-## per-item post-processing (prefix inheritance, duplicate-on-commit), exactly
-## as before — this only decides WHICH templates drop, not how they're minted.
 
 static func roll(
 		common: Array[ItemData],

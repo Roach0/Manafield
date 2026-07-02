@@ -133,10 +133,10 @@ func _on_slot_use_requested(slot: InventorySlot) -> void:
 		return
 	if slot.count < data.consume_count:
 		return
-	Sfx.play(data.click_sound)   # SFX: click (accepted use only)
+	Sfx.play(data.click_sound)
 	# Pay first, so a same-type yield can re-target the slot we just emptied.
 	slot.remove_from_stack(data.consume_count)
-	for yield_item in data.click_yields:
+	for yield_item in data.roll_yields():
 		if yield_item == null:
 			continue
 		var produced := _resolve_yield(yield_item, data)

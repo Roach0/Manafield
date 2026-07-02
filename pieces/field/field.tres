@@ -21,10 +21,11 @@
 script = ExtResource("4_thtcl")
 name = "Field"
 type_id = "Field"
+icons = Array[Texture2D]([ExtResource("3_ja4mi"), ExtResource("7_s105l"), ExtResource("7_rcx5a"), ExtResource("8_1y10a"), ExtResource("6_s105l")])
 progress_max = 15
 description = "A lonely little field for thinking.  On complete, gain a Building."
-icons = Array[Texture2D]([ExtResource("3_ja4mi"), ExtResource("7_s105l"), ExtResource("7_rcx5a"), ExtResource("8_1y10a"), ExtResource("6_s105l")])
-loot_pool = Array[ExtResource("7_1y10a")]([ExtResource("8_hv03d"), ExtResource("9_1y10a")])
+loot_common = Array[ExtResource("7_1y10a")]([ExtResource("9_1y10a")])
+loot_uncommon = Array[ExtResource("7_1y10a")]([ExtResource("8_hv03d")])
 prefix_pool = 2
 prefix_count = 1
 ambient = ExtResource("1_66vq0")

@@ -34,7 +34,6 @@ func new_game() -> void:
 func _on_turn_advanced(turn: int) -> void:
 	effects.play_hovered_tick()           # the cosmetic tick sound
 	remaining_turns -= 1
-	# game-over check on remaining_turns <= 0 goes here when you want it
 
 func _on_piece_placed(piece_data: PieceData, next_piece: PieceData) -> void:
 	print("placed: ", piece_data.name)

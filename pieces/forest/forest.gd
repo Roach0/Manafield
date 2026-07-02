@@ -5,7 +5,6 @@ func get_click_cost() -> Array:
 	return [{"resource": "energy", "amount": 1}]
 
 func _click() -> Dictionary:
-	health -= damage_received
 	return {"loot": true}
 
 

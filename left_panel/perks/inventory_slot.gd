@@ -13,8 +13,32 @@ signal sacrifice_requested(slot: InventorySlot)
 const HOVER_LIFT := 6.0      # how high it rests while hovered
 const HOP_HEIGHT := 14.0     # peak of the initial hop (above the rest height)
 const PULSE_SCALE := 1.50    # how big the blip pulse is.
-const SACRIFICE_HOLD := 0.6        # seconds of holding to fill the meter
+const SACRIFICE_DELAY := 0.18      # grace before the meter/vibration appear — a quick click shows nothing
+const SACRIFICE_HOLD := 0.6        # seconds of holding (after the delay) to fill the meter
 const SACRIFICE_DRAIN := 3.0       # how fast the meter empties on early release (× fill rate)
+const VIBRATE_MAX := 5.0           # peak vibration amplitude (px) at full charge
+
+const RADIAL_SHADER := "
+shader_type canvas_item;
+uniform float fill : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 fill_color : source_color = vec4(0.9, 0.2, 0.2, 0.75);
+uniform vec4 track_color : source_color = vec4(0.0, 0.0, 0.0, 0.25);
+uniform float inner_radius = 0.30;
+uniform float outer_radius = 0.46;
+void fragment() {
+	vec2 uv = UV - vec2(0.5);
+	float dist = length(uv);
+	float aa = 0.01;
+	float ring = smoothstep(inner_radius - aa, inner_radius + aa, dist)
+		* (1.0 - smoothstep(outer_radius - aa, outer_radius + aa, dist));
+	float ang = atan(uv.x, -uv.y);          // 0 at 12 o'clock, increasing clockwise
+	if (ang < 0.0) ang += 6.28318530718;
+	float frac = ang / 6.28318530718;
+	float filled = step(frac, fill);
+	vec4 col = mix(track_color, fill_color, filled);
+	COLOR = vec4(col.rgb, col.a * ring);
+}
+"
 
 
 var count: int = 0           # 0 = empty, >=1 = occupied
@@ -26,7 +50,10 @@ var _count_label: Label
 var _sac_fill := 0.0               # 0..1 meter
 var _sac_holding := false
 var _sac_fired := false            # latch so a full hold fires exactly once
-var _sac_bar: ColorRect            # the fill overlay
+var _sac_delay_left := 0.0         # grace countdown before the meter starts filling
+var _sac_meter: ColorRect          # radial fill overlay (shader-driven)
+var _vibrating := false            # true while we're driving icon.position for the tension shake
+var _hovered := false              # so vibration rests at the right lifted/base height
 
 func _ready() -> void:
 	_build_count_label()
@@ -37,7 +64,7 @@ func _ready() -> void:
 	button.pressed.connect(_on_pressed)
 	button.button_down.connect(_on_button_down)
 	button.button_up.connect(_on_button_up)
-	_build_sacrifice_bar()
+	_build_sacrifice_meter()
 	set_process(true)
 	await get_tree().process_frame
 	icon.pivot_offset = icon.size / 2.0
@@ -77,16 +104,19 @@ func add_to_stack(amount: int = 1) -> void:
 	_refresh_count()
 	_blip()
 
-func _build_sacrifice_bar() -> void:
-	_sac_bar = ColorRect.new()
-	_sac_bar.name = "SacrificeBar"
-	_sac_bar.color = Color(0.9, 0.2, 0.2, 0.55)   # tune to taste
-	_sac_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_sac_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	_sac_bar.custom_minimum_size.y = 0.0
-	_sac_bar.size.y = 0.0
-	add_child(_sac_bar)               # drawn over icon, under count label if it's added later
-	_sac_bar.visible = false
+func _build_sacrifice_meter() -> void:
+	_sac_meter = ColorRect.new()
+	_sac_meter.name = "SacrificeMeter"
+	_sac_meter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_sac_meter.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var mat := ShaderMaterial.new()
+	var sh := Shader.new()
+	sh.code = RADIAL_SHADER
+	mat.shader = sh
+	mat.set_shader_parameter("fill", 0.0)
+	_sac_meter.material = mat
+	add_child(_sac_meter)              # drawn over icon, under count label if it's added later
+	_sac_meter.visible = false
 
 func _on_button_down() -> void:
 	# Only meaningful on an occupied slot.
@@ -94,6 +124,7 @@ func _on_button_down() -> void:
 		return
 	_sac_holding = true
 	_sac_fired = false
+	_sac_delay_left = SACRIFICE_DELAY   # nothing shows until this runs out
 
 func _on_button_up() -> void:
 	_sac_holding = false
@@ -103,24 +134,51 @@ func _on_button_up() -> void:
 
 func _process(delta: float) -> void:
 	if _sac_holding and not is_empty():
-		_sac_fill = min(_sac_fill + delta / SACRIFICE_HOLD, 1.0)
-		if _sac_fill >= 1.0 and not _sac_fired:
-			_sac_fired = true
-			_sac_holding = false
-			sacrifice_requested.emit(self)
+		if _sac_delay_left > 0.0:
+			_sac_delay_left = max(_sac_delay_left - delta, 0.0)   # quiet grace period
+		else:
+			_sac_fill = min(_sac_fill + delta / SACRIFICE_HOLD, 1.0)
+			if _sac_fill >= 1.0 and not _sac_fired:
+				_sac_fired = true
+				_sac_holding = false
+				sacrifice_requested.emit(self)
+				_sac_fill = 0.0            # release: snap the tension off
+				_reset_icon_position()
 	elif _sac_fill > 0.0:
 		_sac_fill = max(_sac_fill - delta / SACRIFICE_HOLD * SACRIFICE_DRAIN, 0.0)
-	_update_sacrifice_bar()
 
-func _update_sacrifice_bar() -> void:
-	if _sac_bar == null:
+	_apply_vibration()
+	_update_sacrifice_meter()
+
+func _update_sacrifice_meter() -> void:
+	if _sac_meter == null:
 		return
-	var visible := _sac_fill > 0.001
-	_sac_bar.visible = visible
-	if visible:
-		_sac_bar.size.y = size.y * _sac_fill
-		_sac_bar.position.y = size.y - _sac_bar.size.y
-		_sac_bar.size.x = size.x
+	var show := _sac_fill > 0.001 and not is_empty()
+	_sac_meter.visible = show
+	if show:
+		(_sac_meter.material as ShaderMaterial).set_shader_parameter("fill", _sac_fill)
+
+# Shake that ramps slow -> violent with the fill (ease-in), then releases on fire.
+func _apply_vibration() -> void:
+	if is_empty() or _sac_fill <= 0.0:
+		if _vibrating:
+			_vibrating = false
+			_reset_icon_position()   # settle back once, then leave position to the tweens
+		return
+	if not _vibrating:
+		_vibrating = true
+		if _tween and _tween.is_running():
+			_tween.kill()            # stop the hover tween fighting our position writes
+	var t := _sac_fill * _sac_fill   # ease-in: barely trembling early, buzzing at the top
+	var amp := VIBRATE_MAX * t
+	var rest_y: float = (_base_y - HOVER_LIFT) if _hovered else _base_y
+	icon.position = Vector2(_base_x + randf_range(-amp, amp), rest_y + randf_range(-amp, amp))
+	icon.scale = Vector2.ONE * (1.0 + 0.10 * t)
+
+func _reset_icon_position() -> void:
+	var rest_y: float = (_base_y - HOVER_LIFT) if _hovered else _base_y
+	icon.position = Vector2(_base_x, rest_y)
+	icon.scale = Vector2.ONE
 
 # Pay down the stack; clears the slot when it empties.
 func remove_from_stack(amount: int = 1) -> void:
@@ -169,6 +227,7 @@ func _blip() -> void:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_hover_start() -> void:
+	_hovered = true
 	hover_changed.emit(true)
 	item_hovered.emit(item_data)
 	if item_data != null:
@@ -182,6 +241,7 @@ func _on_hover_start() -> void:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _on_hover_end() -> void:
+	_hovered = false
 	hover_changed.emit(false)
 	item_hovered.emit(null)
 	if _tween and _tween.is_running():

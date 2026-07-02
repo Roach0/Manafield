@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StatusData" format=3 uid="uid://c3b2mpfm3ft7i"]
+
+[ext_resource type="Script" uid="uid://d3tav0idnuv3r" path="res://effects/status_data.gd" id="1_x3egl"]
+
+[resource]
+script = ExtResource("1_x3egl")
+stat = "health"
+extra_effects = [{}]
+metadata/_custom_type_script = "uid://d3tav0idnuv3r"
